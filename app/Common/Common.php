@@ -203,6 +203,17 @@ function getConfig($key){
     return  $configMsg[$key];
 }
 
+/**获取错误状态码的配置信息
+ * @param string $key
+ *@return unknown
+ */
+function getEnumConfig($key){
+
+    $configMsg = \Illuminate\Support\Facades\Config::get('errMsg');
+
+    return  $configMsg[$key];
+}
+
 
 
 
@@ -210,7 +221,7 @@ function getConfig($key){
  * @param string $key
  *@return unknown
  */
-function jsonOut($code = 0, $msg = "", $data = []){
+function jsonOut($enum, $data = []){
 
 
     if(is_null($data)){
@@ -218,8 +229,8 @@ function jsonOut($code = 0, $msg = "", $data = []){
     }
 
     $result = [
-        'code' => $code,
-        'msg' => $msg,
+        'code' => getEnumConfig($enum)['code'],
+        'msg' => getEnumConfig($enum)['msg'],
         'data' => $data,
     ];
 
@@ -228,14 +239,51 @@ function jsonOut($code = 0, $msg = "", $data = []){
 
 }
 
+/**
+ * 生成唯一订单号
+ * @return  string
+ */
+function getOrderSn()
+{
+    $time = explode ( " ", microtime () );
+    $time = $time[1] . ($time[0] * 1000);
+    $time = explode ( ".", $time);
+    $time = isset($time[1]) ? $time[1] : 0;
+    $time = date('YmdHis') + $time;
 
+    /* 选择一个随机的方案 */
+    mt_srand((double) microtime() * 1000000);
+    return $time . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+}
 
 /** ==============================数据的处理工具函数 -======================================
  *
  */
 
 
-
+/**
+ * 结果结合list 转化为 key=>array() 对象
+ *
+ * @param unknown $ids
+ * @param unknown $list
+ * @param string $compare_key
+ * @return unknown
+ */
+function actionGetObjDataByData($ids, $list, $compare_key = 'id')
+{
+    $retData = new stdClass();
+    // 遍历数据按格式返回
+    foreach ($ids as $id) {
+        $tempData = array();
+        foreach ($list as $info) {
+            if ($id == $info[$compare_key]) {
+                $tempData = $info;
+            }
+        }
+        $retData->$id = $tempData;
+    }
+    return $retData;
+}
 
 
 

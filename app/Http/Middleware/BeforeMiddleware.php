@@ -177,6 +177,11 @@ class BeforeMiddleware
 
         }
 
-        jsonOut(101, $msg, $data);
+        $result = [
+            'code' => 101,
+            'msg' => $msg,
+            'data' => $data
+        ];
+        die(json_encode($result));
     }
 }

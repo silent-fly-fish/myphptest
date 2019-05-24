@@ -17,15 +17,11 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
     $router->group(['prefix'=> 'wechatusers'], function() use ($router){
 
-//        $router->get('', function(){
-//            return \App\Http\Doctor\WechatUserCtl::getInfoById(1);
-//        });
 
-        //列表接口
         $router->get('', function(\Illuminate\Http\Request $request){
             $getData = $request->all();
 
-            return \App\Http\Controllers\DoctorApplyCtl::getAll($getData );
+            return App\Http\Doctor\WechatUserCtl::getInfoById($getData );
         });
 
     });
