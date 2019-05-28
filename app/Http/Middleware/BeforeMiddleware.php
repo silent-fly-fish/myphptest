@@ -26,7 +26,7 @@ class BeforeMiddleware
         $this->method = $request->method(); //请求方式
         if ($this->method == 'OPTIONS') die('');
 
-        //echo json_encode($user_define);exit;
+
         $json =  $request->all();
 
         $this->data = &$json;
@@ -38,8 +38,8 @@ class BeforeMiddleware
         if (!isset($user_define[$user_define_key][$this->method])) {
             return $next($request);
         }
-        //todo 删除
-        if (count($this->data) == 0) {
+        
+        if (count($this->data) == 0 && $this->method != 'GET') {
             $this->jsonOut(1);
         }
 
@@ -177,11 +177,13 @@ class BeforeMiddleware
 
         }
 
-        $result = [
-            'code' => 101,
-            'msg' => $msg,
-            'data' => $data
-        ];
-        die(json_encode($result));
+//        $result = [
+//            'code' => 101,
+//            'msg' => $msg,
+//            'data' => $data
+//        ];
+//        die(json_encode($result));
+
+        jsonOut( 'validationError',$msg);
     }
 }

@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
         $errorObj['msg'] = $e->getMessage();
         $errorObj['file'] = $e->getFile();
         $errorObj['line'] = $e->getLine();
-        jsonOut(500,'interface error！',$errorObj);
+        jsonOut('InterfaceError',$errorObj);
 
         return parent::render($request, $e);
     }

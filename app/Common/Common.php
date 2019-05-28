@@ -31,7 +31,7 @@ function POST($url='',$data = [],$isFull=false){
         $realUrl = getApiUrl($url) ;
     }
     if (!$realUrl)
-        jsonOut('0','接口尚未定义');
+        jsonOut('InterfaceUrlError');
 
     return HttpRequest::post($realUrl,['data' => $data]);
 }
@@ -51,7 +51,7 @@ function GET($url='',$data = [],$isFull=false){
         $realUrl= getApiUrl($url);
     }
     if (!$realUrl)
-        jsonOut('0','接口尚未定义');
+        jsonOut('InterfaceUrlError');
     // 存在查询参数进行拼接
     if (is_array($data)&&(!empty($data))) {
 
@@ -64,12 +64,12 @@ function GET($url='',$data = [],$isFull=false){
         }
 
         $buff = trim($buff, "&");
-        $url.= '?'.$buff;
+        $realUrl.= '?'.$buff;
     }else{
-        $url.= '/'.$data;
+        $realUrl.= '/'.$data;
     }
 
-    return HttpRequest::get($url);
+    return HttpRequest::get($realUrl);
 }
 
 /** 定义http协议PUT请求方法
@@ -85,7 +85,7 @@ function PUT($url='',$data = [],$isFull=false){
         $realUrl= getApiUrl($url);
     }
     if (!$realUrl)
-        jsonOut('0','接口尚未定义');
+        jsonOut('InterfaceUrlError');
 
 
     return HttpRequest::put($realUrl,['data' => $data]);
@@ -159,7 +159,7 @@ function getApiUrl($url){
         return false;
 
 
-    $host = getConfig('SERVER_HOST').'/'.$apiDefine[0].'/'.$apiDefine[1];
+    $host = getConfig(strtoupper($apiDefine[0]).'_SYS_IP').'/'.$apiDefine[1];
 
     return $host;
 }

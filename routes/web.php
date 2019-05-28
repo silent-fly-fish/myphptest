@@ -20,7 +20,6 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
         $router->get('', function(\Illuminate\Http\Request $request){
             $getData = $request->all();
-
             return App\Http\Doctor\WechatUserCtl::getInfoById($getData );
         });
 

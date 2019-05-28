@@ -14,6 +14,13 @@ if(App::environment('production')){
     return [
         //域名地址
         'SERVER_HOST'=>'https://dev.portal.futurefertile.com',
+        //定义测试服上线ip，地址
+        'CIRCLE_SYS_IP'   =>'127.0.0.1:32090/index.php',
+        'ORDER_SYS_IP'    =>'127.0.0.1:32091/index.php',
+        'QUESTION_SYS_IP' =>'127.0.0.1:32092/index.php',
+        'ARTICLE_SYS_IP'  =>'127.0.0.1:32093/index.php',
+        'USER_SYS_IP'     =>'127.0.0.1:32094/index.php',
+        'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
 
     ];
 }
@@ -24,6 +31,13 @@ if(App::environment('production')){
 return [
     //域名地址
     'SERVER_HOST'=>'https://dev.portal.futurefertile.com',
+    //定义测试服上线ip，地址
+    'CIRCLE_SYS_IP'   =>'127.0.0.1:32090/index.php',
+    'ORDER_SYS_IP'    =>'127.0.0.1:32091/index.php',
+    'QUESTION_SYS_IP' =>'127.0.0.1:32092/index.php',
+    'ARTICLE_SYS_IP'  =>'127.0.0.1:32093/index.php',
+    'USER_SYS_IP'     =>'127.0.0.1:32094/index.php',
+    'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
 
 
 ];

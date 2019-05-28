@@ -14,18 +14,10 @@ class WechatUserCtl
 {
    static function getInfoById($id)
 
-   {//将入参切分成数组，判断是否获取多条数据
-//       $ids= explode(",", $id);
-//
-//       if(count($ids)==1){
-//
-//        $ret=  WechatUserORM::getOneInfoById($ids[0]);
-//        jsonOut(0,'',  $ret);
-//       }
-//
-//       $ret=  WechatUserORM::getBatchInfoByIds($ids);
-//       jsonOut(0,'',  $ret);
-       jsonOut('success',1);
+   {
+       $res=  GET('question.patient/masters','1');
+
+       jsonOut('success',$res);
    }
 
 

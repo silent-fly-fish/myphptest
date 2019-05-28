@@ -49,6 +49,10 @@ return [
 
 
     ],
+    'question'=>[
+        'patient/masters' => '',
+
+    ],
 
    
 
