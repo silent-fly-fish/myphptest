@@ -285,6 +285,16 @@ function actionGetObjDataByData($ids, $list, $compare_key = 'id')
     return $retData;
 }
 
+/**
+ * 分页页码偏移量计算
+ * @param $page 页码
+ * @param $count 每页的条数
+ * @return float|int
+ */
+function getOffsetByPage($page, $count){
+    return ($page-1)*$count;
+}
+
 
 
 
