@@ -39,7 +39,7 @@ class PatientORM extends BaseORM
 
     static function getAllByOpen($patientIds) {
         $patientList = Patient::select(Patient::$fields)
-            ->whereIn('patient_id',$patientIds)
+            ->whereIn('id',$patientIds)
             ->get();
 
         return $patientList;
