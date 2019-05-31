@@ -4,7 +4,10 @@
 namespace App\Http\Patient;
 
 
+use App\Http\Module\PatientHistory;
+use App\Http\ORM\PatientHistoryORM;
 use App\Http\ORM\PatientORM;
+use App\Http\ORM\PatientSuggestORM;
 
 class PatientCtl
 {
@@ -90,6 +93,54 @@ class PatientCtl
         if($result) {
             $result = true;
         } else {
+            $result = false;
+        }
+        jsonOut('success',$result);
+    }
+
+    /**
+     * 退出登录
+     * @param $patientId
+     */
+    static function logout($patientId) {
+        //todo 去除登录信息
+    }
+
+    /**
+     * 添加历史记录
+     * @param $data
+     */
+    static function addHistory($data) {
+        //查看搜索历史
+        $history = PatientHistoryORM::getOneByPatientIdAndSearchAndType($data['patient_id'],$data['search'],$data['type']);
+        if($history) {
+            $params['id'] = $history['id'];
+            $params['number'] = $history['number'] + 1;
+            $result = PatientHistoryORM::update($params);
+
+        }else{
+            $result = PatientHistoryORM::addOne($data);
+        }
+        if($result) {
+            $result = true;
+        }else {
+            $result = false;
+        }
+        jsonOut('success', $result);
+    }
+
+    /**
+     * 意见反馈
+     * @param $data
+     */
+    static function addSuggest($data) {
+        if(isset($data['img_urls'])) {
+            $data['img_urls'] = implode(',',$data['img_urls']);
+        }
+        $result = PatientSuggestORM::addOne($data);
+        if($result) {
+            $result = true;
+        }else {
             $result = false;
         }
         jsonOut('success',$result);

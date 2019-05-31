@@ -78,6 +78,20 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code']);
         });
 
+        //添加历史记录
+        $router->post('/historys', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\PatientCtl::addHistory($postData);
+        });
+
+        //添加意见反馈
+        $router->post('/suggests', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\PatientCtl::addSuggest($postData);
+        });
+
     });
 
 

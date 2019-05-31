@@ -20,11 +20,9 @@ class PatientORM extends BaseORM
     }
 
     static function isExistPhone($phone) {
-        $result = Patient::where(['phone'=>$phone])->find();
-        if($result){
-            return true;
-        }
-        return false;
+        $result = Patient::where(['phone'=>$phone])->first();
+
+        return $result;
     }
 
     static function addOne($data) {

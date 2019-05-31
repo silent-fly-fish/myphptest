@@ -163,6 +163,51 @@ return [
                 ],
             ]
         ],
+
+        'patient/historys' => [
+            'POST' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '', 'integer'=> ''],
+                        101
+                    ],
+                    'search' => [
+                        ['required' => ''],
+                        102
+                    ],
+                    'type' => [
+                        ['required' => '', 'integer'=> ''],
+                        103
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer!',
+                    102 => 'search is required!',
+                    103 => 'type is required and integer'
+                ],
+            ]
+        ],
+
+        'patient/suggests' => [
+            'POST' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '', 'integer'=> ''],
+                        101
+                    ],
+                    'reason' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer!',
+                    102 => 'reason is required!'
+                ],
+            ]
+        ],
 	]
 ];
 
