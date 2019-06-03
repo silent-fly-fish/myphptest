@@ -106,6 +106,18 @@ return [
                 'err_code' => [
                     101 => 'patient_ids is required!'
                 ],
+            ],
+            'PUT' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer!'
+                ],
             ]
         ],
 

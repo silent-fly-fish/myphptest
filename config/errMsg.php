@@ -15,4 +15,5 @@ return [
     'phoneIsRegister'=>['code'=>2001,'msg'=>'该手机号已注册'],
     'phoneCodeError'=>['code'=>2002,'msg'=>'手机验证码错误'],
     'phoneNotRegister'=>['code'=>2003,'msg'=>'该手机号尚未注册'],
+    'patientNotExist'=>['code'=>2004,'msg'=>'不存在该用户'],
 ];

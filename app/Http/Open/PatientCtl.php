@@ -25,4 +25,23 @@ class PatientCtl
         jsonOut('success',$patientList);
     }
 
+    static function updatePatientInfo($data) {
+        $params['patient_id'] = $data['patient_id'];
+        if(isset($data['intergral'])) {
+            $params['intergral'] = $data['intergral'];
+        }
+        if(isset($data['sign_date'])) {
+            $params['sign_date'] = $data['sign_date'];
+        }
+        $patientInfo = PatientORM::getOneById($data['patient_id']);
+        if(!$patientInfo) {
+            jsonOut('patientNotExist',false);
+        }
+        $result = PatientORM::update($params);
+        if($result){
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
 }

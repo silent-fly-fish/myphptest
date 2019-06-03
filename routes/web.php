@@ -133,17 +133,27 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Open\DoctorCtl::getDoctorListBase($doctorIds);
         });
 
-        //患者列表
-        $router->get('/patients', function(\Illuminate\Http\Request $request){
-            $getData = $request->all();
-            $patientIds = $getData['patient_ids'];
-            return App\Http\Open\PatientCtl::getPatientList($patientIds);
-        });
+        $router->group(['prefix'=> 'patients'], function() use ($router){
+            //患者列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $patientIds = $getData['patient_ids'];
+                return App\Http\Open\PatientCtl::getPatientList($patientIds);
+            });
 
-        //患者详情
-        $router->get('/patients/{patientId}', function($patientId){
+            //患者详情
+            $router->get('/{patientId}', function($patientId){
 
-            return App\Http\Open\PatientCtl::getPatientInfo($patientId);
+                return App\Http\Open\PatientCtl::getPatientInfo($patientId);
+            });
+
+            //患者详情
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Open\PatientCtl::updatePatientInfo($putData);
+            });
         });
     });
 });
