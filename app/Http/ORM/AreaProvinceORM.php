@@ -13,4 +13,15 @@ class AreaProvinceORM extends BaseORM
         return AreaProvince::find($id);
     }
 
+    static function getAll() {
+        $model = new AreaProvince();
+        $list = $model
+            ->select(AreaProvince::$fields)
+            ->orderBy('id','asc')
+            ->get()
+            ->toArray();
+
+        return $list;
+    }
+
 }

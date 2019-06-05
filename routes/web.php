@@ -92,6 +92,11 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::addSuggest($postData);
         });
 
+        $router->get('/area',function (\Illuminate\Http\Request $request){
+
+            return \App\Http\Patient\AreaCtl::getAreaList();
+        });
+
     });
 
 
