@@ -112,24 +112,35 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
     //子系统调用api
     $router->group(['prefix'=> 'open'], function() use ($router){
-        //医生详情
-        $router->get('/doctors/{doctorId}', function($doctorId){
 
-            return App\Http\Open\DoctorCtl::getDoctorInfo($doctorId);
+        $router->group(['prefix'=> 'doctors'], function() use ($router){
+            //医生详情
+            $router->get('/{doctorId}', function($doctorId){
+
+                return App\Http\Open\DoctorCtl::getDoctorInfo($doctorId);
+            });
+
+            //医生基本信息
+            $router->get('/base/{doctorId}', function($doctorId){
+
+                return App\Http\Open\DoctorCtl::getOneDoctor($doctorId);
+            });
+
+            //医生列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $doctorIds = $getData['doctor_ids'];
+                return App\Http\Open\DoctorCtl::getDoctorList($doctorIds);
+            });
+
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Open\DoctorCtl::updateDoctor($putData);
+            });
         });
 
-        //医生基本信息
-        $router->get('/doctors/base/{doctorId}', function($doctorId){
-
-            return App\Http\Open\DoctorCtl::getDoctorInfo($doctorId);
-        });
-
-        //医生列表
-        $router->get('/doctors', function(\Illuminate\Http\Request $request){
-            $getData = $request->all();
-            $doctorIds = $getData['doctor_ids'];
-            return App\Http\Open\DoctorCtl::getDoctorList($doctorIds);
-        });
 
         //医生列表基本信息
         $router->get('/doctorsbase', function(\Illuminate\Http\Request $request){

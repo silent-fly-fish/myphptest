@@ -9,7 +9,7 @@ class DoctorORM extends BaseORM
 {
     static function getOneById($id) {
 
-        return Doctor::find($id);
+        return Doctor::select(Doctor::$fields)->find($id);
     }
 
     static function getInfoById($id) {
@@ -118,7 +118,7 @@ class DoctorORM extends BaseORM
         $query->offset($offset);
         $query->limit($size);
         //todo 暂定为逆序 可能是按热度查询
-        $query->orderByRaw('user_doctor.id desc');
+        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
         $total = $queryTotal->count();
         $datas = $query->get();
 

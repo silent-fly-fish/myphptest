@@ -52,5 +52,19 @@ class DoctorCtl
         jsonOut('success', $doctorList);
     }
 
+    /**
+     * 更新单个医生相关信息
+     * @param $data
+     */
+    static function updateDoctor($data) {
+        $params['doctor_id'] = $data['doctor_id'];
+        if(isset($data['favorable_rate'])) {
+            $params['favorable_rate'] = $data['favorable_rate'];
+        }
+        $result = DoctorORM::update($params);
+
+        jsonOut('success',$result);
+    }
+
 
 }

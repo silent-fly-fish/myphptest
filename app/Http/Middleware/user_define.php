@@ -77,7 +77,19 @@ return [
                 'err_code' => [
                     101 => 'doctor_ids is required!'
                 ],
-            ]
+            ],
+            'PUT' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!'
+                ],
+            ],
         ],
         'open/doctorsbase' => [
             'GET' => [
