@@ -92,9 +92,20 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::addSuggest($postData);
         });
 
+        //地区三级列表
         $router->get('/area',function (\Illuminate\Http\Request $request){
 
             return \App\Http\Patient\AreaCtl::getAreaList();
+        });
+
+        //输入邀请码
+        $router->put('/invitation',function (\Illuminate\Http\Request $request){
+            $putData = $request->all();
+            $putData = $putData['data'];
+            $patientId = $putData['patient_id'];
+            $inviteCode = trim($putData['invite_code']);
+
+            return \App\Http\Patient\PatientCtl::addInvitation($patientId,$inviteCode);
         });
 
     });

@@ -232,6 +232,26 @@ return [
                 ],
             ]
         ],
+
+        'patient/invitation' => [
+            'PUT' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '', 'integer'=> ''],
+                        101
+                    ],
+                    'invite_code' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer!',
+                    102 => 'invite_code is required!'
+                ],
+            ]
+        ],
 	]
 ];
 

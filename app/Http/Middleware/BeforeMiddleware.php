@@ -38,7 +38,7 @@ class BeforeMiddleware
         if (!isset($user_define[$user_define_key][$this->method])) {
             return $next($request);
         }
-        
+
         if (count($this->data) == 0 && $this->method != 'GET') {
             $this->jsonOut(1);
         }
@@ -64,45 +64,77 @@ class BeforeMiddleware
                             }
                             break;
                         case "integer":
-                            if (!is_int($json[$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if (!is_int($json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "default":
                             break;
                         case "min":
-                            if ($value_value >= $json[$vail_key]) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if ($value_value >= $json[$vail_key]) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "max":
-                            if ($value_value <= $json[$vail_key]) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if ($value_value <= $json[$vail_key]) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "numeric":
-                            if (!is_numeric($json[$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if (!is_numeric($json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "object":
-                            if (!is_array($json[$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if (!is_array($json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "Regx":
-                            if (!preg_match($value_value, $json[$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if (!preg_match($value_value, $json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "in":
-                            if (!in_array($json[$vail_key], $value_value)) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json[$vail_key])) {
+                                if (!in_array($json[$vail_key], $value_value)) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
+
+                        case "maxLength":
+                            if(isset($json[$vail_key])) {
+                                if ($value_value < mb_strlen($json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
+                            }
+                            break;
+                        case "minLength":
+                            if(isset($json[$vail_key])) {
+                                if ($value_value > mb_strlen($json[$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
+                            }
+                            break;
+
+
                     }
                 }
             } else{
+
                 if (in_array("default", $keys)) {
                     if (!isset($json['data'][$vail_key])) {
                         $json['data'][$vail_key] = $vail_value[0]['default'];
@@ -118,40 +150,69 @@ class BeforeMiddleware
                             }
                             break;
                         case "integer":
-                            if (!is_int($json['data'][$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if (!is_int($json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "default":
                             break;
                         case "min":
-                            if ($value_value >= $json['data'][$vail_key]) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if ($value_value >= $json['data'][$vail_key]) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "max":
-                            if ($value_value <= $json['data'][$vail_key]) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if ($value_value <= $json['data'][$vail_key]) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "numeric":
-                            if (!is_numeric($json['data'][$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if (!is_numeric($json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "object":
-                            if (!is_array($json['data'][$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if (!is_array($json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "Regx":
-                            if (!preg_match($value_value, $json['data'][$vail_key])) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if (!preg_match($value_value, $json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                         case "in":
-                            if (!in_array($json['data'][$vail_key], $value_value)) {
-                                $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                            if(isset($json['data'][$vail_key])) {
+                                if (!in_array($json['data'][$vail_key], $value_value)) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
+                            }
+                            break;
+                        case "maxLength":
+                            if(isset($json['data'][$vail_key])) {
+                                if ($value_value < mb_strlen($json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
+                            }
+
+                            break;
+                        case "minLength":
+                            if(isset($json['data'][$vail_key])) {
+                                if ($value_value > mb_strlen($json['data'][$vail_key])) {
+                                    $this->jsonOut($vail_value[1], $err_code[$vail_value[1]]);
+                                }
                             }
                             break;
                     }

@@ -43,5 +43,13 @@ class PatientORM extends BaseORM
         return $patientList;
     }
 
+    static function getOneByCode($inviteCode) {
+        $info = Patient::select(Patient::$fields)
+            ->where(['code'=>$inviteCode])
+            ->first();
+
+        return $info;
+    }
+
 
 }

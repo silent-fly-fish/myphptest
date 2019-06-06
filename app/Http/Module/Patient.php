@@ -28,7 +28,8 @@ class Patient extends Model
         'login_time',
         'intergral',
         'cash',
-        'invite_code'
+        'invite_code',
+        'r_status'
     ];
 
 }

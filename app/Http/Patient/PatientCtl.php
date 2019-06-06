@@ -146,5 +146,33 @@ class PatientCtl
         jsonOut('success',$result);
     }
 
+    /**
+     * 输入用户邀请码
+     * @param $patientId
+     * @param $inviteCode
+     */
+    static function addInvitation($patientId,$inviteCode) {
+
+        //验证邀请码是否存在
+        $patientInfo = PatientORM::getOneByCode($inviteCode);
+        if(empty($patientInfo)) {
+            jsonOut('inviteCodeNotExist',false);
+        }
+
+        if($patientInfo['id'] == $patientId) {
+            jsonOut('inviteCodeNotSelf',false);
+        }
+
+
+        $data['patient_id'] = $patientId;
+        $data['invite_code'] = $inviteCode;
+        $result = PatientORM::update($data);
+        //todo 邀请人和被邀人完成邀请任务各获得积分 1.添加积分 2.几天积分记录
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
 
 }

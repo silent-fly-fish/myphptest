@@ -16,4 +16,6 @@ return [
     'phoneCodeError'=>['code'=>3002,'msg'=>'手机验证码错误'],
     'phoneNotRegister'=>['code'=>3003,'msg'=>'该手机号尚未注册'],
     'patientNotExist'=>['code'=>3004,'msg'=>'不存在该用户'],
+    'inviteCodeNotExist'=>['code'=>3005,'msg'=>'不存在该邀请码'],
+    'inviteCodeNotSelf' => ['code'=>3007,'msg'=>'邀请码不能是自己的'],
 ];
