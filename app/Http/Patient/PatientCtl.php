@@ -87,15 +87,16 @@ class PatientCtl
             jsonOut('phoneNotRegister',false);
         }
         //验证手机验证码是否正确
-        $redisCode = getRedisDataByKey(getRedisFix().'phoneCode');
+        $redisCode = getRedisDataByKey('phoneCode_'.$phone);
         if($redisCode != $code) {
             jsonOut('phoneCodeError',false);
         }
-        $data['patient_id'] = $isRegister['patient_id'];
+        $data['patient_id'] = $isRegister['id'];
         $data['login_time'] = time();
 
         $result = PatientORM::update($data);
         if($result) {
+            //TODO 登录成功生成token
             $result = true;
         } else {
             $result = false;
