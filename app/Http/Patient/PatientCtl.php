@@ -53,16 +53,21 @@ class PatientCtl
         //验证手机号是否注册
         $isRegister = PatientORM::isExistPhone($phone);
         if($isRegister) {
-            jsonOut('phoneIsRegister',$isRegister);
+            jsonOut('phoneIsRegister',false);
         }
         //验证手机验证码是否正确
-        $redisCode = getRedisDataByKey(getRedisFix().'phoneCode');
+        $redisCode = getRedisDataByKey('phoneCode_'.$phone);
         if($redisCode != $code) {
             jsonOut('phoneCodeError',false);
         }
         $data['phone'] = $phone;
-        $result = PatientORM::addOne($data);
-        if($result) {
+
+        $patientId = PatientORM::addOne($data);
+        if($patientId) {
+            //生成用户6位唯一邀请码
+            $data2['code'] = createCode($patientId);
+            $data2['patient_id'] = $patientId;
+            @PatientORM::update($data2);
             $result = true;
         }else {
             $result = false;

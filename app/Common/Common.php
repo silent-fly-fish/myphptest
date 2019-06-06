@@ -295,6 +295,66 @@ function getOffsetByPage($page, $count){
     return ($page-1)*$count;
 }
 
+/**
+ * 生成6位唯一邀请码
+ * @param $user_id
+ * @return string
+ */
+function createCode($user_id) {
+
+    static $source_string = '6GIVR3JEN47K5HSC9WUBLPXOMQAZDYF182T';
+
+    $num = $user_id;
+
+    $code = '';
+
+    while ( $num > 0) {
+
+        $mod = $num % 35;
+
+        $num = ($num - $mod) / 35;
+
+        $code = $source_string[$mod].$code;
+
+    }
+
+    if(empty($code[5]))
+
+        $code = str_pad($code,6,'0',STR_PAD_LEFT);
+
+    return $code;
+
+}
+
+/**
+ * 邀请码解密
+ * @param $code
+ * @return float|int
+ */
+function decode($code) {
+
+    static $source_string = '6GIVR3JEN47K5HSC9WUBLPXOMQAZDYF182T';
+
+    if (strrpos($code, '0') !== false)
+
+        $code = substr($code, strrpos($code, '0')+1);
+
+    $len = strlen($code);
+
+    $code = strrev($code);
+
+    $num = 0;
+
+    for ($i=0; $i < $len; $i++) {
+
+        $num += strpos($source_string, $code[$i]) * pow(35, $i);
+
+    }
+
+    return $num;
+
+}
+
 
 
 

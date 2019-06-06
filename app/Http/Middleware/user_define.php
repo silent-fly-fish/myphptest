@@ -152,7 +152,7 @@ return [
             'POST' => [
                 'params' => [
                     'phone' => [
-                        ['required' => ''],
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         101
                     ],
                     'code' => [
@@ -162,7 +162,7 @@ return [
 
                 ],
                 'err_code' => [
-                    101 => 'phone is required!',
+                    101 => 'phone is required and phoneNumber!',
                     102 => 'code is required!'
                 ],
             ]
