@@ -150,12 +150,22 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Doctor\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
         });
 
-        //发送登录验证码
-        $router->post('/send/logincode', function(\Illuminate\Http\Request $request){
-            $postData = $request->all();
-            $postData = $postData['data'];
-            return App\Http\Doctor\DoctorCtl::phoneLoginCode($postData['phone']);
+        $router->group(['prefix'=> 'send'], function() use ($router){
+            //发送登录验证码
+            $router->post('/logincode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Doctor\DoctorCtl::phoneLoginCode($postData['phone']);
+            });
+
+            //发送申请入驻验证码
+            $router->post('/applycode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Doctor\DoctorCtl::sendApplyCode($postData['phone']);
+            });
         });
+
 
         //申请入驻
         $router->post('/application', function(\Illuminate\Http\Request $request){

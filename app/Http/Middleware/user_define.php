@@ -352,6 +352,51 @@ return [
                 ],
             ]
         ],
+
+        'doctor/application' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ],
+                    'real_name' => [
+                        ['required' => ''],
+                        102
+                    ],
+                    'hospital_name' => [
+                        ['required' => ''],
+                        103
+                    ],
+                    'code' => [
+                        ['required' => ''],
+                        104
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone required and phoneNumber!',
+                    102 => 'real_name is required!',
+                    103 => 'hospital_name is required!',
+                    104 => 'code is required!',
+                ],
+            ]
+        ],
+
+        'doctor/send/applycode' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!'
+                ],
+            ]
+        ],
 	]
 ];
 

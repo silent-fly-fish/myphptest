@@ -40,7 +40,7 @@ class DoctorCtl
             jsonOut('doctorPhoneNotExist',false);
         }
         $redisCode = getRedisDataByKey(env('REDIS_CODE_DOCTOR').$phone);
-        if($redisCode == $code) {
+        if($redisCode == $code && empty($code)) {
             //更新登录时间和token
             $doctorData = [
                 'doctor_id' => $doctorInfo['id'],
@@ -66,8 +66,37 @@ class DoctorCtl
      * @param $data
      */
     static function apply($data) {
+        $phone = $data['phone'];
+        $code = (int)$data['code'];
+        //验证手机号是否注册
+        $doctorInfo = DoctorORM::getOneByName($phone);
+        if($doctorInfo) {
+            jsonOut('phoneIsRegister',false);
+        }
+        //验证验证码是否正确
+        $redisCode = getRedisDataByKey(env('REDIS_CODE_DOCTOR').$phone);
 
-       $result = DoctorApplyORM::addOne($data);
+        if($redisCode !== $code || empty($code)) {
+            jsonOut('phoneCodeError',false);
+        }
+
+
+        $result = DoctorApplyORM::addOne($data);
+
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
+    static function sendApplyCode($phone) {
+        $doctorInfo = DoctorORM::getOneByName($phone);
+        if($doctorInfo) {
+            jsonOut('phoneIsRegister',false);
+        }
+        $result = sendSms($phone,2);
+
+        jsonOut('success',$result);
     }
 
 }
