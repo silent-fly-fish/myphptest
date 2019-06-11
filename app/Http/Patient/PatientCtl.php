@@ -44,6 +44,14 @@ class PatientCtl
         jsonOut('success',$result);
     }
 
+    static function test($patientId) {
+        $code = createCode($patientId);
+
+        $patientIdDecode = decode($code);
+
+        echo 'code:'.$code,';patientId:'.$patientIdDecode;
+    }
+
     /**
      * 手机号注册
      * @param $phone

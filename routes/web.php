@@ -125,6 +125,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return \App\Http\Patient\PatientCtl::addInvitation($patientId,$inviteCode);
         });
 
+        //测试邀请码
+//        $router->get('/test/{patientId}',function ($patientId){
+//
+//            return \App\Http\Patient\PatientCtl::test($patientId);
+//        });
+
     });
 
 
