@@ -78,6 +78,23 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code']);
         });
 
+        //发送短信验证码
+        $router->group(['prefix'=> 'send'],function () use ($router){
+            //发送注册验证码
+            $router->post('/registercode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Patient\PatientCtl::phoneRegisterCode($postData['phone']);
+            });
+
+            //发送登录验证码
+            $router->post('/logincode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Patient\PatientCtl::phoneLoginCode($postData['phone']);
+            });
+        });
+
         //添加历史记录
         $router->post('/historys', function(\Illuminate\Http\Request $request){
             $postData = $request->all();

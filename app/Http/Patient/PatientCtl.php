@@ -56,7 +56,7 @@ class PatientCtl
             jsonOut('phoneIsRegister',false);
         }
         //验证手机验证码是否正确
-        $redisCode = getRedisDataByKey('phoneCode_'.$phone);
+        $redisCode = getRedisDataByKey(env('REDIS_CODE_PATIENT').$phone);
         if($redisCode != $code) {
             jsonOut('phoneCodeError',false);
         }
@@ -87,7 +87,7 @@ class PatientCtl
             jsonOut('phoneNotRegister',false);
         }
         //验证手机验证码是否正确
-        $redisCode = getRedisDataByKey('phoneCode_'.$phone);
+        $redisCode = getRedisDataByKey(env('REDIS_CODE_PATIENT').$phone);
         if($redisCode != $code) {
             jsonOut('phoneCodeError',false);
         }
@@ -96,8 +96,16 @@ class PatientCtl
 
         $result = PatientORM::update($data);
         if($result) {
+
             //TODO 登录成功生成token
-            $result = true;
+            $info = [
+                'id' => $isRegister['id'],
+                'token' => '',
+                'phone' => $isRegister['phone'],
+                'name' => $isRegister['name'],
+                'head_img' => $isRegister['head_img']
+            ];
+            $result = $info;
         } else {
             $result = false;
         }
@@ -178,6 +186,40 @@ class PatientCtl
             jsonOut('success',true);
         }
         jsonOut('success',false);
+    }
+
+    /**
+     * 发送注册短信验证码
+     * @param $phone
+     */
+    static function phoneRegisterCode($phone) {
+        $patientInfo  = PatientORM::isExistPhone($phone);
+        if($patientInfo) {
+            jsonOut('phoneIsRegister',false);
+        }
+        $result = sendSms($phone,1);
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+
+    }
+
+    /**
+     * 发送注册短信验证码
+     * @param $phone
+     */
+    static function phoneLoginCode($phone) {
+        $patientInfo  = PatientORM::isExistPhone($phone);
+        if(empty($patientInfo)) {
+            jsonOut('phoneNotRegister',false);
+        }
+        $result = sendSms($phone,1);
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+
     }
 
 
