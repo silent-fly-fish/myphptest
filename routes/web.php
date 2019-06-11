@@ -140,14 +140,22 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
         $router->post('/login', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
             $postData = $postData['data'];
-            return App\Http\Patient\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
+            return App\Http\Doctor\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
         });
 
         //发送登录验证码
         $router->post('/send/logincode', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
             $postData = $postData['data'];
-            return App\Http\Patient\DoctorCtl::phoneLoginCode($postData['phone']);
+            return App\Http\Doctor\DoctorCtl::phoneLoginCode($postData['phone']);
+        });
+
+        //申请入驻
+        $router->post('/application', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+
+            return App\Http\Doctor\DoctorCtl::apply($postData);
         });
     });
 
