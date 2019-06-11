@@ -252,6 +252,41 @@ return [
                 ],
             ]
         ],
+
+        'doctor/send/logincode' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!'
+                ],
+            ]
+        ],
+
+        'doctor/login' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ],
+                    'code' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!',
+                    102 => 'code is required!'
+                ],
+            ]
+        ],
 	]
 ];
 

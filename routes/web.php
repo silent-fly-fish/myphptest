@@ -136,7 +136,19 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
     //医生端api
     $router->group(['prefix'=> 'doctor'], function() use ($router){
+        //用户手机号登录
+        $router->post('/login', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
+        });
 
+        //发送登录验证码
+        $router->post('/send/logincode', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\DoctorCtl::phoneLoginCode($postData['phone']);
+        });
     });
 
     //运营后台api
