@@ -38,7 +38,8 @@ class Doctor extends Model
         'phone_price',
         'category_id_str',
         'created_at',
-        'is_test'
+        'is_test',
+        'r_status'
     ];
 
 }

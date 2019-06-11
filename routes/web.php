@@ -78,6 +78,23 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code']);
         });
 
+        //发送短信验证码
+        $router->group(['prefix'=> 'send'],function () use ($router){
+            //发送注册验证码
+            $router->post('/registercode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Patient\PatientCtl::phoneRegisterCode($postData['phone']);
+            });
+
+            //发送登录验证码
+            $router->post('/logincode', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return App\Http\Patient\PatientCtl::phoneLoginCode($postData['phone']);
+            });
+        });
+
         //添加历史记录
         $router->post('/historys', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
@@ -115,12 +132,30 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
             return App\Http\Patient\PatientCtl::addAccusation($postData);
         });
+        //测试邀请码
+//        $router->get('/test/{patientId}',function ($patientId){
+//
+//            return \App\Http\Patient\PatientCtl::test($patientId);
+//        });
+
     });
 
 
     //医生端api
     $router->group(['prefix'=> 'doctor'], function() use ($router){
+        //用户手机号登录
+        $router->post('/login', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
+        });
 
+        //发送登录验证码
+        $router->post('/send/logincode', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            return App\Http\Patient\DoctorCtl::phoneLoginCode($postData['phone']);
+        });
     });
 
     //运营后台api
@@ -213,6 +248,14 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $putData = $putData['data'];
 
                 return App\Http\Open\PatientCtl::updatePatientInfo($putData);
+            });
+
+            //减积分操作
+            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Open\PatientCtl::decrease($putData);
             });
         });
     });

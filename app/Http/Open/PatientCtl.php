@@ -45,4 +45,21 @@ class PatientCtl
         jsonOut('success',false);
     }
 
+    static function decrease($data) {
+        $params['patient_id'] = $data['patient_id'];
+        $patientInfo = PatientORM::getOneById($data['patient_id']);
+        if(!$patientInfo) {
+            jsonOut('patientNotExist',false);
+        }
+        if(isset($data['intergral'])) {
+            $params['intergral'] = $patientInfo['intergral'] - $data['intergral'];
+        }
+
+        $result = PatientORM::update($params);
+        if($result){
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
 }

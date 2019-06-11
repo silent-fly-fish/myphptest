@@ -355,6 +355,32 @@ function decode($code) {
 
 }
 
+/**
+ * 发送短信验证码
+ *  @param  [type] $phone 用户手机号
+ * @param  [type] $flag    用户识别1是患者 2是医生
+ * @return
+ */
+function sendSms($phone,$flag){
+    $url = 'http://api.func.futurefertile.com/sms/sendcode';
+    $code = rand(100000, 999999);
+    $data = [
+        'phone' => $phone,
+        'code' => $code
+    ];
+
+    $ret = POST($url,$data,true);
+    if($ret['status'] === 0){
+        if($flag == 1){
+            setRedisDataWithKey(env('REDIS_CODE_PATIENT').$phone,$code,300);
+        }else{
+            setRedisDataWithKey(env('REDIS_CODE_DOCTOR').$phone,$code,300);
+        }
+        return true;
+    }
+    return false;
+}
+
 
 
 

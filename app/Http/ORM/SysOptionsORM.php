@@ -8,7 +8,10 @@ class SysOptionsORM extends BaseORM
 {
     static function getAllByType($type) {
 
-        return SysOptions::select(SysOptions::$fields)->where(['type'=>$type,'r_status'=>1])->get();
+        return SysOptions::select(SysOptions::$fields)
+            ->where(['type'=>$type,'r_status'=>1])
+            ->orderByRaw('sort desc')
+            ->get();
     }
 
 }

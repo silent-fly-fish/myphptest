@@ -190,4 +190,8 @@ class DoctorORM extends BaseORM
 
         return $data;
     }
+
+    static function getOneByName($name) {
+        return Doctor::select(Doctor::$fields)->where(['name'=>$name])->first();
+    }
 }
