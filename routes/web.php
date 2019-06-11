@@ -108,6 +108,13 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return \App\Http\Patient\PatientCtl::addInvitation($patientId,$inviteCode);
         });
 
+        //用户举报
+        $router->post('/accusations', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+
+            return App\Http\Patient\PatientCtl::addAccusation($postData);
+        });
     });
 
 
@@ -119,6 +126,32 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
     //运营后台api
     $router->group(['prefix'=> 'admin'], function() use ($router){
 
+        //举报
+        $router->group(['prefix'=>'accusations'], function() use($router){
+            /*
+             * 举报操作
+             */
+            $router->put('',function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                return \App\Http\Admin\PatientAccusationCtl::updateByID($postData);
+            });
+
+            /*
+             * 获取举报列表
+             */
+            $router->get('',function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+
+                return \App\Http\Admin\PatientAccusationCtl::getAll($postData);
+            });
+
+            //举报详情
+            $router->get('/{id}',function($id){
+
+                return \App\Http\Admin\PatientAccusationCtl::getInfo($id);
+            });
+        });
     });
 
     //子系统调用api

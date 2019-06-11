@@ -12,6 +12,7 @@ return [
     'validationError' => ['code'=>500,'msg'=>'参数验证失败'],
     'InterfaceUrlError'=>['code'=>500,'msg'=>'接口地址未定义'],
     'InterfaceError'=>['code'=>500,'msg'=>'接口错误'],
+    'NoFoundData' => ['code'=>500,'msg'=>'数据不存在'],
     'phoneIsRegister'=>['code'=>3001,'msg'=>'该手机号已注册'],
     'phoneCodeError'=>['code'=>3002,'msg'=>'手机验证码错误'],
     'phoneNotRegister'=>['code'=>3003,'msg'=>'该手机号尚未注册'],

@@ -8,6 +8,7 @@ use App\Http\Module\PatientHistory;
 use App\Http\ORM\PatientHistoryORM;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientSuggestORM;
+use App\Http\ORM\PatientAccusationORM;
 
 class PatientCtl
 {
@@ -181,4 +182,18 @@ class PatientCtl
     }
 
 
+    /**
+     * 用户举报
+     * @param $data
+     */
+    static function addAccusation($data) {
+        $result = PatientAccusationORM::addOne($data);
+
+        if($result) {
+            $result = true;
+        }else {
+            $result = false;
+        }
+        jsonOut('success',$result);
+    }
 }
