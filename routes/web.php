@@ -204,6 +204,14 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Open\PatientCtl::updatePatientInfo($putData);
             });
+
+            //减积分操作
+            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Open\PatientCtl::decrease($putData);
+            });
         });
     });
 });
