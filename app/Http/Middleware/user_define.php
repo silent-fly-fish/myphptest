@@ -133,6 +133,24 @@ return [
             ]
         ],
 
+        'open/patientdoctor' => [
+            'GET' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '',],
+                        101
+                    ],
+                    'doctor_id' => [
+                        ['required' => '',],
+                        102
+                    ]
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required!',
+                    102 => 'doctor_id is required!'
+                ],
+            ]
+        ],
         'patient/patients' => [
             'PUT' => [
                 'params' => [
