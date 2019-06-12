@@ -4,9 +4,9 @@
 namespace App\Http\Doctor;
 
 
-use App\Http\Module\DoctorApply;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
+use App\Http\ORM\DoctorVisitORM;
 
 class DoctorCtl
 {
@@ -89,6 +89,10 @@ class DoctorCtl
         jsonOut('success',false);
     }
 
+    /**
+     * 发送申请入驻验证码
+     * @param $phone
+     */
     static function sendApplyCode($phone) {
         $doctorInfo = DoctorORM::getOneByName($phone);
         if($doctorInfo) {
@@ -97,6 +101,66 @@ class DoctorCtl
         $result = sendSms($phone,2);
 
         jsonOut('success',$result);
+    }
+
+    /**
+     * 获取医生详情
+     * @param $doctorId
+     */
+    static function getDoctorInfo($doctorId) {
+        $doctorInfo = DoctorORM::getInfoById($doctorId);
+
+        jsonOut('success', $doctorInfo);
+    }
+
+    /**
+     * 获取医生出诊信息
+     * @param $doctorId
+     */
+    static function getDoctorVisitList($doctorId) {
+
+        $doctorVisitList = DoctorVisitORM::getVisitsByDoctorId($doctorId);
+
+        foreach ($doctorVisitList as $k => $v) {
+            $doctorVisitList[$k]['visit_json'] = json_decode($v['visit_json']);
+        }
+
+        jsonOut('success', $doctorVisitList);
+    }
+
+    /**
+     * 修改医生信息
+     * @param $data
+     */
+    static function updateDoctor($data) {
+
+        $params['doctor_id'] = $data['doctor_id'];
+        if(isset($data['one_price'])) {
+            $params['one_price'] = $data['one_price'];
+        }
+        if(isset($data['more_price'])) {
+            $params['more_price'] = $data['more_price'];
+        }
+        if(isset($data['phone_price'])) {
+            $params['phone_price'] = $data['phone_price'];
+        }
+        $result = DoctorORM::update($params);
+
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
+    /**
+     * 获取医生基本信息
+     * @param $doctorId
+     */
+    static function getDoctorBase($doctorId) {
+
+        $doctorInfo = DoctorORM::getOneById($doctorId);
+
+        jsonOut('success',$doctorInfo);
     }
 
 }

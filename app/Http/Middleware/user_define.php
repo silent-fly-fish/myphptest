@@ -397,6 +397,59 @@ return [
                 ],
             ]
         ],
+
+        'doctor/visits' => [
+            'GET' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required!'
+                ],
+            ]
+        ],
+
+        'doctor/doctors' => [
+            'PUT' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!'
+                ],
+            ]
+        ],
+
+        'doctor/patients' => [
+            'GET' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'page' => [
+                        ['default' => 1],
+                        102
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        103
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required!'
+                ],
+            ]
+        ],
 	]
 ];
 

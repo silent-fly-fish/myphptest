@@ -174,6 +174,51 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
             return App\Http\Doctor\DoctorCtl::apply($postData);
         });
+
+        $router->group(['prefix'=> 'doctors'], function() use ($router){
+
+            //医生详情
+            $router->get('/{doctorId}', function($doctorId){
+
+
+                return App\Http\Doctor\DoctorCtl::getDoctorInfo($doctorId);
+            });
+
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Doctor\DoctorCtl::updateDoctor($putData);
+            });
+
+            $router->get('/base/{doctorId}', function($doctorId){
+
+
+                return App\Http\Doctor\DoctorCtl::getDoctorBase($doctorId);
+            });
+
+        });
+
+
+        //医生出诊列表
+        $router->get('/visits', function(\Illuminate\Http\Request $request){
+            $getData = $request->all();
+
+
+            return App\Http\Doctor\DoctorCtl::getDoctorVisitList($getData['doctor_id']);
+        });
+
+        //患者列表
+        $router->get('/patients', function(\Illuminate\Http\Request $request){
+            $getData = $request->all();
+            $doctorId = $getData['doctor_id'];
+            $tagId = isset($getData['tag_id'])? $getData['tag_id'] : 0;
+            $page = $getData['page'];
+            $size = $getData['size'];
+
+            return App\Http\Doctor\PatientCtl::getPatientList($doctorId,$page,$size,$tagId);
+        });
+
     });
 
     //运营后台api
