@@ -66,5 +66,4 @@ class DoctorCtl
         jsonOut('success',$result);
     }
 
-
 }

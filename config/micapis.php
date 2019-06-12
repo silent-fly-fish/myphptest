@@ -8,50 +8,17 @@
  */
 return [
 
-    'base'=>[
-        'pharmacy/users' => "",
-        'options/get/type' => '',
-        'cycle/all' => '',
-        'status/all' => '',
-        'hospset/api/hid' => '',
-        'ckset/api/hid' => '',
-        'pharmset/api/hid' => '',
-        'oprsetting/api/hid' => '',
-        'ckbaseset/api/hid' => '',
+    'article'=>[
+        'open/master'=>'',
+        'open/comment'=>'',
     ],
-    'baseuser'=>[
-        'doctors' => '',
-        'doctors/unionid'=>'',
-        'doctorwechatsession'=>'',
-        'doctorwechatsession/openid'=>'',
-        'doctorwechatsession/doctor'=>'',
-        'doctorapplys' => '',
-        'wechatusers' => '',
-        'wechatusers/punionid'=>'',
-        'wechatusers/openid'=>'',
-        'patients'=>'',
-        'patients/unionid'=>'',
-        'nanke/doctorinfo/doctorid'=>'',
-        'nanke/questions'=>'',
-        'nanke/questions/order_sn'=>'',
-        'doctorproducts'=>'',
-        'nanke/doctorpatients/patientid' => '',
-        'nanke/patienttags'=>'',
-        'nanke/doctorvisits' => '',
-        'nanke/doctorinfo' => '',
-        'nanke/doctortags' => '',
-        'nanke/doctorpatients' => '',
-        'nanke/ofquestions/s1'=>'',
-        'nanke/ofbind/s1'=>'',
-        'nanke/ofquestions/s2'=>'',
-        'nanke/questionrecords'=>'',
-        'nanke/patienttags/patientid'=>'',
-
-
+    'circle'=>[
+        'open/master'=>'',
+        'open/comment'=>'',
     ],
     'question'=>[
+        'open/evaluate' => '',
         'patient/masters' => '',
-
     ],
 
    

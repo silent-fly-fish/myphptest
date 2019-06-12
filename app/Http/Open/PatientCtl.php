@@ -5,6 +5,7 @@ namespace App\Http\Open;
 
 
 use App\Http\ORM\PatientORM;
+use App\Http\ORM\DoctorORM;
 
 class PatientCtl
 {
@@ -62,4 +63,23 @@ class PatientCtl
         jsonOut('success',false);
     }
 
+
+    /**
+     * 获取患者、医生对应的信息
+     * @param $getData
+     */
+    static function getPatientDoctorInfo($getData){
+        $patientId = isset($getData['patient_id'])?$getData['patient_id']:0;
+        $doctorId = isset($getData['doctor_id'])?$getData['doctor_id']:0;
+
+        $patientInfo = PatientORM::getOneById($patientId);
+        if(!$patientInfo) {
+            jsonOut('patientNotExist',false);
+        }
+        $doctorInfo = DoctorORM::getInfoById($doctorId);
+        if(!$doctorInfo) {
+            jsonOut('doctorNotExist',false);
+        }
+        jsonOut('success',['patients'=>$patientInfo,'doctors'=>$doctorInfo]);
+    }
 }
