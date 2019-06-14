@@ -219,6 +219,31 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Doctor\PatientCtl::getPatientList($doctorId,$page,$size,$tagId);
         });
 
+        $router->group(['prefix'=> 'tags'], function() use ($router){
+            //医生标签列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $doctorId = $getData['doctor_id'];
+
+                return App\Http\Doctor\TagsCtl::getTagsList($doctorId);
+            });
+
+            //医生标签列表
+            $router->POST('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $doctorId = $getData['doctor_id'];
+
+                return App\Http\Doctor\TagsCtl::getTagsList($doctorId);
+            });
+        });
+
+        //全部的总关注量
+        $router->get('/attention/{doctorId}', function($doctorId){
+
+            return App\Http\Doctor\TagsCtl::getAllTotal($doctorId);
+        });
+
+
     });
 
     //运营后台api

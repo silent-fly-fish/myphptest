@@ -4,12 +4,12 @@
 namespace App\Http\ORM;
 
 
-use App\Http\Module\PatientTags;
+use App\Http\Module\DoctorTags;
 
-class PatientTagsORM extends BaseORM
+class DoctorTagsORM extends BaseORM
 {
     static function addOne($data) {
-        $model = new PatientTags();
+        $model = new DoctorTags();
         $data = self::isIncolumns($model, $data); //过滤添加参数
 
         $model->fill($data);
@@ -19,10 +19,12 @@ class PatientTagsORM extends BaseORM
     }
 
     static function getAllByDoctorId($doctorId) {
-        $list = PatientTags::query()
-            ->select(PatientTags::$fields)
-            ->where(['doctor_id'=>$doctorId])
-            ->get();
+        $query = DoctorTags::query();
+        $list = $query
+            ->select(DoctorTags::$fields)
+            ->where(['doctor_id'=>$doctorId,'r_status'=> 1])
+            ->get()
+            ->toArray();
 
         return $list;
     }

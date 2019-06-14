@@ -468,6 +468,38 @@ return [
                 ],
             ]
         ],
+
+        'doctor/tags' => [
+            'GET' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required!'
+                ],
+            ],
+            'POST' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'tag_name' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    102 => 'tag_name is required!',
+                ],
+            ]
+        ],
 	]
 ];
 
