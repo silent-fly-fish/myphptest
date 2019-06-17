@@ -273,6 +273,15 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return App\Http\Doctor\TagsCtl::delPatientTags($doctorId,$patientIds,$tagId);
             });
 
+            //患者标签列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $doctorId = $getData['doctor_id'];
+                $patientId = $getData['patient_id'];
+
+                return App\Http\Doctor\TagsCtl::getPatientTags($doctorId,$patientId);
+            });
+
         });
 
         //全部的总关注量

@@ -163,4 +163,37 @@ class TagsCtl
 
     }
 
+    /**
+     * 获取患者的标签列表
+     * @param $doctorId
+     * @param $patientId
+     */
+    static function getPatientTags($doctorId,$patientId) {
+        //医生的标签列表
+        $doctorTagList = DoctorTagsORM::getAllByDoctorId($doctorId);
+        //用户在该医生被赋予的标签
+        $patientInfo = PatientTagsORM::getOneByDoctorIdAndPatientId($doctorId,$patientId);
+        $tagIdStr = isset($patientInfo['tag_id_str'])? $patientInfo['tag_id_str'] : '';
+        if(empty($tagIdStr)) {
+            foreach ($doctorTagList as $k => $v) {
+                $doctorTagList[$k]['is_own'] = 0;
+            }
+
+            jsonOut('success',$doctorTagList);
+        }
+        $tagArr = array_filter(explode(',',$tagIdStr));
+
+        foreach ($doctorTagList as $k => $v) {
+            $temp = 0;
+            foreach ($tagArr as $kk => $vv) {
+                if($vv == $v['id']) {
+                    $temp = 1;break;
+                }
+            }
+            $doctorTagList[$k]['is_own'] = $temp;
+        }
+
+        jsonOut('success',$doctorTagList);
+    }
+
 }
