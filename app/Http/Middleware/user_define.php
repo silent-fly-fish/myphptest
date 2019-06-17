@@ -151,6 +151,24 @@ return [
                 ],
             ]
         ],
+        'open/patientdoctors' => [
+            'GET' => [
+                'params' => [
+                    'patient_ids' => [
+                        ['required' => '',],
+                        101
+                    ],
+                    'doctor_ids' => [
+                        ['required' => '',],
+                        102
+                    ]
+                ],
+                'err_code' => [
+                    101 => 'patient_ids is required!',
+                    102 => 'doctor_ids is required!'
+                ],
+            ]
+        ],
         'patient/patients' => [
             'PUT' => [
                 'params' => [

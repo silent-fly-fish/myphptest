@@ -377,6 +377,13 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Open\PatientCtl::getPatientDoctorInfo($getData);
         });
 
+        //批量获取患者医生信息
+        $router->get('/patientdoctors', function(\Illuminate\Http\Request $request){
+            $getData = $request->all();
+
+            return App\Http\Open\PatientCtl::getPatientDoctorInfos($getData);
+        });
+
         $router->group(['prefix'=> 'patients'], function() use ($router){
             //患者列表
             $router->get('', function(\Illuminate\Http\Request $request){
