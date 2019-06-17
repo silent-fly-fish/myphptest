@@ -561,6 +561,23 @@ return [
                     101 => 'doctor_id is required and integer!',
                     103 => 'tag_id is required and integer!',
                 ],
+            ],
+            'GET' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'patient_id' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required!',
+                    102 => 'patient_id is required!',
+                ],
             ]
         ],
 	]
