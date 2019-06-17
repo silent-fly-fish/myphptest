@@ -288,6 +288,34 @@ return [
                 ],
             ]
         ],
+        'patient/send/logincode' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!'
+                ],
+            ]
+        ],
+        'patient/send/registercode' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!'
+                ],
+            ]
+        ],
 
         'doctor/send/logincode' => [
             'POST' => [
