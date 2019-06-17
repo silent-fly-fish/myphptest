@@ -11,6 +11,11 @@ class PatientORM extends BaseORM
         return Patient::find($patientId, Patient::$fields);
     }
 
+    static function getInByIds($patientIds) {
+
+        return Patient::select(Patient::$fields)->where(['r_status'=>1])->whereIn('id',$patientIds)->get();
+    }
+
     static function update($data) {
         $model = new Patient();
         $patientId = $data['patient_id'];

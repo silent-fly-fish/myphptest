@@ -82,4 +82,26 @@ class PatientCtl
         }
         jsonOut('success',['patients'=>$patientInfo,'doctors'=>$doctorInfo]);
     }
+
+    /**
+     * 批量获取患者、医生对应的信息
+     * @param $getData
+     */
+    static function getPatientDoctorInfos($getData){
+        $patientIds = isset($getData['patient_ids'])?$getData['patient_ids']:0;
+        $doctorIds = isset($getData['doctor_ids'])?$getData['doctor_ids']:0;
+
+        $patientIds = explode(',',$patientIds);
+        $doctorIds = explode(',',$doctorIds);
+
+        $patientInfos = PatientORM::getInByIds($patientIds);
+        if(!$patientInfos) {
+            jsonOut('patientNotExist',false);
+        }
+        $doctorInfos = DoctorORM::getInfoByIds($doctorIds);
+        if(!$doctorInfos) {
+            jsonOut('doctorNotExist',false);
+        }
+        jsonOut('success',['patients'=>$patientInfos,'doctors'=>$doctorInfos]);
+    }
 }

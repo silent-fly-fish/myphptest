@@ -194,4 +194,36 @@ class DoctorORM extends BaseORM
     static function getOneByName($name) {
         return Doctor::select(Doctor::$fields)->where(['name'=>$name])->first();
     }
+
+
+    static function getInfoByIds($ids) {
+        $model = new Doctor();
+        $doctorInfo = $model
+            ->select([
+                'user_doctor.id',
+                'user_doctor.real_name',
+                'user_doctor.hospital_id',
+                'user_doctor.branch_id',
+                'user_doctor.position_id',
+                'h.name as hospital_name',
+                'b.name as branch_name',
+                'p.name as position_name',
+                'h.level',
+                'h.logo',
+                'user_doctor.img',
+                'user_doctor.good_at',
+                'user_doctor.description',
+                'user_doctor.one_price',
+                'user_doctor.more_price',
+                'user_doctor.phone_price'
+            ])
+            ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
+            ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id')
+            ->where(['user_doctor.r_status'=>1])
+            ->whereIn('user_doctor.id',$ids)
+            ->get();
+
+        return $doctorInfo;
+    }
 }
