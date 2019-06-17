@@ -145,7 +145,7 @@ class PatientAccusationCtl
                 $info['type_name'] = '医生评价';
                 break;
         }
-        print_r($info);exit;
+        jsonOut('success',  $info);
     }
 
 }

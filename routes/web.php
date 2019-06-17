@@ -313,12 +313,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return \App\Http\Admin\PatientAccusationCtl::getInfo($id);
             });
 
-            //类目列表
-//            $router->get('/typelist',function(\Illuminate\Http\Request $request){
-//                $postData = $request->all();
-//
-//                return \App\Http\Admin\PatientAccusationCtl::getTypeAll($postData);
-//            });
+        });
+        //类目列表
+        $router->get('/typelist',function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+
+            return \App\Http\Admin\PatientAccusationCtl::getTypeAll($postData);
         });
     });
 
