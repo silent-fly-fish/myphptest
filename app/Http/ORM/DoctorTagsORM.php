@@ -29,4 +29,9 @@ class DoctorTagsORM extends BaseORM
         return $list;
     }
 
+    static function deleteByDoctorId($doctorId,$tagId) {
+
+        return DoctorTags::where(['doctor_id' => $doctorId,'id'=>$tagId])->update(['r_status'=>0]);
+    }
+
 }

@@ -228,13 +228,51 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return App\Http\Doctor\TagsCtl::getTagsList($doctorId);
             });
 
-            //医生标签列表
-            $router->POST('', function(\Illuminate\Http\Request $request){
-                $getData = $request->all();
-                $doctorId = $getData['doctor_id'];
+            //医生新增标签分组
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                $doctorId = $postData['doctor_id'];
+                $tagName = $postData['tag_name'];
 
-                return App\Http\Doctor\TagsCtl::getTagsList($doctorId);
+                return App\Http\Doctor\TagsCtl::addTag($doctorId,$tagName);
             });
+
+            //删除标签分组
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $doctorId = $putData['doctor_id'];
+                $tagId = $putData['tag_id'];
+
+                return App\Http\Doctor\TagsCtl::deleteTag($doctorId,$tagId);
+            });
+        });
+
+        $router->group(['prefix'=> 'patienttags'], function() use ($router){
+
+            //为患者打标签
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                $doctorId = $postData['doctor_id'];
+                $patientId = $postData['patient_id'];
+                $tagIds = $postData['tag_ids'];
+
+                return App\Http\Doctor\TagsCtl::assignTag($doctorId,$patientId,$tagIds);
+            });
+
+            //删除患者标签
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $doctorId = $putData['doctor_id'];
+                $patientIds = $putData['patient_ids'];
+                $tagId = $putData['tag_id'];
+
+                return App\Http\Doctor\TagsCtl::delPatientTags($doctorId,$patientIds,$tagId);
+            });
+
         });
 
         //全部的总关注量

@@ -498,6 +498,69 @@ return [
                     101 => 'doctor_id is required and integer!',
                     102 => 'tag_name is required!',
                 ],
+            ],
+            'PUT' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'tag_id' => [
+                        ['required' => '','integer' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    102 => 'tag_id is required and integer!',
+                ],
+            ]
+        ],
+
+        'doctor/patienttags' => [
+            'POST' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'patient_id' => [
+                        ['required' => '','integer' => ''],
+                        102
+                    ],
+                    'tag_ids' => [
+                        ['required' => ''],
+                        103
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    102 => 'patient_id is required and integer!',
+                    103 => 'tag_ids is required!',
+                ],
+            ],
+            'PUT' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'patient_ids' => [
+                        ['default' => []],
+                        102
+                    ],
+                    'tag_id' => [
+                        ['required' => '','integer' => ''],
+                        103
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    103 => 'tag_id is required and integer!',
+                ],
             ]
         ],
 	]
