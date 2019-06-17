@@ -24,9 +24,9 @@ class CorsMiddleware
     {
 
         header('Content-Type:application/json; charset=utf-8');
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT');
-        header('Access-Control-Allow-Headers: Origin,openid,token, X-Auth-Token, Content-Type, Accept');
+//        header('Access-Control-Allow-Origin: *');
+//        header('Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT');
+//        header('Access-Control-Allow-Headers: Origin,openid,token, X-Auth-Token, Content-Type, Accept');
 
         if ($request->isMethod('options'))
             return new Response('OK', 200);
