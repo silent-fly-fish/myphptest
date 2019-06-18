@@ -329,6 +329,37 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 //                return \App\Http\Admin\PatientAccusationCtl::getTypeAll($postData);
 //            });
         });
+
+        $router->group(['prefix'=>'doctors'],function () use ($router){
+            //医生详情
+            $router->get('/{doctorId}', function($doctorId){
+
+                return App\Http\Open\DoctorCtl::getDoctorInfo($doctorId);
+            });
+
+            //医生列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+
+                return App\Http\Admin\DoctorCtl::getDoctorList($getData);
+            });
+
+            //添加医生
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return App\Http\Admin\DoctorCtl::addDoctor($postData);
+            });
+
+            //修改医生信息
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Admin\DoctorCtl::updateDoctor($putData);
+            });
+        });
     });
 
     //子系统调用api

@@ -103,8 +103,8 @@ class DoctorORM extends BaseORM
         }
 
         if(isset($data['category_id'])) {
-            $query->whereRaw(FIND_IN_SET($data['category_id'], 'user_doctor.category_id_str'));
-            $queryTotal->whereRaw(FIND_IN_SET($data['category_id'], 'user_doctor.category_id_str'));
+            $query->whereRaw("find_in_set($data[category_id], user_doctor.category_id_str)");
+            $queryTotal->whereRaw("find_in_set($data[category_id], user_doctor.category_id_str)");
         }
         if(isset($data['search'])) {
             $query->where('user_doctor.real_name','like','%'.$data['search'].'%');
@@ -225,5 +225,106 @@ class DoctorORM extends BaseORM
             ->get();
 
         return $doctorInfo;
+    }
+
+    static function getAllList($data) {
+
+        $model = new Doctor();
+        $page = $data['page'];
+        $size = $data['size'];
+
+        $query =$model::query();
+        $queryTotal = $model::query();
+        $query->select([
+            'user_doctor.id',
+            'user_doctor.real_name',
+            'user_doctor.hospital_id',
+            'user_doctor.branch_id',
+            'user_doctor.position_id',
+            'h.name as hospital_name',
+            'b.name as branch_name',
+            'p.name as position_name',
+            'h.level',
+            'h.logo',
+            'user_doctor.img',
+            'user_doctor.good_at',
+            'user_doctor.description',
+            'user_doctor.one_price',
+            'user_doctor.more_price',
+            'user_doctor.phone_price',
+            'user_doctor.name'
+        ])
+            ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
+            ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
+        $queryTotal->select([
+            'user_doctor.id',
+            'user_doctor.real_name',
+            'user_doctor.hospital_id',
+            'user_doctor.branch_id',
+            'user_doctor.position_id',
+            'h.name as hospital_name',
+            'b.name as branch_name',
+            'p.name as position_name',
+            'h.level',
+            'h.logo',
+            'user_doctor.img',
+            'user_doctor.good_at',
+            'user_doctor.description',
+            'user_doctor.one_price',
+            'user_doctor.more_price',
+            'user_doctor.phone_price'
+        ])
+            ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
+            ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
+        if(!empty($data['hospital_id'])) {
+            $query->where('user_doctor.hospital_id','=',$data['hospital_id']);
+            $queryTotal->where('user_doctor.hospital_id','=', $data['hospital_id']);
+        }
+        //类目筛选
+        if(isset($data['category_id'])) {
+            $query->whereRaw("find_in_set($data[category_id], user_doctor.category_id_str)");
+            $queryTotal->whereRaw("find_in_set($data[category_id], user_doctor.category_id_str)");
+        }
+        //医生名称筛选
+        if(isset($data['real_name'])) {
+            $query->where('user_doctor.real_name','like','%'.$data['real_name'].'%');
+            $queryTotal->where('user_doctor.real_name','like','%'.$data['real_name'].'%');
+        }
+        //科室刷选
+        if(isset($data['branch_id'])) {
+            $query->where('user_doctor.branch_id','=',$data['branch_id']);
+            $queryTotal->where('user_doctor.branch_id','=',$data['branch_id']);
+        }
+        //手机号筛选
+        if(isset($data['name'])) {
+            $query->where('user_doctor.name','like','%'.$data['name'].'%');
+            $queryTotal->where('user_doctor.name','like','%'.$data['name'].'%');
+        }
+
+
+        $offset = getOffsetByPage($page, $size);
+        $query->offset($offset);
+        $query->limit($size);
+        //todo 暂定为逆序 可能是按热度查询
+        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+        $total = $queryTotal->count();
+        $datas = $query->get();
+
+
+
+        $ret['total'] = $total;
+        $ret['list'] = $datas;
+
+        return $ret;
+    }
+
+    static function getOneByPhone($phone) {
+
+        return Doctor::query()
+            ->select(Doctor::$fields)
+            ->where('name','=',$phone)
+            ->first();
     }
 }

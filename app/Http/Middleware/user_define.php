@@ -626,6 +626,125 @@ return [
                 ],
             ]
         ],
+
+        'admin/doctors' => [
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+            'POST' => [
+                'params' => [
+                    'real_name' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'name' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        102
+                    ],
+                    'password' => [
+                        ['required' => ''],
+                        103
+                    ],
+                    'telephone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        104
+                    ],
+                    'hospital_id' => [
+                        ['required' => '','integer' => ''],
+                        105
+                    ],
+                    'branch_id' => [
+                        ['required' => '','integer' => ''],
+                        106
+                    ],
+                    'position_id' => [
+                        ['required' => '','integer' => ''],
+                        107
+                    ],
+                    'category_ids' => [
+                        ['default' => []],
+                        108
+                    ],
+                    'img' => [
+                        ['required' => ''],
+                        109
+                    ],
+                    'good_at' => [
+                        ['required' => ''],
+                        110
+                    ],
+                    'description' => [
+                        ['required' => ''],
+                        111
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'real_name is required!',
+                    102 => 'name is required and phoneNumber!',
+                    103 => 'password is required!',
+                    104 => 'telephone is required and phoneNumber!',
+                    105 => 'hospital_id is required and integer!',
+                    106 => 'branch_id is required and integer!',
+                    107 => 'position_id is required and integer!',
+                    108 => 'category_ids is required!',
+                    109 => 'img is required!',
+                    110 => 'good_at is required!',
+                    111 => 'description is required!',
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'name' => [
+                        ['Regx'=>'/^1[3456789]\d{9}$/'],
+                        102
+                    ],
+                    'telephone' => [
+                        ['Regx'=>'/^1[3456789]\d{9}$/'],
+                        1043
+                    ],
+                    'hospital_id' => [
+                        ['integer' => ''],
+                        104
+                    ],
+                    'branch_id' => [
+                        ['integer' => ''],
+                        105
+                    ],
+                    'position_id' => [
+                        ['integer' => ''],
+                        106
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    102 => 'name is phoneNumber!',
+                    103 => 'telephone is phoneNumber!',
+                    104 => 'hospital_id is integer!',
+                    105 => 'branch_id is integer!',
+                    106 => 'position_id is  integer!'
+                ],
+            ],
+        ],
 	]
 ];
 
