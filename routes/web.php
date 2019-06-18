@@ -360,6 +360,23 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return App\Http\Admin\DoctorCtl::updateDoctor($putData);
             });
         });
+
+        $router->group(['prefix'=>'visits'],function () use ($router){
+            //医生出诊信息
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+                $doctorId = $getData['doctor_id'];
+                return App\Http\Admin\DoctorVisitsCtl::getDoctorVisitList($doctorId);
+            });
+
+            //添加或修改出诊信息
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return App\Http\Admin\DoctorVisitsCtl::updateOrAddByData($postData);
+            });
+        });
     });
 
     //子系统调用api
