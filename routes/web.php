@@ -138,6 +138,21 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 //            return \App\Http\Patient\PatientCtl::test($patientId);
 //        });
 
+        $router->post('/views',function (\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            $patientId = $postData['patient_id'];
+            $doctorId = $postData['doctor_id'];
+
+            return \App\Http\Patient\PatientCtl::addDoctorView($patientId,$doctorId);
+        });
+
+        //医生热度得分脚本
+        $router->get('/doctor/hotsjob',function (\Illuminate\Http\Request $request){
+
+            return \App\Http\Patient\DoctorCtl::doctorHot();
+        });
+
     });
 
 
