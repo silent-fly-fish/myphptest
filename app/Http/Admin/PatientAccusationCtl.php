@@ -85,7 +85,7 @@ class PatientAccusationCtl
             }elseif($type == 5){
                 $accusationArrJson =   GET('question.open/evaluate',['evaluate_ids'=>implode(',',$accusationIds)]);
             }
-
+            
             $accusationArrInfo = [];
             foreach ($ret['list'] as $k=>$v){
                 $accusationArrInfo = isset($accusationArrJson['data'][$v['accusation_id']])?$accusationArrJson['data'][$v['accusation_id']]:'';
