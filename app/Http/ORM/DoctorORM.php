@@ -75,6 +75,7 @@ class DoctorORM extends BaseORM
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_doctor_hots as dh','dh.doctor_id','=','user_doctor.id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
         $queryTotal->select([
             'user_doctor.id',
@@ -96,6 +97,7 @@ class DoctorORM extends BaseORM
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_doctor_hots as dh','dh.doctor_id','=','user_doctor.id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
         if(!empty($data['hospital_id'])) {
             $query->whereIn('user_doctor.hospital_id', $data['hospital_id']);
@@ -118,7 +120,8 @@ class DoctorORM extends BaseORM
         $query->offset($offset);
         $query->limit($size);
         //todo 暂定为逆序 可能是按热度查询
-        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+//        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+        $query->orderByRaw('dh.total_score desc,user_doctor.id asc');
         $total = $queryTotal->count();
         $datas = $query->get();
 
@@ -326,5 +329,13 @@ class DoctorORM extends BaseORM
             ->select(Doctor::$fields)
             ->where('name','=',$phone)
             ->first();
+    }
+
+    static function getAllNotPage() {
+        return Doctor::query()
+            ->select(Doctor::$fields)
+            ->whereRaw('uptime != 0')
+            ->get()
+            ->toArray();
     }
 }

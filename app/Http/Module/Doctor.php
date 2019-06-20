@@ -39,7 +39,10 @@ class Doctor extends Model
         'category_id_str',
         'created_at',
         'is_test',
-        'r_status'
+        'r_status',
+        'favorable_rate',
+        'referee',
+        'uptime'
     ];
 
 }

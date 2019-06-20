@@ -5,6 +5,8 @@ namespace App\Http\Patient;
 
 
 use App\Http\Module\PatientHistory;
+use App\Http\ORM\DoctorViewORM;
+use App\Http\ORM\DoctorVisitORM;
 use App\Http\ORM\PatientHistoryORM;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientSuggestORM;
@@ -245,5 +247,29 @@ class PatientCtl
             $result = false;
         }
         jsonOut('success',$result);
+    }
+
+    /**
+     * 增加医生浏览量
+     * @param $patientId
+     * @param $doctorId
+     */
+    static function addDoctorView($patientId,$doctorId) {
+
+        $info = DoctorViewORM::getOne($patientId,$doctorId);
+        $data['patient_id'] = $patientId;
+        $data['doctor_id'] = $doctorId;
+        if(empty($info)) {
+            $result = DoctorViewORM::addOne($data);
+        }else {
+            $data['id'] = $info['id'];
+            $data['view_number'] = $info['view_number'] + 1;
+            $result = DoctorViewORM::update($data);
+        }
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+
     }
 }

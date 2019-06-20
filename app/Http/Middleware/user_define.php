@@ -761,6 +761,27 @@ return [
             ],
 
         ],
+
+        'patient/views' => [
+            'POST' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'patient_id' => [
+                        ['required' => '','integer' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                    102 => 'patient_id is required and integer!'
+                ],
+            ],
+
+        ],
 	]
 ];
 
