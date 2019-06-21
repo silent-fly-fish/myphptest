@@ -392,6 +392,24 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return App\Http\Admin\DoctorVisitsCtl::updateOrAddByData($postData);
             });
         });
+
+        $router->group(['prefix'=>'hospitals'],function () use ($router) {
+
+            //添加医院
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\HospitalCtl::addHospital($postData);
+            });
+            //修改医院信息
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return \App\Http\Admin\HospitalCtl::updateHospital($putData);
+            });
+        });
     });
 
     //子系统调用api

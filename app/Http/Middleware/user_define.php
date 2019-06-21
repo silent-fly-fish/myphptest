@@ -782,6 +782,80 @@ return [
             ],
 
         ],
+
+        'admin/hospitals' => [
+            'POST' => [
+                'params' => [
+                    'name' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'level' => [
+                        ['required' => ''],
+                        102
+                    ],
+                    'province_code' => [
+                        ['required' => ''],
+                        103
+                    ],
+                    'city_code' => [
+                        ['required' => ''],
+                        104
+                    ],
+                    'area_code' => [
+                        ['required' => ''],
+                        105
+                    ],
+                    'logo' => [
+                        ['required' => ''],
+                        106
+                    ],
+                    'address' => [
+                        ['required' => ''],
+                        107
+                    ],
+                    'description' => [
+                        ['required' => ''],
+                        108
+                    ],
+                    'r_status' => [
+                        ['required' => '','integer' => ''],
+                        109
+                    ],
+                    'public_hospital' => [
+                        ['required' => '','integer' => ''],
+                        110
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'name is required!',
+                    102 => 'level is required!',
+                    103 => 'province_code is required!',
+                    104 => 'city_code is required!',
+                    105 => 'area_code is required!',
+                    106 => 'logo is required!',
+                    107 => 'address is required!',
+                    108 => 'description is required!',
+                    109 => 'r_status is required and integer!',
+                    110 => 'public_hospital is required and integer!'
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'id is required and integer!'
+                ],
+            ],
+
+        ],
 	]
 ];
 

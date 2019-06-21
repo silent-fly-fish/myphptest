@@ -23,4 +23,22 @@ class HospitalORM extends BaseORM
         return Hospital::select(Hospital::$fields)->where(['county_code'=>$countryId,'r_status'=>1])->get()->toArray();
     }
 
+    static function addOne($data) {
+        $model = new Hospital();
+        $data = self::isIncolumns($model, $data); //过滤添加参数
+
+        $model->fill($data);
+        $model->save();
+
+        return $model->getKey();
+    }
+
+    static function update($data) {
+        $model = new Hospital();
+        $id = $data['id'];
+        $data = self::isIncolumns($model, $data);
+
+        return $model::whereRaw('id='.$id)->update($data);
+    }
+
 }
