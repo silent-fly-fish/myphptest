@@ -33,14 +33,14 @@ class DoctorCtl
 
         //地区筛选
         $hospitalIds = [];
-        if(isset($data['province_id'])) {
-            $hospitalIds = HospitalORM::getAllByProvinceId($data['province_id']);
-        } else if(isset($data['city_id'])) {
-            $hospitalIds = HospitalORM::getAllByCityId($data['city_id']);
-        } else if(isset($data['country_id'])) {
-            $hospitalIds = HospitalORM::getAllByCountryId($data['country_id']);
+        if(isset($data['province_code'])) {
+            $hospitalIds = HospitalORM::getAllByProvinceId($data['province_code']);
+        } else if(isset($data['city_code'])) {
+            $hospitalIds = HospitalORM::getAllByCityId($data['city_code']);
+        } else if(isset($data['country_code'])) {
+            $hospitalIds = HospitalORM::getAllByCountryId($data['country_code']);
         }
-        $data['hospital_id'] = count($hospitalIds)? array_column($hospitalIds,'id') : [];
+        $data['area'] = count($hospitalIds)? array_column($hospitalIds,'id') : [];
 
 
         $doctorList = DoctorORM::getAll($data);

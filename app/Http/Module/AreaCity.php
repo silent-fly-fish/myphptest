@@ -17,10 +17,9 @@ class AreaCity extends Model
     ];
 
     static $fields = [
-        'id',
         'code',
         'name',
-        'p_code'
+        'province_code'
     ];
 
 }

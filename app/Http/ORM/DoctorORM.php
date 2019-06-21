@@ -99,9 +99,9 @@ class DoctorORM extends BaseORM
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
             ->leftJoin('user_doctor_hots as dh','dh.doctor_id','=','user_doctor.id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
-        if(!empty($data['hospital_id'])) {
-            $query->whereIn('user_doctor.hospital_id', $data['hospital_id']);
-            $queryTotal->whereIn('user_doctor.hospital_id', $data['hospital_id']);
+        if(!empty($data['area'])) {
+            $query->whereIn('user_doctor.hospital_id', $data['area']);
+            $queryTotal->whereIn('user_doctor.hospital_id', $data['area']);
         }
 
         if(isset($data['category_id'])) {
@@ -111,6 +111,11 @@ class DoctorORM extends BaseORM
         if(isset($data['search'])) {
             $query->where('user_doctor.real_name','like','%'.$data['search'].'%');
             $queryTotal->where('user_doctor.real_name','like','%'.$data['search'].'%');
+        }
+
+        if(isset($data['hospital_id'])) {
+            $query->where(['hospital_id'=>$data['hospital_id']]);
+            $queryTotal->where(['hospital_id'=>$data['hospital_id']]);
         }
 
 

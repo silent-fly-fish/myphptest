@@ -17,10 +17,8 @@ class AreaProvince extends Model
     ];
 
     static $fields = [
-        'id',
         'code',
         'name',
-        'p_code'
     ];
 
 }
