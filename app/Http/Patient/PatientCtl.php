@@ -48,7 +48,7 @@ class PatientCtl
     }
 
     static function test($patientId) {
-        $code = createCode($patientId);
+        $code = createCode($patientId,2);
 
         $patientIdDecode = decode($code);
 
@@ -75,8 +75,8 @@ class PatientCtl
 
         $patientId = PatientORM::addOne($data);
         if($patientId) {
-            //生成用户6位唯一邀请码
-            $data2['code'] = createCode($patientId);
+            //生成用户7位唯一邀请码
+            $data2['code'] = createCode($patientId,2);
             $data2['patient_id'] = $patientId;
             @PatientORM::update($data2);
             $result = true;

@@ -133,10 +133,10 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::addAccusation($postData);
         });
         //测试邀请码
-//        $router->get('/test/{patientId}',function ($patientId){
-//
-//            return \App\Http\Patient\PatientCtl::test($patientId);
-//        });
+        $router->get('/test/{patientId}',function ($patientId){
+
+            return \App\Http\Patient\PatientCtl::test($patientId);
+        });
 
         $router->post('/views',function (\Illuminate\Http\Request $request){
             $postData = $request->all();

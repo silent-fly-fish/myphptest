@@ -296,11 +296,12 @@ function getOffsetByPage($page, $count){
 }
 
 /**
- * 生成6位唯一邀请码
+ * 生成7位唯一邀请码
  * @param $user_id
+ * @param $type 1代表医生 2代表患者
  * @return string
  */
-function createCode($user_id) {
+function createCode($user_id,$type) {
 
     static $source_string = '6GIVR3JEN47K5HSC9WUBLPXOMQAZDYF182T';
 
@@ -322,6 +323,7 @@ function createCode($user_id) {
 
         $code = str_pad($code,6,'0',STR_PAD_LEFT);
 
+    $code = $type.$code;
     return $code;
 
 }
@@ -332,6 +334,10 @@ function createCode($user_id) {
  * @return float|int
  */
 function decode($code) {
+
+    $type = substr($code,0,1);
+
+    $code = substr($code,1);
 
     static $source_string = '6GIVR3JEN47K5HSC9WUBLPXOMQAZDYF182T';
 
@@ -350,7 +356,11 @@ function decode($code) {
         $num += strpos($source_string, $code[$i]) * pow(35, $i);
 
     }
-
+    if($type == 1) {
+        $num = 'd'.$num;
+    }else {
+        $num = 'p'.$num;
+    }
     return $num;
 
 }
