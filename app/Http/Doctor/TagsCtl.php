@@ -36,7 +36,9 @@ class TagsCtl
         foreach($patientTags as $k => $v) {
             $tagIdArr = array_filter(explode(',',$v['tag_id_str']));
             foreach($tagIdArr as $kk=>$vv) {
-                $tagArr2[$vv]++;
+                if(isset($tagArr2[$vv])) {
+                    $tagArr2[$vv]++;
+                }
             }
         }
 

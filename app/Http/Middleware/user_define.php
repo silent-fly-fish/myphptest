@@ -576,7 +576,7 @@ return [
                         102
                     ],
                     'tag_ids' => [
-                        ['required' => ''],
+                        ['default' => ''],
                         103
                     ]
 
@@ -584,7 +584,6 @@ return [
                 'err_code' => [
                     101 => 'doctor_id is required and integer!',
                     102 => 'patient_id is required and integer!',
-                    103 => 'tag_ids is required!',
                 ],
             ],
             'PUT' => [
