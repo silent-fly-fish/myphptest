@@ -409,6 +409,20 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return \App\Http\Admin\HospitalCtl::updateHospital($putData);
             });
+
+            //获取医院列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+                return \App\Http\Admin\HospitalCtl::getHospitalList($getData);
+            });
+
+            //获取医院详情
+            $router->get('/{hospitalId}',function($hospitalId) {
+
+                return \App\Http\Admin\HospitalCtl::getHospitalInfo($hospitalId);
+            });
+
         });
     });
 
