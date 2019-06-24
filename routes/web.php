@@ -424,6 +424,42 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
         });
+
+        $router->group(['prefix'=>'banners'],function () use ($router) {
+
+            //添加首页banner或运营banner
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\OptionsCtl::addOption($postData);
+            });
+            //删除首页banner和运营banner
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return \App\Http\Admin\OptionsCtl::delOption($putData);
+            });
+
+            //获取首页banner和运营banner列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+                $type = $getData['type'];
+
+                return \App\Http\Admin\OptionsCtl::getOptionList($type);
+            });
+
+            //置顶操作
+            $router->put('/top',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $type = $putData['type'];
+                $id = $putData['id'];
+                return \App\Http\Admin\OptionsCtl::top($type,$id);
+            });
+
+        });
     });
 
     //子系统调用api
