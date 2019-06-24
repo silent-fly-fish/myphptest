@@ -41,7 +41,7 @@ class Doctor extends Model
         'is_test',
         'r_status',
         'favorable_rate',
-        'referee',
+        'referee_id',
         'uptime'
     ];
 
