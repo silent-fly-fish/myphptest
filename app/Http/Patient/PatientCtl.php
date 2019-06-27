@@ -229,6 +229,9 @@ class PatientCtl
             if(!$res) {
                 jsonOut('error',false);
             }
+            $info['patient_id'] = $patientId;
+            $info['task_id'] = getConfig('INPUT_INVITE_ID');
+            event(new ExamineUserEvent($info)); //加积分
         }else {
             jsonOut('inviteCodeNotExist',false);
         }
@@ -236,7 +239,6 @@ class PatientCtl
         $data['patient_id'] = $patientId;
         $data['invite_code'] = $inviteCode;
         $result = PatientORM::update($data);
-        //todo 邀请人和被邀人完成邀请任务各获得积分 1.添加积分 2.几天积分记录
         if($result) {
             jsonOut('success',true);
         }
