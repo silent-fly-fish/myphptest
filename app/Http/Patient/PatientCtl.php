@@ -4,6 +4,7 @@
 namespace App\Http\Patient;
 
 
+use App\Events\ExamineUserEvent;
 use App\Http\Module\PatientHistory;
 use App\Http\ORM\DoctorViewORM;
 use App\Http\ORM\DoctorVisitORM;

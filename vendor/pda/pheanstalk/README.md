@@ -14,7 +14,7 @@ in 2013, and a 3.0 release in 2014.
 Pheanstalk 3.0 introduces PHP namespaces, PSR-1 and PSR-2 coding standards,
 and PSR-4 autoloader standard.
 
-beanstalkd up to the latest version 1.4 is supported.  All commands and
+beanstalkd up to the latest version 1.10 is supported.  All commands and
 responses specified in the [protocol documentation][3] for beanstalkd 1.3 are
 implemented.
 
@@ -83,9 +83,6 @@ a pull request to rectify this.
 # ensure you have Composer set up
 $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
-
-# ensure you have PHPUnit
-$ composer install --dev
 
 $ ./vendor/bin/phpunit
 PHPUnit 4.0.19 by Sebastian Bergmann.
