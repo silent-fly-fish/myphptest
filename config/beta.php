@@ -38,7 +38,7 @@ return [
 //    'QUESTION_SYS_IP' =>'127.0.0.1:32092/index.php',
     'ARTICLE_SYS_IP'  =>'47.97.5.140:32093/index.php',
     'USER_SYS_IP'     =>'47.97.5.140:32094/index.php',
-    'INTERGRAL_SYS_IP'=>'47.97.5.140:32095/index.php',
-
+//    'INTERGRAL_SYS_IP'=>'47.97.5.140:32095/index.php',
+    'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
 
 ];

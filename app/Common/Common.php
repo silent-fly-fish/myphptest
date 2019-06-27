@@ -335,6 +335,9 @@ function createCode($user_id,$type) {
  */
 function decode($code) {
 
+    if(strlen($code) != 7) {
+        return false;
+    }
     $type = substr($code,0,1);
 
     $code = substr($code,1);
@@ -356,10 +359,13 @@ function decode($code) {
         $num += strpos($source_string, $code[$i]) * pow(35, $i);
 
     }
+
     if($type == 1) {
         $num = 'd'.$num;
-    }else {
+    }elseif($type == 2) {
         $num = 'p'.$num;
+    }else {
+        return false;
     }
     return $num;
 

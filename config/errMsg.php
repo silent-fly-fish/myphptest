@@ -22,4 +22,5 @@ return [
     'doctorPhoneNotExist' => ['code'=>3008,'msg'=>'医生账号不存在'],
     'doctorPhoneStop' => ['code'=>3009,'msg'=>'医生账号已禁用'],
     'doctorNotExist'=>['code'=>3010,'msg'=>'不存在该用户'],
+    'inviteCodeIsExist' => ['code'=>3011,'msg'=>'已填写邀请码'],
 ];
