@@ -20,6 +20,9 @@ return [
         'open/evaluate' => '',
         'patient/masters' => '',
     ],
+    'intergral'=>[
+        'open/invitation' => '',
+    ],
 
    
 

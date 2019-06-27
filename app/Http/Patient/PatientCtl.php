@@ -4,9 +4,11 @@
 namespace App\Http\Patient;
 
 
+use App\Events\ExamineUserEvent;
 use App\Http\Module\PatientHistory;
 use App\Http\ORM\DoctorViewORM;
 use App\Http\ORM\DoctorVisitORM;
+use App\Http\ORM\PatientAttentionORM;
 use App\Http\ORM\PatientHistoryORM;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientSuggestORM;
@@ -178,21 +180,65 @@ class PatientCtl
      */
     static function addInvitation($patientId,$inviteCode) {
 
-        //验证邀请码是否存在
-        $patientInfo = PatientORM::getOneByCode($inviteCode);
-        if(empty($patientInfo)) {
+        $decode = decode($inviteCode);
+
+        if($decode === false) {
             jsonOut('inviteCodeNotExist',false);
         }
-
-        if($patientInfo['id'] == $patientId) {
-            jsonOut('inviteCodeNotSelf',false);
+        $first = substr($decode,0,1);
+        $inviteId = substr($decode,1); //邀请人id
+        $selfInfo = PatientORM::getOneById($patientId);
+        //已填写邀请码
+        if(!empty($selfInfo['invite_code'])) {
+            jsonOut('inviteCodeIsExist',false);
         }
 
+        if($first === 'd') {
+            //建立邀请关系和关注关系
+            $invitationData = [
+                'p_patient_id' => (int)$inviteId,
+                'patient_id' => $patientId,
+                'type' => 1
+            ];
+            $res = POST('intergral.open/invitation',$invitationData)['data'];
+            if(!$res) {
+                jsonOut('error',false);
+            }
+            $isAttention = PatientAttentionORM::getOneByPatientIdAndDoctorId($patientId,$inviteId);
+            if(!$isAttention) {
+                $attentionData = [
+                    'patient_id' => $patientId,
+                    'doctor_id' => $inviteId
+                ];
+                @PatientAttentionORM::addOne($attentionData);
+            }
+
+        }elseif($first === 'p') {
+            //邀请码不能是自己的
+            if($inviteId == $patientId) {
+                jsonOut('inviteCodeNotSelf',false);
+            }
+            $invitationData = [
+                'p_patient_id' => (int)$inviteId,
+                'patient_id' => $patientId,
+                'type' => 0
+            ];
+
+            //建立邀请关系
+            $res = POST('intergral.open/invitation',$invitationData)['data'];
+            if(!$res) {
+                jsonOut('error',false);
+            }
+            $info['patient_id'] = $patientId;
+            $info['task_id'] = getConfig('INPUT_INVITE_ID');
+            event(new ExamineUserEvent($info)); //加积分
+        }else {
+            jsonOut('inviteCodeNotExist',false);
+        }
 
         $data['patient_id'] = $patientId;
         $data['invite_code'] = $inviteCode;
         $result = PatientORM::update($data);
-        //todo 邀请人和被邀人完成邀请任务各获得积分 1.添加积分 2.几天积分记录
         if($result) {
             jsonOut('success',true);
         }

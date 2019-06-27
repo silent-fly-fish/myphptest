@@ -581,7 +581,7 @@ return [
                         102
                     ],
                     'tag_ids' => [
-                        ['required' => ''],
+                        ['default' => ''],
                         103
                     ]
 
@@ -589,7 +589,6 @@ return [
                 'err_code' => [
                     101 => 'doctor_id is required and integer!',
                     102 => 'patient_id is required and integer!',
-                    103 => 'tag_ids is required!',
                 ],
             ],
             'PUT' => [
@@ -857,6 +856,97 @@ return [
                 ],
                 'err_code' => [
                     101 => 'id is required and integer!'
+                ],
+            ],
+
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+
+        ],
+
+        'admin/banners' => [
+            'POST' => [
+                'params' => [
+                    'type' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'name' => [
+                        ['required' => ''],
+                        102
+                    ],
+                    'value' => [
+                        ['required' => ''],
+                        103
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'type is required!',
+                    102 => 'name is required!',
+                    103 => 'value is required!'
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'id is required and integer!'
+                ],
+            ],
+
+            'GET' => [
+                'params' => [
+                    'type' => [
+                        ['required' => ''],
+                        101
+                    ],
+
+
+                ],
+                'err_code' => [
+                    101 => 'type is required!'
+                ],
+            ],
+
+        ],
+
+        'admin/banners/top' => [
+            'PUT' => [
+                'params' => [
+                    'id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'type' => [
+                        ['required' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'id is required and integer!',
+                    102 => 'type is required!'
                 ],
             ],
 

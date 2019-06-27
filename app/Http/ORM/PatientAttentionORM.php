@@ -73,4 +73,13 @@ class PatientAttentionORM extends BaseORM
         return $total;
     }
 
+    static function getOneByPatientIdAndDoctorId($patientId,$doctorId) {
+        $info = PatientAttention::query()
+            ->select(PatientAttention::$fields)
+            ->where(['patient_id'=>$patientId,'doctor_id'=>$doctorId])
+            ->first();
+
+        return $info;
+    }
+
 }

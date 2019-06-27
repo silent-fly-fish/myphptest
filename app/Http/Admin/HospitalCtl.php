@@ -34,4 +34,25 @@ class HospitalCtl
         jsonOut('success',false);
     }
 
+    /**
+     * 获取医院列表
+     * @param $getData
+     */
+    static function getHospitalList($getData) {
+
+        $hospitalList = HospitalORM::getAllByList($getData);
+
+        jsonOut('success',$hospitalList);
+    }
+
+    /**
+     * 获取医院详情
+     * @param $hospitalId
+     */
+    static function getHospitalInfo($hospitalId) {
+        $hospitalInfo = HospitalORM::getOneById($hospitalId);
+
+        jsonOut('success',$hospitalInfo);
+    }
+
 }

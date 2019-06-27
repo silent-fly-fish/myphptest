@@ -1,5 +1,7 @@
 <?php
 
+use Bschmitt\Amqp\LumenServiceProvider;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../app/Common/Common.php';
 
@@ -88,11 +90,11 @@ $app->routeMiddleware([
 
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 
-$app->register(\Overtrue\LaravelWeChat\ServiceProvider::class);
+$app->register(Bschmitt\Amqp\LumenServiceProvider::class);
 
 
 
@@ -117,4 +119,5 @@ $app->router->group([
 $app->configure('micapis');
 $app->configure('beta');
 $app->configure('errMsg');
+$app->configure('amqp');
 return $app;

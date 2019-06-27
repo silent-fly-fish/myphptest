@@ -409,6 +409,56 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return \App\Http\Admin\HospitalCtl::updateHospital($putData);
             });
+
+            //获取医院列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+                return \App\Http\Admin\HospitalCtl::getHospitalList($getData);
+            });
+
+            //获取医院详情
+            $router->get('/{hospitalId}',function($hospitalId) {
+
+                return \App\Http\Admin\HospitalCtl::getHospitalInfo($hospitalId);
+            });
+
+        });
+
+        $router->group(['prefix'=>'banners'],function () use ($router) {
+
+            //添加首页banner或运营banner
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\OptionsCtl::addOption($postData);
+            });
+            //删除首页banner和运营banner
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return \App\Http\Admin\OptionsCtl::delOption($putData);
+            });
+
+            //获取首页banner和运营banner列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+                $type = $getData['type'];
+
+                return \App\Http\Admin\OptionsCtl::getOptionList($type);
+            });
+
+            //置顶操作
+            $router->put('/top',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $type = $putData['type'];
+                $id = $putData['id'];
+                return \App\Http\Admin\OptionsCtl::top($type,$id);
+            });
+
         });
     });
 

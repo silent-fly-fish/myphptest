@@ -4,6 +4,7 @@
 namespace App\Http\Admin;
 
 
+use App\Http\Module\Doctor;
 use App\Http\ORM\DoctorORM;
 use App\Http\ORM\HospitalORM;
 
@@ -57,6 +58,9 @@ class DoctorCtl
         $data['salt'] = $salt;
         $result = DoctorORM::addOne($data);
         if($result) {
+            $data['invite_code'] = createCode($result,1);
+            $data['doctor_id'] = $result;
+            @DoctorORM::update($data);
             jsonOut('success',true);
         }
         jsonOut('success',false);

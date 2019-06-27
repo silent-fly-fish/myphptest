@@ -41,8 +41,9 @@ class Doctor extends Model
         'is_test',
         'r_status',
         'favorable_rate',
-        'referee',
-        'uptime'
+        'referee_id',
+        'uptime',
+        'invite_code'
     ];
 
 }
