@@ -391,12 +391,17 @@ return [
                     'reason' => [
                         ['required' => ''],
                         102
-                    ]
+                    ],
+                    'r_status' => [
+                        ['required' => '', 'integer'=> ''],
+                        103
+                    ],
 
                 ],
                 'err_code' => [
                     101 => 'id is required|integer!',
-                    102 => 'reason is required!'
+                    102 => 'reason is required!',
+                    103 => 'r_status is required|integer!',
                 ],
             ],
             'GET' => [

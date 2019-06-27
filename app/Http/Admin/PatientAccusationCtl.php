@@ -20,12 +20,13 @@ class PatientAccusationCtl
     static function updateByID($data){
         $id = isset($data['id'])?$data['id']:0;
         $reason = isset($data['reason'])?$data['reason']:'';
+        $r_status = isset($data['r_status'])?$data['r_status']:0;
 
         //获取评论原始信息
         $info = PatientAccusationORM::getOneInfoById($id);
         if(!$info) jsonOut('NoFoundData');
 
-        $ret=  PatientAccusationORM::updateById(['id'=>$id,'r_status'=>2,'reason'=>$reason]);
+        $ret=  PatientAccusationORM::updateById(['id'=>$id,'r_status'=>$r_status,'reason'=>$reason]);
         if($ret){
             jsonOut('success',  $ret);
         }
