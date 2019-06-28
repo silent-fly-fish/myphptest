@@ -22,6 +22,7 @@ return [
     ],
     'intergral'=>[
         'open/invitation' => '',
+        'open/intergral' => '',
     ],
 
    

@@ -22,6 +22,8 @@ class PatientCtl
      */
     static function getPatientInfo($patientId) {
         $patientInfo = PatientORM::getOneById($patientId);
+        $intergralInfo = GET('intergral.open/intergral',$patientId)['data'];
+        $patientInfo['intergral'] = isset($intergralInfo['intergral_number'])? $intergralInfo['intergral_number'] : 0;
 
         jsonOut('success',$patientInfo);
     }
