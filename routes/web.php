@@ -460,6 +460,37 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
         });
+
+        $router->group(['prefix'=>'doctorteam'],function () use ($router) {
+
+            //医生团队分配
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+                $doctorId = $postData['doctor_id'];
+                $doctorTeamIds = $postData['doctor_team_ids'];
+
+                return \App\Http\Admin\DoctorTeamCtl::assignDoctorTeam($doctorId,$doctorTeamIds);
+            });
+
+            //医生团队列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+
+                return \App\Http\Admin\DoctorTeamCtl::getDoctorTeamList($getData);
+            });
+
+            //置顶操作
+            $router->put('/top',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $type = $putData['type'];
+                $id = $putData['id'];
+                return \App\Http\Admin\OptionsCtl::top($type,$id);
+            });
+
+        });
     });
 
     //子系统调用api

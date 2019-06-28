@@ -951,6 +951,41 @@ return [
             ],
 
         ],
+        'admin/doctorteam' => [
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+            'POST' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'doctor_team_ids' => [
+                        ['default' => []],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer!',
+                ],
+            ],
+
+        ],
 	]
 ];
 

@@ -3,6 +3,7 @@
 
 namespace App\Http\ORM;
 
+use App\Http\Module\Doctor;
 use App\Http\Module\DoctorTeam;
 class DoctorTeamORM extends BaseORM
 {
@@ -21,6 +22,38 @@ class DoctorTeamORM extends BaseORM
             ->get();
 
         return $doctorTeam;
+    }
+
+    static function getListByDoctorId($doctorId) {
+        $model = new DoctorTeam();
+        $list = $model::query()
+            ->select([
+                'd.real_name'
+            ])
+            ->leftJoin('user_doctor as d','user_doctor_team.team_doctor_id','=','d.id')
+            ->where(['user_doctor_team.doctor_id'=>$doctorId])
+            ->get()
+            ->toArray();
+
+        return $list;
+    }
+
+    static function delByDoctorId($doctorId) {
+        $res = DoctorTeam::query()
+            ->where(['doctor_id'=>$doctorId])
+            ->delete();
+
+        return $res;
+    }
+
+    static function addOne($data) {
+        $model = new DoctorTeam();
+        $data = self::isIncolumns($model, $data); //过滤添加参数
+
+        $model->fill($data);
+        $model->save();
+
+        return $model->getKey();
     }
 
 }

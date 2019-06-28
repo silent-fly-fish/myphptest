@@ -124,8 +124,7 @@ class DoctorORM extends BaseORM
         $offset = getOffsetByPage($page, $size);
         $query->offset($offset);
         $query->limit($size);
-        //todo 暂定为逆序 可能是按热度查询
-//        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+
         $query->orderByRaw('dh.total_score desc,user_doctor.id asc');
         $total = $queryTotal->count();
         $datas = $query->get();
@@ -315,7 +314,6 @@ class DoctorORM extends BaseORM
         $offset = getOffsetByPage($page, $size);
         $query->offset($offset);
         $query->limit($size);
-        //todo 暂定为逆序 可能是按热度查询
         $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
         $total = $queryTotal->count();
         $datas = $query->get();
@@ -342,5 +340,72 @@ class DoctorORM extends BaseORM
             ->whereRaw('uptime != 0')
             ->get()
             ->toArray();
+    }
+
+    static function getAllByTeam($data) {
+        $model = new Doctor();
+        $query = $model::query();
+        $queryTotal = $model::query();
+        $page = $data['page'];
+        $size = $data['size'];
+
+        $query->select([
+            'user_doctor.id',
+            'user_doctor.real_name',
+            'user_doctor.name',
+            'user_doctor.hospital_id',
+            'user_doctor.created_at',
+            'user_doctor.r_status',
+            'h.name as hospital_name'
+        ])
+            ->leftJoin('user_hospital as h','user_doctor.hospital_id','=','h.id');
+
+        $queryTotal->select([
+            'user_doctor.id',
+            'user_doctor.real_name',
+            'user_doctor.name',
+            'user_doctor.hospital_id',
+            'user_doctor.created_at',
+            'user_doctor.r_status',
+            'h.name as hospital_name'
+        ])
+            ->join('user_hospital as h','user_doctor.hospital_id','=','h.id');
+
+        //医生姓名筛选
+        if(isset($data['real_name'])) {
+            $query->where('user_doctor.real_name','like','%'.$data['real_name'].'%');
+            $queryTotal->where('user_doctor.real_name','like','%'.$data['real_name'].'%');
+        }
+
+        //医生手机号筛选
+        if(isset($data['name'])) {
+            $query->where('user_doctor.name','like','%'.$data['name'].'%');
+            $queryTotal->where('user_doctor.name','like','%'.$data['name'].'%');
+        }
+
+        //医院筛选
+        if(isset($data['hospital_id'])) {
+            $query->where(['user_doctor.hospital_id'=>$data['hospital_id']]);
+            $queryTotal->where(['user_doctor.hospital_id'=>$data['hospital_id']]);
+        }
+
+        if(isset($data['r_status'])) {
+            $query->where(['user_doctor.r_status'=>$data['r_status']]);
+            $queryTotal->where(['user_doctor.r_status'=>$data['r_status']]);
+        }
+
+        $offset = getOffsetByPage($page, $size);
+        $query->offset($offset);
+        $query->limit($size);
+
+        $query->orderBy('user_doctor.id','asc');
+        $total = $queryTotal->count();
+        $datas = $query->get();
+
+        $ret['total'] = $total;
+        $ret['list'] = $datas;
+
+        return $ret;
+
     }
 }
