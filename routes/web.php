@@ -481,13 +481,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return \App\Http\Admin\DoctorTeamCtl::getDoctorTeamList($getData);
             });
 
-            //置顶操作
-            $router->put('/top',function(\Illuminate\Http\Request $request) {
-                $putData = $request->all();
-                $putData = $putData['data'];
-                $type = $putData['type'];
-                $id = $putData['id'];
-                return \App\Http\Admin\OptionsCtl::top($type,$id);
+            //医生团队分配列表
+            $router->get('/team',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+                $doctorId = $getData['doctor_id'];
+
+                return \App\Http\Admin\DoctorTeamCtl::getTeamList($doctorId);
             });
 
         });

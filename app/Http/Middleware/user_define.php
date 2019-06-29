@@ -986,6 +986,22 @@ return [
             ],
 
         ],
+
+        'admin/doctorteam/team' => [
+            'GET' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => ''],
+                        101
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required!',
+                ],
+            ],
+
+        ],
 	]
 ];
 

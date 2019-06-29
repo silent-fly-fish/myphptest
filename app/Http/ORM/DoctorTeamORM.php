@@ -28,7 +28,8 @@ class DoctorTeamORM extends BaseORM
         $model = new DoctorTeam();
         $list = $model::query()
             ->select([
-                'd.real_name'
+                'd.real_name',
+                'd.id'
             ])
             ->leftJoin('user_doctor as d','user_doctor_team.team_doctor_id','=','d.id')
             ->where(['user_doctor_team.doctor_id'=>$doctorId])

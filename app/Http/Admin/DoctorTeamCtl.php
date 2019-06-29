@@ -53,4 +53,14 @@ class DoctorTeamCtl
             jsonOut('success',false);
         }
     }
+
+    /**
+     * 医生团队分配列表
+     * @param $doctorId
+     */
+    static function getTeamList($doctorId) {
+       $list = DoctorTeamORM::getListByDoctorId($doctorId);
+
+       jsonOut('success',$list);
+    }
 }
