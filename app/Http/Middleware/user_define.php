@@ -1002,6 +1002,48 @@ return [
             ],
 
         ],
+
+        'admin/doctorapply' => [
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ],
+                    'apply_status' => [
+                        ['required' => '','integer'=>'','in'=>[1,2,3]],
+                        102
+                    ],
+                    'desc' => [
+                        ['default' => ''],
+                        103
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'id is required and integer!',
+                    102 => 'apply_status is required and integer and in!',
+                ],
+            ],
+
+        ],
 	]
 ];
 

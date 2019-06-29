@@ -490,6 +490,29 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
         });
+
+        $router->group(['prefix'=>'doctorapply'],function () use ($router) {
+
+            //审核入驻医生
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+                $id = $putData['id'];
+                $applyStatus = $putData['apply_status'];
+                $desc = $putData['desc'];
+
+                return \App\Http\Admin\DoctorCtl::checkDoctor($id,$applyStatus,$desc);
+            });
+
+            //申请入驻列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+
+                return \App\Http\Admin\DoctorCtl::applyDoctorList($getData);
+            });
+
+        });
     });
 
     //子系统调用api

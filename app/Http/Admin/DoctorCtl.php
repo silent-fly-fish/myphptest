@@ -5,6 +5,7 @@ namespace App\Http\Admin;
 
 
 use App\Http\Module\Doctor;
+use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
 use App\Http\ORM\HospitalORM;
 
@@ -79,6 +80,37 @@ class DoctorCtl
             $data['password'] = md5(md5($data['password']).$doctorInfo['salt']);
         }
         $result = DoctorORM::update($data);
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
+
+    /**
+     * 申请入驻列表
+     * @param $data
+     */
+    static function applyDoctorList($data) {
+
+        $list = DoctorApplyORM::getAll($data);
+
+        jsonOut('success',$list);
+    }
+
+    /**
+     * 审核申请入驻医生
+     * @param $id
+     * @param $applyStatus
+     * @param $desc
+     */
+    static function checkDoctor($id,$applyStatus,$desc) {
+
+        $data = [
+            'id' => $id,
+            'apply_status' => $applyStatus,
+            'desc' => $desc
+        ];
+        $result = DoctorApplyORM::update($data);
         if($result) {
             jsonOut('success',true);
         }
