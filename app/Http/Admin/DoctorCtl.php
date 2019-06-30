@@ -59,6 +59,9 @@ class DoctorCtl
         $data['salt'] = $salt;
         $result = DoctorORM::addOne($data);
         if($result) {
+            $tagData = ['doctor_id'=>$result,'tag_ids'=>$data['tag_ids']];
+            POST('tag.open/doctortag',$tagData)['data'];
+
             $data['invite_code'] = createCode($result,1);
             $data['doctor_id'] = $result;
             @DoctorORM::update($data);
