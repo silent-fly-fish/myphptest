@@ -84,6 +84,8 @@ class DoctorCtl
         }
         $result = DoctorORM::update($data);
         if($result) {
+//            $tagData = ['doctor_id'=>$data['doctor_id'],'tag_ids'=>$data['tag_ids']];
+//            POST('tag.open/doctortag',$tagData)['data'];
             jsonOut('success',true);
         }
         jsonOut('success',false);
