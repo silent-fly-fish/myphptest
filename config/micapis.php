@@ -24,7 +24,9 @@ return [
         'open/invitation' => '',
         'open/intergral' => '',
     ],
-
+    'tag'=>[
+        'open/doctortag' => '',
+    ],
    
 
 

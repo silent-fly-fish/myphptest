@@ -22,6 +22,7 @@ if(App::environment('production')){
         'USER_SYS_IP'     =>'127.0.0.1:32094/index.php',
         'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
         'INPUT_INVITE_ID' => 7,
+        'TAG_SYS_IP'=>'127.0.0.1:32096/index.php',
     ];
 }
 /**
@@ -41,5 +42,6 @@ return [
     'INTERGRAL_SYS_IP'=>'47.97.5.140:32095/index.php',
 //    'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
     'INPUT_INVITE_ID' => 7,
+    'TAG_SYS_IP'=>'127.0.0.1:32096/index.php',
 
 ];
