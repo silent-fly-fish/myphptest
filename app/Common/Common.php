@@ -398,9 +398,18 @@ function sendSms($phone,$flag){
 }
 
 
+/**
+ * 生成用户token
+ * @param $patientId
+ * @return string
+ */
+function getUserToken($patientId) {
+    $time = time(); //当前时间戳
+    $rand = rand(1000,9999);
+    $token = md5(md5($patientId.$time).$rand);
 
-
-
+    return $token;
+}
 
 /** =====================redis缓存相关配置===================== **/
 

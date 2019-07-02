@@ -19,9 +19,9 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        'bee9632da3ca00a99623b9c35d0c4f8b' => __DIR__ . '/..' . '/laravel/lumen-framework/src/helpers.php',
         'f0e7e63bbb278a92db02393536748c5f' => __DIR__ . '/..' . '/overtrue/wechat/src/Kernel/Support/Helpers.php',
         '6747f579ad6817f318cc3a7e7a0abb93' => __DIR__ . '/..' . '/overtrue/wechat/src/Kernel/Helpers.php',
+        'bee9632da3ca00a99623b9c35d0c4f8b' => __DIR__ . '/..' . '/laravel/lumen-framework/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -69,6 +69,7 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         'O' => 
         array (
             'Overtrue\\Socialite\\' => 19,
+            'Overtrue\\LaravelWeChat\\' => 23,
         ),
         'M' => 
         array (
@@ -269,6 +270,10 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         'Overtrue\\Socialite\\' => 
         array (
             0 => __DIR__ . '/..' . '/overtrue/socialite/src',
+        ),
+        'Overtrue\\LaravelWeChat\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/overtrue/laravel-wechat/src',
         ),
         'Monolog\\' => 
         array (
@@ -533,6 +538,7 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         'App\\Http\\Patient\\DoctorCtl' => __DIR__ . '/../..' . '/app/Http/Patient/DoctorCtl.php',
         'App\\Http\\Patient\\OptionsCtl' => __DIR__ . '/../..' . '/app/Http/Patient/OptionsCtl.php',
         'App\\Http\\Patient\\PatientCtl' => __DIR__ . '/../..' . '/app/Http/Patient/PatientCtl.php',
+        'App\\Http\\Patient\\WechatCtl' => __DIR__ . '/../..' . '/app/Http/Patient/WechatCtl.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Listeners\\AddIntergralListener' => __DIR__ . '/../..' . '/app/Listeners/AddIntergralListener.php',
         'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
@@ -749,6 +755,8 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         'Aws\\DynamoDb\\SetValue' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/DynamoDb/SetValue.php',
         'Aws\\DynamoDb\\StandardSessionConnection' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/DynamoDb/StandardSessionConnection.php',
         'Aws\\DynamoDb\\WriteRequestBatch' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/DynamoDb/WriteRequestBatch.php',
+        'Aws\\EC2InstanceConnect\\EC2InstanceConnectClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/EC2InstanceConnect/EC2InstanceConnectClient.php',
+        'Aws\\EC2InstanceConnect\\Exception\\EC2InstanceConnectException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/EC2InstanceConnect/Exception/EC2InstanceConnectException.php',
         'Aws\\EKS\\EKSClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/EKS/EKSClient.php',
         'Aws\\EKS\\Exception\\EKSException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/EKS/Exception/EKSException.php',
         'Aws\\Ec2\\Ec2Client' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Ec2/Ec2Client.php',
@@ -2799,6 +2807,18 @@ class ComposerStaticInit8ad5fc86d592679e02c9f3bdd0f9ccf8
         'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
+        'Overtrue\\LaravelWeChat\\CacheBridge' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/CacheBridge.php',
+        'Overtrue\\LaravelWeChat\\Controllers\\Controller' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Controllers/Controller.php',
+        'Overtrue\\LaravelWeChat\\Controllers\\OpenPlatformController' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Controllers/OpenPlatformController.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\Authorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/Authorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\OpenPlatformEvent' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/OpenPlatformEvent.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\Unauthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/Unauthorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\UpdateAuthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/UpdateAuthorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\VerifyTicketRefreshed' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/VerifyTicketRefreshed.php',
+        'Overtrue\\LaravelWeChat\\Events\\WeChatUserAuthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/WeChatUserAuthorized.php',
+        'Overtrue\\LaravelWeChat\\Facade' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Facade.php',
+        'Overtrue\\LaravelWeChat\\Middleware\\OAuthAuthenticate' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Middleware/OAuthAuthenticate.php',
+        'Overtrue\\LaravelWeChat\\ServiceProvider' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/ServiceProvider.php',
         'Overtrue\\Socialite\\AccessToken' => __DIR__ . '/..' . '/overtrue/socialite/src/AccessToken.php',
         'Overtrue\\Socialite\\AccessTokenInterface' => __DIR__ . '/..' . '/overtrue/socialite/src/AccessTokenInterface.php',
         'Overtrue\\Socialite\\AuthorizeFailedException' => __DIR__ . '/..' . '/overtrue/socialite/src/AuthorizeFailedException.php',

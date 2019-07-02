@@ -92,7 +92,7 @@ $app->routeMiddleware([
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
-
+$app->register(Overtrue\LaravelWeChat\ServiceProvider::class);
 
 $app->register(Bschmitt\Amqp\LumenServiceProvider::class);
 

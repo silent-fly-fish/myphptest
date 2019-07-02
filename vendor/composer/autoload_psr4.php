@@ -36,6 +36,7 @@ return array(
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'Pheanstalk\\' => array($vendorDir . '/pda/pheanstalk/src'),
     'Overtrue\\Socialite\\' => array($vendorDir . '/overtrue/socialite/src'),
+    'Overtrue\\LaravelWeChat\\' => array($vendorDir . '/overtrue/laravel-wechat/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Laravel\\Lumen\\' => array($vendorDir . '/laravel/lumen-framework/src'),
     'JmesPath\\' => array($vendorDir . '/mtdowling/jmespath.php/src'),
