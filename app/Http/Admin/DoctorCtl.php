@@ -17,7 +17,11 @@ class DoctorCtl
      */
     static function getDoctorInfo($doctorId) {
         $doctorInfo = DoctorORM::getInfoById($doctorId);
-
+        if(!$doctorInfo) {
+            jsonOut('doctorNotExist',false);
+        }
+        $tagArr = GET('tag.open/doctortag',$doctorId)['data'];
+        $doctorInfo['tag_ids'] = $tagArr;
         jsonOut('success', $doctorInfo);
     }
 
@@ -84,8 +88,8 @@ class DoctorCtl
         }
         $result = DoctorORM::update($data);
         if($result) {
-//            $tagData = ['doctor_id'=>$data['doctor_id'],'tag_ids'=>$data['tag_ids']];
-//            POST('tag.open/doctortag',$tagData)['data'];
+            $tagData = ['doctor_id'=>$data['doctor_id'],'tag_ids'=>$data['tag_ids']];
+            PUT('tag.open/doctortag',$tagData)['data'];
             jsonOut('success',true);
         }
         jsonOut('success',false);

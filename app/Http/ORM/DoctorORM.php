@@ -30,8 +30,7 @@ class DoctorORM extends BaseORM
             'user_doctor.good_at',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price',
-            'user_doctor.phone_price'
+            'user_doctor.more_price'
             ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
@@ -407,5 +406,15 @@ class DoctorORM extends BaseORM
 
         return $ret;
 
+    }
+
+    static function getBatchByIDS($ids){
+        $ret =  Doctor::select('id','real_name')->whereIn('id',$ids)->where(['r_status'=>1])->get();
+
+        if (count($ret) > 0){
+            $ret = actionGetObjDataByData($ids,$ret,'id');
+        }
+
+        return $ret;
     }
 }

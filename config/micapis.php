@@ -26,6 +26,7 @@ return [
     ],
     'tag'=>[
         'open/doctortag' => '',
+        'open/patienttag' => '',
     ],
    
 

@@ -35,7 +35,6 @@ class Doctor extends Model
         'token_time',
         'one_price',
         'more_price',
-        'phone_price',
         'category_id_str',
         'created_at',
         'is_test',

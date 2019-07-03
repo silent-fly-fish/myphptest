@@ -1039,6 +1039,43 @@ return [
             ],
 
         ],
+
+        'admin/patients' => [
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ],
+                    'tag_ids' => [
+                        ['default' => ''],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required|integer!',
+                ],
+            ],
+
+        ],
 	]
 ];
 

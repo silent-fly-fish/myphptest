@@ -349,7 +349,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             //医生详情
             $router->get('/{doctorId}', function($doctorId){
 
-                return App\Http\Open\DoctorCtl::getDoctorInfo($doctorId);
+                return App\Http\Admin\DoctorCtl::getDoctorInfo($doctorId);
             });
 
             //医生列表
@@ -373,6 +373,36 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $putData = $putData['data'];
 
                 return App\Http\Admin\DoctorCtl::updateDoctor($putData);
+            });
+        });
+
+        $router->group(['prefix'=>'patients'],function () use ($router){
+            //患者详情
+            $router->get('/{patientId}', function($patientId){
+
+                return App\Http\Admin\PatientCtl::getPatientInfo($patientId);
+            });
+
+            //患者列表
+            $router->get('', function(\Illuminate\Http\Request $request){
+                $getData = $request->all();
+
+                return App\Http\Admin\PatientCtl::getPatientList($getData);
+            });
+            //给患者打标签
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Admin\PatientCtl::addPatientTag($putData);
+            });
+
+            //患修改标签
+            $router->put('', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return App\Http\Admin\PatientCtl::updatePatientTag($putData);
             });
         });
 
