@@ -120,6 +120,11 @@ class PatientCtl
                 'name' => $isRegister['name'],
                 'head_img' => $isRegister['head_img']
             ];
+            $taskInfo = [
+                'patient_id' => $isRegister['id'],
+                'task_id' =>getConfig('LOGIN_ID') ,
+            ];
+            event(new ExamineUserEvent($taskInfo));
             $result = $info;
         } else {
             $result = false;

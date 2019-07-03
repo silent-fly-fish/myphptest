@@ -2,6 +2,7 @@
 
 
 namespace App\Http\Patient;
+use App\Events\ExamineUserEvent;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientWechatORM;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +119,11 @@ class WechatCtl
                     'id' => $isRegister['id'],
                     'token' => $data['token']
                 ];
+                $taskInfo = [
+                    'patient_id' => $isRegister['id'],
+                    'task_id' =>getConfig('LOGIN_ID') ,
+                ];
+                event(new ExamineUserEvent($taskInfo));
                 DB::commit();
                 jsonOut('success',$info);
             } catch (\Exception $e){
