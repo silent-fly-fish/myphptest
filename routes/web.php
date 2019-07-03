@@ -181,6 +181,37 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
         });
 
+        //落地页海外医院
+        $router->group(['prefix' => 'overseasHospital'],function () use ($router){
+
+            //海外医院列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+
+                return \App\Http\Patient\TempCtl::getHospitalList();
+            });
+
+            //海外医院详情
+            $router->get('{id}',function($id) {
+
+                return \App\Http\Patient\TempCtl::getHospitalInfo($id);
+            });
+        });
+
+        //活动页医生列表
+        $router->get('/temp/doctors',function(\Illuminate\Http\Request $request) {
+
+            $ids = [
+                1,4,5,6
+            ];
+            return \App\Http\Patient\TempCtl::getDoctorList($ids);
+        });
+
+        //活动页疾病详情
+        $router->get('/temp/illness',function(\Illuminate\Http\Request $request) {
+
+            return \App\Http\Patient\TempCtl::getIllnessInfo();
+        });
+
     });
 
 
