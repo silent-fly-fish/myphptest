@@ -17,7 +17,7 @@
         "aws/aws-sdk-php": "^3.0",
         "pda/pheanstalk": "^3.0",
         "bschmitt/laravel-amqp": "^2.0",
-        "overtrue/wechat": "~4.0"
+        "overtrue/laravel-wechat": "~4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

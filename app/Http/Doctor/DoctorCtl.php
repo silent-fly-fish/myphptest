@@ -141,9 +141,7 @@ class DoctorCtl
         if(isset($data['more_price'])) {
             $params['more_price'] = $data['more_price'];
         }
-        if(isset($data['phone_price'])) {
-            $params['phone_price'] = $data['phone_price'];
-        }
+
         $result = DoctorORM::update($params);
 
         if($result) {

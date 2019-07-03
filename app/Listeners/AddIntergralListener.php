@@ -33,7 +33,7 @@ class AddIntergralListener{
     public function handle(ExamineUserEvent $event)
     {
        $info=$event->info;
-
-        \Amqp::publish('routing-key',json_encode(['task_id'=>$info['task_id'],'patient_id'=>$info['patient_id']]), ['queue'=>'intergral']);
+       $data['data'] = ['task_id'=>$info['task_id'],'patient_id'=>$info['patient_id']];
+        \Amqp::publish('routing-key',json_encode($data), ['queue'=>'INTERGRAL_ADD_BY_TASK']);
     }
 }

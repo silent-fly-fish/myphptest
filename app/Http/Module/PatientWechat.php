@@ -25,6 +25,7 @@ class PatientWechat extends Model
         'sex',
         'province',
         'city',
-        'area'
+        'area',
+        'unionid'
     ];
 }

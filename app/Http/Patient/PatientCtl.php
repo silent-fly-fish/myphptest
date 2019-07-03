@@ -112,14 +112,19 @@ class PatientCtl
         $result = PatientORM::update($data);
         if($result) {
 
-            //TODO 登录成功生成token
+
             $info = [
                 'id' => $isRegister['id'],
-                'token' => '',
+                'token' => getUserToken($isRegister['id']),
                 'phone' => $isRegister['phone'],
                 'name' => $isRegister['name'],
                 'head_img' => $isRegister['head_img']
             ];
+            $taskInfo = [
+                'patient_id' => $isRegister['id'],
+                'task_id' =>getConfig('LOGIN_ID') ,
+            ];
+            event(new ExamineUserEvent($taskInfo));
             $result = $info;
         } else {
             $result = false;

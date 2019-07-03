@@ -1040,6 +1040,7 @@ return [
 
         ],
 
+
         'admin/patients' => [
             'GET' => [
                 'params' => [
@@ -1072,6 +1073,64 @@ return [
                 ],
                 'err_code' => [
                     101 => 'patient_id is required|integer!',
+
+                ],
+            ],
+        ],
+
+        'patient/wechat/login' => [
+            'GET' => [
+                'params' => [
+                    'code' => [
+                        ['required' => ''],
+                        101
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'code is required!',
+                ],
+            ],
+
+        ],
+
+        'patient/wechat/bind' => [
+            'PUT' => [
+                'params' => [
+                    'code' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        102
+                    ],
+                    'unionid' => [
+                        ['required' => ''],
+                        103
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'code is required!',
+                    102 => 'phone is required and phoneNumber!',
+                    103 => 'unionid is required!',
+                ],
+            ],
+
+        ],
+
+        'patient/wechat/send/bindcode' => [
+            'POST' => [
+                'params' => [
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        101
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'phone is required and phoneNumber!',
                 ],
             ],
 

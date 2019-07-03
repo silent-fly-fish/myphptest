@@ -69,8 +69,7 @@ class DoctorORM extends BaseORM
             'user_doctor.good_at',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price',
-            'user_doctor.phone_price'
+            'user_doctor.more_price'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
@@ -91,8 +90,7 @@ class DoctorORM extends BaseORM
             'user_doctor.good_at',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price',
-            'user_doctor.phone_price'
+            'user_doctor.more_price'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
@@ -171,8 +169,7 @@ class DoctorORM extends BaseORM
             'user_doctor.good_at',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price',
-            'user_doctor.phone_price'
+            'user_doctor.more_price'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
@@ -220,8 +217,7 @@ class DoctorORM extends BaseORM
                 'user_doctor.good_at',
                 'user_doctor.description',
                 'user_doctor.one_price',
-                'user_doctor.more_price',
-                'user_doctor.phone_price'
+                'user_doctor.more_price'
             ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
@@ -257,7 +253,6 @@ class DoctorORM extends BaseORM
             'user_doctor.description',
             'user_doctor.one_price',
             'user_doctor.more_price',
-            'user_doctor.phone_price',
             'user_doctor.name'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
@@ -278,8 +273,7 @@ class DoctorORM extends BaseORM
             'user_doctor.good_at',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price',
-            'user_doctor.phone_price'
+            'user_doctor.more_price'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')

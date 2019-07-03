@@ -1,17 +1,17 @@
 [
     {
         "name": "aws/aws-sdk-php",
-        "version": "3.102.1",
-        "version_normalized": "3.102.1.0",
+        "version": "3.103.1",
+        "version_normalized": "3.103.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/aws/aws-sdk-php.git",
-            "reference": "0fe11c62b118f3362a030e9994e3fe1eeea56172"
+            "reference": "2f6b31befa14d26a31dc8ce0adeac5f383db35d2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0fe11c62b118f3362a030e9994e3fe1eeea56172",
-            "reference": "0fe11c62b118f3362a030e9994e3fe1eeea56172",
+            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2f6b31befa14d26a31dc8ce0adeac5f383db35d2",
+            "reference": "2f6b31befa14d26a31dc8ce0adeac5f383db35d2",
             "shasum": ""
         },
         "require": {
@@ -45,7 +45,7 @@
             "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
             "ext-sockets": "To use client-side monitoring"
         },
-        "time": "2019-06-27T00:22:45+00:00",
+        "time": "2019-06-28T18:43:32+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2310,6 +2310,61 @@
         "keywords": [
             "router",
             "routing"
+        ]
+    },
+    {
+        "name": "overtrue/laravel-wechat",
+        "version": "4.0.23",
+        "version_normalized": "4.0.23.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/overtrue/laravel-wechat.git",
+            "reference": "64d424a9cb8ce82321f1d6e5a053c53e82afcb32"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/overtrue/laravel-wechat/zipball/64d424a9cb8ce82321f1d6e5a053c53e82afcb32",
+            "reference": "64d424a9cb8ce82321f1d6e5a053c53e82afcb32",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/container": "^5.1",
+            "overtrue/wechat": "^4.0"
+        },
+        "time": "2019-03-01T10:43:18+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Overtrue\\LaravelWeChat\\ServiceProvider"
+                ],
+                "aliases": {
+                    "EasyWeChat": "Overtrue\\LaravelWeChat\\Facade"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Overtrue\\LaravelWeChat\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "overtrue",
+                "email": "anzhengchao@gmail.com"
+            }
+        ],
+        "description": "微信 SDK for Laravel",
+        "keywords": [
+            "laravel",
+            "sdk",
+            "wechat",
+            "weixin"
         ]
     },
     {
