@@ -1135,6 +1135,67 @@ return [
             ],
 
         ],
+
+        'admin/referees' => [
+            'POST' => [
+                'params' => [
+                    'name' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'phone' => [
+                        ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'name is required!',
+                    102 => 'phone is required and phoneNumber!',
+                ],
+            ],
+
+            'PUT' => [
+                'params' => [
+                    'id' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'phone' => [
+                        ['Regx'=>'/^1[3456789]\d{9}$/'],
+                        102
+                    ],
+                    'r_status' => [
+                        ['in'=>[0,1]],
+                        103
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'id is required!',
+                    102 => 'phone is phoneNumber!',
+                    103 => 'r_status is in!',
+                ],
+            ],
+
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+
+                ],
+            ],
+
+        ],
 	]
 ];
 

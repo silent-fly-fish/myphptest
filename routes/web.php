@@ -602,6 +602,35 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
         });
+
+        $router->group(['prefix'=>'referees'],function () use ($router) {
+
+            //添加销售员
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\RefereesCtl::addOne($postData);
+            });
+
+            //销售人员列表
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+
+                return \App\Http\Admin\RefereesCtl::getRefereeList($getData);
+            });
+
+            //修改或删除销售人员
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return \App\Http\Admin\RefereesCtl::update($putData);
+            });
+
+
+        });
     });
 
     //子系统调用api

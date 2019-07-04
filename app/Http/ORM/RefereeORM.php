@@ -5,6 +5,7 @@ namespace App\Http\ORM;
 
 
 use App\Http\Module\Referee;
+use Carbon\Carbon;
 
 class RefereeORM extends BaseORM
 {
@@ -24,6 +25,58 @@ class RefereeORM extends BaseORM
         $data = self::isIncolumns($model, $data);
 
         return $model::whereRaw('id='.$id)->update($data);
+    }
+
+    static function getAllList($data) {
+        $page = $data['page'];
+        $size = $data['size'];
+        $model = new Referee();
+
+        $query = $model::query();
+        $queryTotal = $model::query();
+
+        $query->select($model::$fields);
+        $queryTotal->select($model::$fields);
+
+        //手机号筛选
+        if (isset($data['phone'])) {
+            $query->where('phone','like','%'.$data['phone'].'%');
+            $queryTotal->where('phone','like','%'.$data['phone'].'%');
+        }
+
+        //姓名筛选
+        if (isset($data['name'])) {
+            $query->where('name','like','%'.$data['name'].'%');
+            $queryTotal->where('name','like','%'.$data['name'].'%');
+        }
+
+        $offset = getOffsetByPage($page, $size);
+        $query->offset($offset);
+        $query->limit($size);
+
+        $query->orderBy('id','desc');
+        $data = $query->get();
+
+        $datas['total'] = $queryTotal->count();
+        $datas['list'] = $data?$data->toArray():[];
+
+        return $datas;
+    }
+
+    static function getOneById($id) {
+
+        return Referee::query()
+            ->select(Referee::$fields)
+            ->find($id);
+    }
+
+    static function isByNameOrPhone($name='',$phone='') {
+        $isExist = Referee::query()
+            ->where('name','=',$name)
+            ->orWhere('phone','=',$phone)
+            ->count();
+
+        return $isExist;
     }
 
 }
