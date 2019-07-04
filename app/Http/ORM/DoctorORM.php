@@ -237,6 +237,7 @@ class DoctorORM extends BaseORM
 
         $query =$model::query();
         $queryTotal = $model::query();
+
         $query->select([
             'user_doctor.id',
             'user_doctor.real_name',
@@ -253,10 +254,11 @@ class DoctorORM extends BaseORM
             'user_doctor.description',
             'user_doctor.one_price',
             'user_doctor.more_price',
-            'user_doctor.name'
+            'user_doctor.category_id_str'
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_doctor_hots as dh','dh.doctor_id','=','user_doctor.id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
         $queryTotal->select([
             'user_doctor.id',
@@ -277,7 +279,10 @@ class DoctorORM extends BaseORM
         ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
+            ->leftJoin('user_doctor_hots as dh','dh.doctor_id','=','user_doctor.id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
+
+
         if(!empty($data['hospital_id'])) {
             $query->where('user_doctor.hospital_id','=',$data['hospital_id']);
             $queryTotal->where('user_doctor.hospital_id','=', $data['hospital_id']);
@@ -307,10 +312,12 @@ class DoctorORM extends BaseORM
         $offset = getOffsetByPage($page, $size);
         $query->offset($offset);
         $query->limit($size);
-        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+//        $query->orderByRaw('user_doctor.sort desc,user_doctor.id desc');
+        $query->orderByRaw('dh.total_score desc,user_doctor.id asc');
         $total = $queryTotal->count();
-        $datas = $query->get();
 
+        $datas = $query->get();
+        $datas = $datas?$datas->toArray():[];
 
 
         $ret['total'] = $total;

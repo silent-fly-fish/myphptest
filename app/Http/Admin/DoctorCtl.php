@@ -7,6 +7,8 @@ namespace App\Http\Admin;
 use App\Http\Module\Doctor;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
+use App\Http\ORM\SysOptionsORM;
+
 use App\Http\ORM\HospitalORM;
 
 class DoctorCtl
@@ -41,9 +43,42 @@ class DoctorCtl
 //        }
 //        $data['hospital_id'] = count($hospitalIds)? array_column($hospitalIds,'id') : [];
 
-        $doctorList = DoctorORM::getAllList($data);
+        $ret = DoctorORM::getAllList($data);
+//        print_r($ret);exit;
+        if($ret['total'] > 0){
+            $sysOptionsArr = SysOptionsORM::getAllByType($type='category');
+            if($sysOptionsArr){
+                $sysOptionsArr = $sysOptionsArr->toArray();
+                $ids = array_unique(array_column($sysOptionsArr,'id'));
+                $sysOptionsJson = actionGetObjDataByData($ids,$sysOptionsArr,'id');
+            }
+//            print_r($sysOptionsJson);exit;
+            foreach ($ret['list'] as $k=>$v) {
+                $temp=[];
+                foreach (explode(',',$v['category_id_str']) as $kb=>$vb){
+//                    print_r($sysOptionsJson->{$vb}['id']);exit;
+                    $arr=[];
+                    if($vb){
+//                        if(@isset($sysOptionsJson->{$vb}['id']) && @isset($sysOptionsJson->{$vb}['name'])){
+                            $arr['id'] = isset($sysOptionsJson->{$vb}['id'])?$sysOptionsJson->{$vb}['id']:'';
+                            $arr['name']= isset($sysOptionsJson->{$vb}['name'])?$sysOptionsJson->{$vb}['name']:'';
+//                        }
+                    }
 
-        jsonOut('success', $doctorList);
+                    if(!empty($arr)){
+                        $temp[]=$arr ;
+                    }
+                }
+
+
+                unset($ret['list'][$k]['category_ids_str']);
+
+                $ret['list'][$k]['categorys'] =         $temp;
+
+            }
+        }
+
+        jsonOut('success', $ret);
     }
 
     /**
