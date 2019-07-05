@@ -137,7 +137,21 @@ class PatientCtl
      * @param $patientId
      */
     static function logout($patientId) {
-        //todo 去除登录信息
+        //查询用户信息
+        $patientInfo = PatientORM::getOneById($patientId);
+        if(!$patientInfo) {
+            jsonOut('patientNotExist',false);
+        }
+        $data = [
+            'patient_id' => $patientInfo['id'],
+            'token' => ''
+        ];
+        $result = PatientORM::update($data);
+
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('error',false);
     }
 
     /**
