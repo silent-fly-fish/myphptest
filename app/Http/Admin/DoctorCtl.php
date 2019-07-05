@@ -25,20 +25,19 @@ class DoctorCtl
         $doctorInfo = $doctorInfo?$doctorInfo->toArray():[];
         $tagArr = GET('tag.open/doctortag',$doctorId)['data'];
 
-        $sysOptionsArr = SysOptionsORM::getAllByType($type='category');
-        if($sysOptionsArr) {
-            $sysOptionsArr = $sysOptionsArr->toArray();
-            $ids = array_unique(array_column($sysOptionsArr, 'id'));
-            $sysOptionsJson = actionGetObjDataByData($ids, $sysOptionsArr, 'id');
-
-            $categoryInfo = [];
-            foreach (explode(',',$doctorInfo['category_id_str']) as $k=>$v){
-                $categoryInfo['id'] = isset($sysOptionsJson->{$v}['id'])?$sysOptionsJson->{$v}['id']:'';
-                $categoryInfo['name'] = isset($sysOptionsJson->{$v}['name'])?$sysOptionsJson->{$v}['name']:'';
-                $doctorInfo['categorys'][$k] = $categoryInfo;
+        if($tagArr){
+            foreach ($tagArr as $k=>$v){
+                $tagArr[$k] = (int)$v;
             }
         }
         $doctorInfo['tag_ids'] = $tagArr;
+        $categoryIds = explode(',',$doctorInfo['category_id_str']);
+        if($categoryIds){
+            foreach ($categoryIds as $k=>$v){
+                $categoryIds[$k] = (int)$v;
+            }
+        }
+        $doctorInfo['category_id_str'] = $categoryIds;
         jsonOut('success', $doctorInfo);
     }
 
