@@ -66,4 +66,18 @@ class DoctorCtl
         jsonOut('success',$result);
     }
 
+    /**
+     * 批量更新医生信息（跑好评率脚本）
+     * @param $data
+     */
+    static function updateBatchDoctor($data) {
+
+        $result = DoctorORM::updateBatchById($data);
+        if($result) {
+            jsonOut('success',true);
+        }
+
+        jsonOut('success',false);
+    }
+
 }

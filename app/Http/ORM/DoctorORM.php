@@ -152,6 +152,13 @@ class DoctorORM extends BaseORM
         return $model::whereRaw('id='.$doctorId.' and r_status=1')->update($data);
     }
 
+    static function updateBatchById($data) {
+
+        $model = new Doctor();
+        $table = $model->getTable();
+        return self::updateBatch($table,$data);
+    }
+
     static function getAllByOpen($doctorIds) {
         $model = new Doctor();
         $query = $model::query();

@@ -679,6 +679,14 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Open\DoctorCtl::updateDoctor($putData);
             });
+
+            //批量更新医生信息（跑好评率脚本）
+            $router->put('/update/batch', function(\Illuminate\Http\Request $request){
+                $putData = $request->all();
+                $putData = $putData['data'];
+
+                return \App\Http\Open\DoctorCtl::updateBatchDoctor($putData);
+            });
         });
 
 
