@@ -339,4 +339,27 @@ class PatientCtl
         jsonOut('success',false);
 
     }
+
+    /**
+     * 关注医生
+     * @param $patientId
+     * @param $doctorId
+     */
+    static function bindDoctorAttention($patientId,$doctorId) {
+
+        $isAttention = PatientAttentionORM::getOneByPatientIdAndDoctorId($patientId,$doctorId);
+        if($isAttention) {
+            jsonOut('success',true);
+        }
+        $data = [
+            'patient_id' => $patientId,
+            'doctor_id' => $doctorId
+        ];
+
+        $result = PatientAttentionORM::addOne($data);
+        if($result) {
+            jsonOut('success',true);
+        }
+        jsonOut('success',false);
+    }
 }

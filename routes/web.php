@@ -155,6 +155,15 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return \App\Http\Patient\PatientCtl::addDoctorView($patientId,$doctorId);
         });
 
+        $router->post('/attentions',function (\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            $patientId = $postData['patient_id'];
+            $doctorId = $postData['doctor_id'];
+
+            return \App\Http\Patient\PatientCtl::bindDoctorAttention($patientId,$doctorId);
+        });
+
         //医生热度得分脚本
         $router->get('/doctor/hotsjob',function (\Illuminate\Http\Request $request){
 

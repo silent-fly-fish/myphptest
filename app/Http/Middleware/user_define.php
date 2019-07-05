@@ -1212,6 +1212,27 @@ return [
             ],
 
         ],
+
+        'patient/attentions' => [
+            'POST' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ],
+                    'doctor_id' => [
+                        ['required' => '','integer'=>''],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer',
+                    102 => 'doctor_id is required and integer',
+                ],
+            ],
+
+        ],
 	]
 ];
 
