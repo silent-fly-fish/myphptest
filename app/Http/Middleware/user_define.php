@@ -1196,6 +1196,22 @@ return [
             ],
 
         ],
+
+        'patient/logout' => [
+            'POST' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer',
+                ],
+            ],
+
+        ],
 	]
 ];
 

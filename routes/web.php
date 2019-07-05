@@ -78,6 +78,14 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code']);
         });
 
+        //用户手机号登录
+        $router->post('/logout', function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+            $postData = $postData['data'];
+            $patientId = $postData['patient_id'];
+            return App\Http\Patient\PatientCtl::logout($patientId);
+        });
+
         //发送短信验证码
         $router->group(['prefix'=> 'send'],function () use ($router){
             //发送注册验证码
