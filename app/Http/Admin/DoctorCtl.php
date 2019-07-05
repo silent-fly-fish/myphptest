@@ -22,7 +22,22 @@ class DoctorCtl
         if(!$doctorInfo) {
             jsonOut('doctorNotExist',false);
         }
+        $doctorInfo = $doctorInfo?$doctorInfo->toArray():[];
         $tagArr = GET('tag.open/doctortag',$doctorId)['data'];
+
+        $sysOptionsArr = SysOptionsORM::getAllByType($type='category');
+        if($sysOptionsArr) {
+            $sysOptionsArr = $sysOptionsArr->toArray();
+            $ids = array_unique(array_column($sysOptionsArr, 'id'));
+            $sysOptionsJson = actionGetObjDataByData($ids, $sysOptionsArr, 'id');
+
+            $categoryInfo = [];
+            foreach (explode(',',$doctorInfo['category_id_str']) as $k=>$v){
+                $categoryInfo['id'] = isset($sysOptionsJson->{$v}['id'])?$sysOptionsJson->{$v}['id']:'';
+                $categoryInfo['name'] = isset($sysOptionsJson->{$v}['name'])?$sysOptionsJson->{$v}['name']:'';
+                $doctorInfo['categorys'][$k] = $categoryInfo;
+            }
+        }
         $doctorInfo['tag_ids'] = $tagArr;
         jsonOut('success', $doctorInfo);
     }
@@ -44,37 +59,30 @@ class DoctorCtl
 //        $data['hospital_id'] = count($hospitalIds)? array_column($hospitalIds,'id') : [];
 
         $ret = DoctorORM::getAllList($data);
-//        print_r($ret);exit;
         if($ret['total'] > 0){
             $sysOptionsArr = SysOptionsORM::getAllByType($type='category');
             if($sysOptionsArr){
                 $sysOptionsArr = $sysOptionsArr->toArray();
                 $ids = array_unique(array_column($sysOptionsArr,'id'));
                 $sysOptionsJson = actionGetObjDataByData($ids,$sysOptionsArr,'id');
-            }
-//            print_r($sysOptionsJson);exit;
-            foreach ($ret['list'] as $k=>$v) {
-                $temp=[];
-                foreach (explode(',',$v['category_id_str']) as $kb=>$vb){
-//                    print_r($sysOptionsJson->{$vb}['id']);exit;
-                    $arr=[];
-                    if($vb){
-//                        if(@isset($sysOptionsJson->{$vb}['id']) && @isset($sysOptionsJson->{$vb}['name'])){
+
+                foreach ($ret['list'] as $k=>$v) {
+                    $temp=[];
+                    foreach (explode(',',$v['category_id_str']) as $kb=>$vb){
+                        $arr=[];
+                        if($vb){
                             $arr['id'] = isset($sysOptionsJson->{$vb}['id'])?$sysOptionsJson->{$vb}['id']:'';
                             $arr['name']= isset($sysOptionsJson->{$vb}['name'])?$sysOptionsJson->{$vb}['name']:'';
-//                        }
-                    }
+                        }
 
-                    if(!empty($arr)){
-                        $temp[]=$arr ;
+                        if(!empty($arr)){
+                            $temp[]=$arr ;
+                        }
                     }
+                    unset($ret['list'][$k]['category_ids_str']);
+
+                    $ret['list'][$k]['categorys'] =         $temp;
                 }
-
-
-                unset($ret['list'][$k]['category_ids_str']);
-
-                $ret['list'][$k]['categorys'] =         $temp;
-
             }
         }
 
