@@ -28,6 +28,7 @@ class DoctorORM extends BaseORM
             'h.logo',
             'user_doctor.img',
             'user_doctor.good_at',
+            'user_doctor.category_id_str',
             'user_doctor.description',
             'user_doctor.one_price',
             'user_doctor.more_price'
