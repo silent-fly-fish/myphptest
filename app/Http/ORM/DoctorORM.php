@@ -33,7 +33,8 @@ class DoctorORM extends BaseORM
             'user_doctor.one_price',
             'user_doctor.more_price',
                 'user_doctor.name',
-                'user_doctor.telephone'
+                'user_doctor.telephone',
+                'user_doctor.r_status'
             ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
