@@ -39,7 +39,7 @@ class DoctorORM extends BaseORM
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id')
-            ->where(['user_doctor.id'=>$id,'user_doctor.r_status'=>1])
+            ->where(['user_doctor.id'=>$id])
             ->first();
 
         return $doctorInfo;
