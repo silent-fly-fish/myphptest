@@ -52,6 +52,12 @@ class HospitalCtl
     static function getHospitalInfo($hospitalId) {
         $hospitalInfo = HospitalORM::getOneById($hospitalId);
 
+        if(!$hospitalInfo){
+            jsonOut('NoFoundData',false);
+        }
+        $hospitalInfo = $hospitalInfo->toArray();
+        $hospitalInfo['level'] = (int)$hospitalInfo['level'];
+       
         jsonOut('success',$hospitalInfo);
     }
 
