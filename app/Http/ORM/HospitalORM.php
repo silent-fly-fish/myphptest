@@ -117,9 +117,11 @@ class HospitalORM extends BaseORM
                 'user_hospital.city_code',
                 'user_hospital.area_code',
                 'user_hospital.address',
+                'user_hospital.public_hospital',
+                'user_hospital.description',
                 'ap.name as province_name',
                 'ac.name as city_name',
-                'acy.name as area_name',
+                'acy.name as area_name'
             ])
             ->leftJoin('user_area_province as ap','user_hospital.province_code','=','ap.code')
             ->leftJoin('user_area_city as ac','user_hospital.city_code','=','ac.code')
