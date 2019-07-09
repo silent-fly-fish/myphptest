@@ -44,6 +44,7 @@ return [
 //    'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
     'INPUT_INVITE_ID' => 7, //输入验证码
     'LOGIN_ID' => 1, //登录
-    'TAG_SYS_IP'=>'47.97.5.140:32096/index.php',
+    'TAG_SYS_IP'=>'127.0.0.1:32096/index.php',
+//    'TAG_SYS_IP'=>'47.97.5.140:32096/index.php',
 
 ];

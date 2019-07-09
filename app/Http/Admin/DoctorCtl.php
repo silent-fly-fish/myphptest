@@ -24,10 +24,13 @@ class DoctorCtl
         }
         $doctorInfo = $doctorInfo?$doctorInfo->toArray():[];
         $tagArr = GET('tag.open/doctortag',$doctorId)['data'];
-
+        
         if($tagArr){
             foreach ($tagArr as $k=>$v){
-                $tagArr[$k] = (int)$v;
+                foreach ($v as $ka=>$va){
+
+                    $tagArr[$k][$ka] = (int)$va;
+                }
             }
         }
         $doctorInfo['tag_ids'] = $tagArr;
