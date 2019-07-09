@@ -105,7 +105,7 @@ class DoctorCtl
         $salt = substr(md5(time()),0,4);
 
         $data['password'] = md5(md5($data['password']).$salt);
-        $data['category_ids'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
+        $data['category_id_str'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
         $data['salt'] = $salt;
         $result = DoctorORM::addOne($data);
         if($result) {
@@ -136,6 +136,7 @@ class DoctorCtl
         if(isset($data['password'])) {
             $data['password'] = md5(md5($data['password']).$doctorInfo['salt']);
         }
+        $data['category_id_str'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
         $result = DoctorORM::update($data);
         if($result) {
             $tagData = ['doctor_id'=>$data['doctor_id'],'tag_ids'=>$data['tag_ids']];
