@@ -129,6 +129,11 @@ class DoctorCtl
         if(empty($doctorInfo)) {
             jsonOut('doctorNotExist',false);
         }
+        $res = DoctorORM::isExistByDoctorName($data['doctor_id'],$data['name']);
+
+        if($res){
+            return jsonOut('doctorPhoneIsExist',false);
+        }
         if(isset($data['password'])) {
             $data['password'] = md5(md5($data['password']).$doctorInfo['salt']);
         }

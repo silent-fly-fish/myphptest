@@ -12,6 +12,13 @@ class DoctorORM extends BaseORM
         return Doctor::select(Doctor::$fields)->find($id);
     }
 
+    static  function  isExistByDoctorName($id,$name){
+        return Doctor::where('id','<>',$id)->where([
+            'name'=>$name,
+            'r_status'=>1
+        ])->count();
+    }
+
     static function getInfoById($id) {
         $model = new Doctor();
         $doctorInfo = $model
