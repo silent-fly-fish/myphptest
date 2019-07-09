@@ -3,6 +3,7 @@
 namespace App\Console;
 
 
+use App\Jobs\DoctorHotsJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -30,6 +31,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(function (){
             logText('life ---------->','cron');
         });
+
+        //每天晚上2:00医生热度积分脚本任务执行
+        $schedule->job(new DoctorHotsJob,'doctorhots')->dailyAt('2:00');
 
 
     }
