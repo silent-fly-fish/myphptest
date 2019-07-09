@@ -653,10 +653,10 @@ return [
                         ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         102
                     ],
-                    'password' => [
-                        ['required' => ''],
-                        103
-                    ],
+//                    'password' => [
+//                        ['required' => ''],
+//                        103
+//                    ],
                     'telephone' => [
                         ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         104
@@ -694,7 +694,7 @@ return [
                 'err_code' => [
                     101 => 'real_name is required!',
                     102 => 'name is required and phoneNumber!',
-                    103 => 'password is required!',
+//                    103 => 'password is required!',
                     104 => 'telephone is required and phoneNumber!',
                     105 => 'hospital_id is required and integer!',
                     106 => 'branch_id is required and integer!',
