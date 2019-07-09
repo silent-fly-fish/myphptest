@@ -119,6 +119,7 @@ class HospitalORM extends BaseORM
                 'user_hospital.address',
                 'user_hospital.public_hospital',
                 'user_hospital.description',
+                'user_hospital.logo',
                 'ap.name as province_name',
                 'ac.name as city_name',
                 'acy.name as area_name'
