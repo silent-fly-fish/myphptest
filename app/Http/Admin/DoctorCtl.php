@@ -130,7 +130,6 @@ class DoctorCtl
             jsonOut('doctorNotExist',false);
         }
         $res = DoctorORM::isExistByDoctorName($data['doctor_id'],$data['name']);
-
         if($res){
             return jsonOut('doctorPhoneIsExist',false);
         }
