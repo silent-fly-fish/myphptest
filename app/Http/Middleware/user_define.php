@@ -718,7 +718,7 @@ return [
                     ],
                     'telephone' => [
                         ['Regx'=>'/^1[3456789]\d{9}$/'],
-                        1043
+                        103
                     ],
                     'hospital_id' => [
                         ['integer' => ''],
