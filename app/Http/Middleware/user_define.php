@@ -805,10 +805,10 @@ return [
                         ['required' => ''],
                         105
                     ],
-                    'logo' => [
-                        ['required' => ''],
-                        106
-                    ],
+//                    'logo' => [
+//                        ['required' => ''],
+//                        106
+//                    ],
                     'address' => [
                         ['required' => ''],
                         107
@@ -833,7 +833,7 @@ return [
                     103 => 'province_code is required!',
                     104 => 'city_code is required!',
                     105 => 'area_code is required!',
-                    106 => 'logo is required!',
+//                    106 => 'logo is required!',
                     107 => 'address is required!',
                     108 => 'description is required!',
                     109 => 'r_status is required and integer!',

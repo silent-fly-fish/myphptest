@@ -24,7 +24,7 @@ class SysOptionsCtl
      * 获取职称
      */
     static function getPositionList() {
-        $positionList = SysOptionsORM::getAllByType($type='hospital_level');
+        $positionList = SysOptionsORM::getAllByType($type='title');
         if(!$positionList) {
             jsonOut('NoFoundData',false);
         }

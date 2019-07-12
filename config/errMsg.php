@@ -25,4 +25,5 @@ return [
     'doctorNotExist'=>['code'=>3010,'msg'=>'不存在该用户'],
     'inviteCodeIsExist' => ['code'=>3011,'msg'=>'已填写邀请码'],
     'isRefereeNameOrPhone' => ['code'=>3012,'msg'=>'销售人员手机号或姓名已存在'],
+    'hospitalPhoneIsExist' => ['code'=>3014,'msg'=>'医院名称已存在'],
 ];
