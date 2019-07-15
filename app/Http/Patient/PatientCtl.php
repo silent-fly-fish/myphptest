@@ -83,7 +83,16 @@ class PatientCtl
             $data2['code'] = createCode($patientId,2);
             $data2['patient_id'] = $patientId;
             @PatientORM::update($data2);
-            $result = true;
+
+            $info = [
+                'id' => $patientId,
+                'token' => getUserToken($isRegister['id']),
+                'phone' => $phone,
+                'name' => '',
+                'head_img' => ''
+            ];
+
+            return $info;
         }else {
             $result = false;
         }
