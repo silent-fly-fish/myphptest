@@ -35,8 +35,8 @@ class RefereeORM extends BaseORM
         $query = $model::query();
         $queryTotal = $model::query();
 
-        $query->select($model::$fields);
-        $queryTotal->select($model::$fields);
+        $query->where('r_status','=',1)->select($model::$fields);
+        $queryTotal->where('r_status','=',1)->select($model::$fields);
 
         //手机号筛选
         if (isset($data['phone'])) {
