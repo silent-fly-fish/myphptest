@@ -79,4 +79,15 @@ class RefereeORM extends BaseORM
         return $isExist;
     }
 
+    static function isByNameUpdateOrPhone($id='',$name='',$phone='') {
+        $query = Referee::query();
+        $isExist = $query
+            ->where('id','<>',$id)
+            ->whereRaw("(name = '$name' or phone = '$phone')")
+            ->count();
+
+        return $isExist;
+    }
+
+
 }

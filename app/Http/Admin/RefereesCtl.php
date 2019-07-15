@@ -46,7 +46,7 @@ class RefereesCtl
 
         $name = isset($data['name'])? $data['name'] : '';
         $phone = isset($data['phone'])? $data['phone'] : '';
-        $isExist = RefereeORM::isByNameOrPhone($name,$phone);
+        $isExist = RefereeORM::isByNameUpdateOrPhone($name,$phone);
         if($isExist) {
             jsonOut('isRefereeNameOrPhone',false);
         }
