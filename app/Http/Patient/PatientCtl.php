@@ -124,7 +124,7 @@ class PatientCtl
                 'patient_id' => $isRegister['id'],
                 'task_id' =>getConfig('LOGIN_ID') ,
             ];
-            event(new ExamineUserEvent($taskInfo));
+//            event(new ExamineUserEvent($taskInfo)); //todo 暂时去除
             $result = $info;
         } else {
             $result = false;
