@@ -92,7 +92,7 @@ class PatientCtl
                 'head_img' => ''
             ];
 
-            return $info;
+            $result = $info;
         }else {
             $result = false;
         }
