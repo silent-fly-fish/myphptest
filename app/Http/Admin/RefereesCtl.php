@@ -43,10 +43,10 @@ class RefereesCtl
      * @param $data
      */
     static function update($data) {
-        $id = isset($data['id'])? $data['id'] : '';
+
         $name = isset($data['name'])? $data['name'] : '';
         $phone = isset($data['phone'])? $data['phone'] : '';
-        $isExist = RefereeORM::isByNameUpdateOrPhone($id,$name,$phone);
+        $isExist = RefereeORM::isByNameOrPhone($name,$phone);
         if($isExist) {
             jsonOut('isRefereeNameOrPhone',false);
         }
