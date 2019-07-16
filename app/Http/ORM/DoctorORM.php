@@ -259,6 +259,7 @@ class DoctorORM extends BaseORM
 
         $query->select([
             'user_doctor.id',
+            'user_doctor.name',
             'user_doctor.real_name',
             'user_doctor.hospital_id',
             'user_doctor.branch_id',
@@ -281,6 +282,7 @@ class DoctorORM extends BaseORM
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
         $queryTotal->select([
             'user_doctor.id',
+            'user_doctor.name',
             'user_doctor.real_name',
             'user_doctor.hospital_id',
             'user_doctor.branch_id',
