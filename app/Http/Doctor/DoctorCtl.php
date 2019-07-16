@@ -41,7 +41,7 @@ class DoctorCtl
         }
 
         $redisCode = getRedisDataByKey(env('REDIS_CODE_DOCTOR').$phone);
-        if(($redisCode !== $code && $code != '708090') || empty($code)) {
+        if(($redisCode != $code && $code != '708090') || empty($code)) {
             jsonOut('phoneCodeError',false);
         }
 
@@ -81,7 +81,7 @@ class DoctorCtl
         //验证验证码是否正确
         $redisCode = getRedisDataByKey(env('REDIS_CODE_DOCTOR').$phone);
 
-        if(($redisCode !== $code && $code != '708090') || empty($code)) {
+        if(($redisCode != $code && $code != '708090') || empty($code)) {
             jsonOut('phoneCodeError',false);
         }
 
