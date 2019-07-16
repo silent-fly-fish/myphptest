@@ -229,6 +229,21 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             return \App\Http\Patient\TempCtl::getIllnessInfo();
         });
 
+        //用户病历模块
+        $router->post('/records',function(\Illuminate\Http\Request $request) {
+            $postData = $request->all();
+            $postData=  $postData['data'];
+            return \App\Http\Patient\RecordCtl::AddOne($postData);
+        });
+        $router->get('/records',function(\Illuminate\Http\Request $request) {
+            $getData = $request->all();
+            return \App\Http\Patient\RecordCtl::getList($getData );
+        });
+        $router->get('/records/completion',function(\Illuminate\Http\Request $request) {
+            $getData = $request->all();
+            return \App\Http\Patient\RecordCtl::getCompletion($getData );
+        });
+
     });
 
 
