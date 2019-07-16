@@ -12,6 +12,13 @@ class DoctorORM extends BaseORM
         return Doctor::select(Doctor::$fields)->find($id);
     }
 
+    static  function  isExistByDoctorName($id,$name){
+        return Doctor::where('id','<>',$id)->where([
+            'name'=>$name,
+            'r_status'=>1
+        ])->count();
+    }
+
     static function getInfoById($id) {
         $model = new Doctor();
         $doctorInfo = $model
@@ -31,12 +38,16 @@ class DoctorORM extends BaseORM
             'user_doctor.category_id_str',
             'user_doctor.description',
             'user_doctor.one_price',
-            'user_doctor.more_price'
+            'user_doctor.more_price',
+                'user_doctor.name',
+                'user_doctor.telephone',
+                'user_doctor.referee_id',
+                'user_doctor.r_status'
             ])
             ->leftJoin('user_hospital as h','h.id','=','user_doctor.hospital_id')
             ->leftJoin('user_sys_options as b','b.id','=','user_doctor.branch_id')
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id')
-            ->where(['user_doctor.id'=>$id,'user_doctor.r_status'=>1])
+            ->where(['user_doctor.id'=>$id])
             ->first();
 
         return $doctorInfo;
@@ -248,6 +259,7 @@ class DoctorORM extends BaseORM
 
         $query->select([
             'user_doctor.id',
+            'user_doctor.name',
             'user_doctor.real_name',
             'user_doctor.hospital_id',
             'user_doctor.branch_id',
@@ -270,6 +282,7 @@ class DoctorORM extends BaseORM
             ->leftJoin('user_sys_options as p','p.id','=','user_doctor.position_id');
         $queryTotal->select([
             'user_doctor.id',
+            'user_doctor.name',
             'user_doctor.real_name',
             'user_doctor.hospital_id',
             'user_doctor.branch_id',

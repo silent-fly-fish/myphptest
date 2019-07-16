@@ -13,7 +13,10 @@ class HospitalCtl
      * @param $data
      */
     static function addHospital($data) {
-
+        $ret =  HospitalORM::isExistByHospitalName($data['name']);
+        if($ret){
+            return jsonOut('hospitalPhoneIsExist',false);
+        }
         $result = HospitalORM::addOne($data);
         if($result) {
             jsonOut('success',true);
@@ -26,7 +29,11 @@ class HospitalCtl
      * @param $data
      */
     static function updateHospital($data) {
+        $res = HospitalORM::isExistByUpdateHospitalName($data['id'],$data['name']);
 
+        if($res){
+            return jsonOut('hospitalPhoneIsExist',false);
+        }
         $result = HospitalORM::update($data);
         if($result) {
             jsonOut('success',true);
@@ -51,6 +58,12 @@ class HospitalCtl
      */
     static function getHospitalInfo($hospitalId) {
         $hospitalInfo = HospitalORM::getOneById($hospitalId);
+
+        if(!$hospitalInfo){
+            jsonOut('NoFoundData',false);
+        }
+        $hospitalInfo = $hospitalInfo->toArray();
+        $hospitalInfo['level'] = (int)$hospitalInfo['level'];
 
         jsonOut('success',$hospitalInfo);
     }

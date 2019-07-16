@@ -20,8 +20,10 @@ return [
     'inviteCodeNotExist'=>['code'=>3005,'msg'=>'不存在该邀请码'],
     'inviteCodeNotSelf' => ['code'=>3007,'msg'=>'邀请码不能是自己的'],
     'doctorPhoneNotExist' => ['code'=>3008,'msg'=>'医生账号不存在'],
+    'doctorPhoneIsExist' => ['code'=>3013,'msg'=>'医生账号已存在'],
     'doctorPhoneStop' => ['code'=>3009,'msg'=>'医生账号已禁用'],
     'doctorNotExist'=>['code'=>3010,'msg'=>'不存在该用户'],
     'inviteCodeIsExist' => ['code'=>3011,'msg'=>'已填写邀请码'],
     'isRefereeNameOrPhone' => ['code'=>3012,'msg'=>'销售人员手机号或姓名已存在'],
+    'hospitalPhoneIsExist' => ['code'=>3014,'msg'=>'医院名称已存在'],
 ];

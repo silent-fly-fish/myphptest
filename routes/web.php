@@ -402,6 +402,18 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
     //运营后台api
     $router->group(['prefix'=> 'admin'], function() use ($router){
 
+        $router->get('/branchlist',function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+
+            return \App\Http\Admin\SysOptionsCtl::getBranchList($postData);
+        });
+
+        $router->get('/positionlist',function(\Illuminate\Http\Request $request){
+            $postData = $request->all();
+
+            return \App\Http\Admin\SysOptionsCtl::getPositionList($postData);
+        });
+
         //举报
         $router->group(['prefix'=>'accusations'], function() use($router){
             /*

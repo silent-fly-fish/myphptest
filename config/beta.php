@@ -36,7 +36,7 @@ return [
     //定义测试服上线ip，地址
     'CIRCLE_SYS_IP'   =>'47.97.5.140:32090/index.php',
     'ORDER_SYS_IP'    =>'47.97.5.140:32091/index.php',
-    'QUESTION_SYS_IP' =>'47.97.5.140:32092/index.php',
+    'QUESTION_SYS_IP' =>'47.97.5.140:32092',
 //    'QUESTION_SYS_IP' =>'127.0.0.1:32092/index.php',
     'ARTICLE_SYS_IP'  =>'47.97.5.140:32093/index.php',
     'USER_SYS_IP'     =>'47.97.5.140:32094/index.php',
@@ -44,6 +44,7 @@ return [
 //    'INTERGRAL_SYS_IP'=>'127.0.0.1:32095/index.php',
     'INPUT_INVITE_ID' => 7, //输入验证码
     'LOGIN_ID' => 1, //登录
-    'TAG_SYS_IP'=>'127.0.0.1:32096/index.php',
+//    'TAG_SYS_IP'=>'47.97.5.140:32096/index.php',
+    'TAG_SYS_IP'=>'47.97.5.140:32096',
 
 ];

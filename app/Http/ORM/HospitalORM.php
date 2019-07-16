@@ -23,6 +23,19 @@ class HospitalORM extends BaseORM
         return Hospital::select(Hospital::$fields)->where(['county_code'=>$countryId,'r_status'=>1])->get()->toArray();
     }
 
+    static  function  isExistByHospitalName($name){
+        return Hospital::where([
+            'name'=>$name,
+            'r_status'=>1
+        ])->count();
+    }
+
+    static  function  isExistByUpdateHospitalName($id,$name){
+        return Hospital::where('id','<>',$id)->where([
+            'name'=>$name,
+            'r_status'=>1
+        ])->count();
+    }
     static function addOne($data) {
         $model = new Hospital();
         $data = self::isIncolumns($model, $data); //过滤添加参数
@@ -117,9 +130,12 @@ class HospitalORM extends BaseORM
                 'user_hospital.city_code',
                 'user_hospital.area_code',
                 'user_hospital.address',
+                'user_hospital.public_hospital',
+                'user_hospital.description',
+                'user_hospital.logo',
                 'ap.name as province_name',
                 'ac.name as city_name',
-                'acy.name as area_name',
+                'acy.name as area_name'
             ])
             ->leftJoin('user_area_province as ap','user_hospital.province_code','=','ap.code')
             ->leftJoin('user_area_city as ac','user_hospital.city_code','=','ac.code')

@@ -7,6 +7,7 @@ namespace App\Http\Admin;
 use App\Http\Module\Doctor;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
+use App\Http\ORM\DoctorTeamORM;
 use App\Http\ORM\SysOptionsORM;
 
 use App\Http\ORM\HospitalORM;
@@ -25,9 +26,13 @@ class DoctorCtl
         $doctorInfo = $doctorInfo?$doctorInfo->toArray():[];
         $tagArr = GET('tag.open/doctortag',$doctorId)['data'];
 
+//        print_r($tagArr);exit;
         if($tagArr){
             foreach ($tagArr as $k=>$v){
-                $tagArr[$k] = (int)$v;
+                foreach ($v as $ka=>$va){
+
+                    $tagArr[$k][$ka] = (int)$va;
+                }
             }
         }
         $doctorInfo['tag_ids'] = $tagArr;
@@ -66,6 +71,11 @@ class DoctorCtl
                 $sysOptionsJson = actionGetObjDataByData($ids,$sysOptionsArr,'id');
 
                 foreach ($ret['list'] as $k=>$v) {
+                    $team = DoctorTeamORM::getListByDoctorId($v['id']);
+                    if(!empty($team)) {
+                        $team = array_column($team,'real_name');
+                    }
+                    $ret['list'][$k]['team'] = $team;
                     $temp=[];
                     foreach (explode(',',$v['category_id_str']) as $kb=>$vb){
                         $arr=[];
@@ -82,6 +92,7 @@ class DoctorCtl
 
                     $ret['list'][$k]['categorys'] =         $temp;
                 }
+
             }
         }
 
@@ -101,7 +112,7 @@ class DoctorCtl
         $salt = substr(md5(time()),0,4);
 
         $data['password'] = md5(md5($data['password']).$salt);
-        $data['category_ids'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
+        $data['category_id_str'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
         $data['salt'] = $salt;
         $result = DoctorORM::addOne($data);
         if($result) {
@@ -125,9 +136,14 @@ class DoctorCtl
         if(empty($doctorInfo)) {
             jsonOut('doctorNotExist',false);
         }
+        $res = DoctorORM::isExistByDoctorName($data['doctor_id'],$data['name']);
+        if($res){
+            return jsonOut('doctorPhoneIsExist',false);
+        }
         if(isset($data['password'])) {
             $data['password'] = md5(md5($data['password']).$doctorInfo['salt']);
         }
+        $data['category_id_str'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
         $result = DoctorORM::update($data);
         if($result) {
             $tagData = ['doctor_id'=>$data['doctor_id'],'tag_ids'=>$data['tag_ids']];

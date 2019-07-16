@@ -1,4 +1,4 @@
-FROM registry-vpc.cn-hangzhou.aliyuncs.com/mztb0511/nginx-php:7.1
+FROM registry-vpc.cn-hangzhou.aliyuncs.com/mztb0511/nginx-phpfpm:7.1
 
 WORKDIR /var/www/html
 

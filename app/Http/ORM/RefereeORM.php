@@ -35,8 +35,8 @@ class RefereeORM extends BaseORM
         $query = $model::query();
         $queryTotal = $model::query();
 
-        $query->select($model::$fields);
-        $queryTotal->select($model::$fields);
+        $query->where('r_status','=',1)->select($model::$fields);
+        $queryTotal->where('r_status','=',1)->select($model::$fields);
 
         //手机号筛选
         if (isset($data['phone'])) {
@@ -78,5 +78,16 @@ class RefereeORM extends BaseORM
 
         return $isExist;
     }
+
+    static function isByNameUpdateOrPhone($id='',$name='',$phone='') {
+        $query = Referee::query();
+        $isExist = $query
+            ->where('id','<>',$id)
+            ->whereRaw("(name = '$name' or phone = '$phone')")
+            ->count();
+
+        return $isExist;
+    }
+
 
 }

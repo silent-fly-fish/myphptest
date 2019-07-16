@@ -653,10 +653,10 @@ return [
                         ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         102
                     ],
-                    'password' => [
-                        ['required' => ''],
-                        103
-                    ],
+//                    'password' => [
+//                        ['required' => ''],
+//                        103
+//                    ],
                     'telephone' => [
                         ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         104
@@ -694,7 +694,7 @@ return [
                 'err_code' => [
                     101 => 'real_name is required!',
                     102 => 'name is required and phoneNumber!',
-                    103 => 'password is required!',
+//                    103 => 'password is required!',
                     104 => 'telephone is required and phoneNumber!',
                     105 => 'hospital_id is required and integer!',
                     106 => 'branch_id is required and integer!',
@@ -718,7 +718,7 @@ return [
                     ],
                     'telephone' => [
                         ['Regx'=>'/^1[3456789]\d{9}$/'],
-                        1043
+                        103
                     ],
                     'hospital_id' => [
                         ['integer' => ''],
@@ -805,10 +805,10 @@ return [
                         ['required' => ''],
                         105
                     ],
-                    'logo' => [
-                        ['required' => ''],
-                        106
-                    ],
+//                    'logo' => [
+//                        ['required' => ''],
+//                        106
+//                    ],
                     'address' => [
                         ['required' => ''],
                         107
@@ -833,7 +833,7 @@ return [
                     103 => 'province_code is required!',
                     104 => 'city_code is required!',
                     105 => 'area_code is required!',
-                    106 => 'logo is required!',
+//                    106 => 'logo is required!',
                     107 => 'address is required!',
                     108 => 'description is required!',
                     109 => 'r_status is required and integer!',
