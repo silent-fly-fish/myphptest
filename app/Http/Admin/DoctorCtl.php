@@ -7,6 +7,7 @@ namespace App\Http\Admin;
 use App\Http\Module\Doctor;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
+use App\Http\ORM\DoctorTeamORM;
 use App\Http\ORM\SysOptionsORM;
 
 use App\Http\ORM\HospitalORM;
@@ -70,6 +71,11 @@ class DoctorCtl
                 $sysOptionsJson = actionGetObjDataByData($ids,$sysOptionsArr,'id');
 
                 foreach ($ret['list'] as $k=>$v) {
+                    $team = DoctorTeamORM::getListByDoctorId($v['id']);
+                    if(!empty($team)) {
+                        $team = array_column($team,'real_name');
+                    }
+                    $ret['list'][$k]['team'] = $team;
                     $temp=[];
                     foreach (explode(',',$v['category_id_str']) as $kb=>$vb){
                         $arr=[];
@@ -86,6 +92,7 @@ class DoctorCtl
 
                     $ret['list'][$k]['categorys'] =         $temp;
                 }
+
             }
         }
 
