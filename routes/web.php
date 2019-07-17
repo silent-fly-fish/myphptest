@@ -524,6 +524,14 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Admin\DoctorVisitsCtl::updateOrAddByData($postData);
             });
+
+
+            $router->delete('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return App\Http\Admin\DoctorVisitsCtl::delByID($postData);
+            });
         });
 
         $router->group(['prefix'=>'hospitals'],function () use ($router) {
