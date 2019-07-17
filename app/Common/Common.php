@@ -411,6 +411,17 @@ function getUserToken($patientId) {
     return $token;
 }
 
+/**
+ * 生成用户唯一用户名
+ * @param $id
+ */
+function createUsername($id) {
+    $rand = rand(1000,9999);
+    $username = 'SGY_'.md5($id.$rand);
+
+    return $username;
+}
+
 /** =====================redis缓存相关配置===================== **/
 
 function getRedisFix(){

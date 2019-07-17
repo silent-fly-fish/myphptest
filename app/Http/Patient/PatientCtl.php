@@ -13,6 +13,9 @@ use App\Http\ORM\PatientHistoryORM;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientSuggestORM;
 use App\Http\ORM\PatientAccusationORM;
+use App\Http\ORM\PatientWechatORM;
+use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class PatientCtl
 {
@@ -74,83 +77,115 @@ class PatientCtl
     /**
      * 手机号注册
      * @param $phone
-     * @param $code
+     * @param $unionid
      */
-    static function phoneRegister($phone,$code) {
-        //验证手机号是否注册
-        $isRegister = PatientORM::isExistPhone($phone);
-        if($isRegister) {
-            jsonOut('phoneIsRegister',false);
-        }
-        //验证手机验证码是否正确
-        $redisCode = getRedisDataByKey(env('REDIS_CODE_PATIENT').$phone);
-        if(($redisCode != $code && $code != '708090') || empty($code)) {
-            jsonOut('phoneCodeError',false);
-        }
+    static function phoneRegister($phone,$unionid = '') {
+
         $data['phone'] = $phone;
 
-        $patientId = PatientORM::addOne($data);
-        if($patientId) {
+
+        //开启事务
+        DB::beginTransaction();
+        try{
+            $patientId = PatientORM::addOne($data);
+            if(!empty($unionid)) {
+                $wxInfo = PatientWechatORM::getOneByUnionid($unionid);
+                if(empty($wxInfo)) {
+                    jsonOut('error',false);
+                }
+                $wxData = [
+                    'unionid' => $unionid,
+                    'patient_id' => $patientId
+                ];
+                @PatientWechatORM::update($wxData);
+            }
             //生成用户7位唯一邀请码
             $data2['code'] = createCode($patientId,2);
             $data2['patient_id'] = $patientId;
+            $data2['name'] = createUsername($patientId);
+            $data2['head_img'] = ''; //todo 默认头像
+            $data2['login_time'] = time();
             @PatientORM::update($data2);
 
             $info = [
                 'id' => $patientId,
-                'token' => getUserToken($isRegister['id']),
+                'token' => getUserToken($patientId),
                 'phone' => $phone,
-                'name' => '',
-                'head_img' => ''
+                'name' => $data2['name'],
+                'head_img' => $data2['head_img']
             ];
 
-            $result = $info;
-        }else {
-            $result = false;
+            DB::commit();
+            jsonOut('success',$info);
+        }catch (\Exception $e) {
+            DB::rollback();
+            jsonOut('error',false);
         }
-        jsonOut('success',$result);
+
+
+
     }
 
     /**
      * 手机验证码登录
      * @param $phone
      * @param $code
+     * @param $unionid
      */
-    static function phoneCodeLogin($phone,$code) {
+    static function phoneCodeLogin($phone,$code,$unionid = '') {
         //验证手机号是否注册
         $isRegister = PatientORM::isExistPhone($phone);
-        if(!$isRegister) {
-            jsonOut('phoneNotRegister',false);
-        }
         //验证手机验证码是否正确
         $redisCode = getRedisDataByKey(env('REDIS_CODE_PATIENT').$phone);
         if(($redisCode != $code && $code != '708090') || empty($code)) {
             jsonOut('phoneCodeError',false);
         }
-        $data['patient_id'] = $isRegister['id'];
+        if(!$isRegister) {
+            //注册逻辑
+            self::phoneRegister($phone,$unionid);
+        }
+        $patientId = $isRegister['id'];
+        //登录逻辑
+        $data['patient_id'] = $patientId;
         $data['login_time'] = time();
 
-        $result = PatientORM::update($data);
-        if($result) {
-
+        //开启事务
+        DB::beginTransaction();
+        try{
+            $result = PatientORM::update($data);
+            if(!empty($unionid)) {
+                $wxInfo = PatientWechatORM::getOneByUnionid($unionid);
+                if(empty($wxInfo)) {
+                    jsonOut('error',false);
+                }
+                $wxData = [
+                    'unionid' => $unionid,
+                    'patient_id' => $patientId
+                ];
+                @PatientWechatORM::update($wxData);
+            }
 
             $info = [
-                'id' => $isRegister['id'],
-                'token' => getUserToken($isRegister['id']),
+                'id' => $patientId,
+                'token' => getUserToken($patientId),
                 'phone' => $isRegister['phone'],
                 'name' => $isRegister['name'],
                 'head_img' => $isRegister['head_img']
             ];
             $taskInfo = [
-                'patient_id' => $isRegister['id'],
+                'patient_id' => $patientId,
                 'task_id' =>getConfig('LOGIN_ID') ,
             ];
-//            event(new ExamineUserEvent($taskInfo)); //todo 暂时去除
-            $result = $info;
-        } else {
-            $result = false;
+            event(new ExamineUserEvent($taskInfo)); //todo 暂时去除
+            jsonOut('success',$info);
+
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rallback();
+            jsonOut('error',false);
         }
-        jsonOut('success',$result);
+
+
     }
 
     /**
@@ -291,28 +326,25 @@ class PatientCtl
      * 发送注册短信验证码
      * @param $phone
      */
-    static function phoneRegisterCode($phone) {
-        $patientInfo  = PatientORM::isExistPhone($phone);
-        if($patientInfo) {
-            jsonOut('phoneIsRegister',false);
-        }
-        $result = sendSms($phone,1);
-        if($result) {
-            jsonOut('success',true);
-        }
-        jsonOut('success',false);
-
-    }
+//    static function phoneRegisterCode($phone) {
+//        $patientInfo  = PatientORM::isExistPhone($phone);
+//        if($patientInfo) {
+//            jsonOut('phoneIsRegister',false);
+//        }
+//        $result = sendSms($phone,1);
+//        if($result) {
+//            jsonOut('success',true);
+//        }
+//        jsonOut('success',false);
+//
+//    }
 
     /**
-     * 发送注册短信验证码
+     * 发送注册/登录短信验证码
      * @param $phone
      */
     static function phoneLoginCode($phone) {
-        $patientInfo  = PatientORM::isExistPhone($phone);
-        if(empty($patientInfo)) {
-            jsonOut('phoneNotRegister',false);
-        }
+
         $result = sendSms($phone,1);
         if($result) {
             jsonOut('success',true);

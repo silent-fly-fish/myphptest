@@ -65,20 +65,21 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
         });
 
         //用户手机号注册
-        $router->post('/register', function(\Illuminate\Http\Request $request){
-            $postData = $request->all();
-            $postData = $postData['data'];
-            return App\Http\Patient\PatientCtl::phoneRegister($postData['phone'],$postData['code']);
-        });
+//        $router->post('/register', function(\Illuminate\Http\Request $request){
+//            $postData = $request->all();
+//            $postData = $postData['data'];
+//            return App\Http\Patient\PatientCtl::phoneRegister($postData['phone'],$postData['code']);
+//        });
 
-        //用户手机号登录
+        //用户手机号登录/注册/微信账号绑定
         $router->post('/login', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
             $postData = $postData['data'];
-            return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code']);
+            $unionid = isset($postData['unionid'])? $postData['unionid'] : '';
+            return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code'],$unionid);
         });
 
-        //用户手机号登录
+        //退出登录
         $router->post('/logout', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
             $postData = $postData['data'];
@@ -89,11 +90,11 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
         //发送短信验证码
         $router->group(['prefix'=> 'send'],function () use ($router){
             //发送注册验证码
-            $router->post('/registercode', function(\Illuminate\Http\Request $request){
-                $postData = $request->all();
-                $postData = $postData['data'];
-                return App\Http\Patient\PatientCtl::phoneRegisterCode($postData['phone']);
-            });
+//            $router->post('/registercode', function(\Illuminate\Http\Request $request){
+//                $postData = $request->all();
+//                $postData = $postData['data'];
+//                return App\Http\Patient\PatientCtl::phoneRegisterCode($postData['phone']);
+//            });
 
             //发送登录验证码
             $router->post('/logincode', function(\Illuminate\Http\Request $request){
@@ -189,13 +190,13 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return \App\Http\Patient\WechatCtl::bindPhone($phone,$code,$unionid);
             });
 
-            //发送绑定验证码
-            $router->post('/send/bindcode',function(\Illuminate\Http\Request $request) {
-                $postData = $request->all();
-                $postData = $postData['data'];
-                $phone = $postData['phone'];
-                return \App\Http\Patient\WechatCtl::sendBindCode($phone);
-            });
+//            //发送绑定验证码
+//            $router->post('/send/bindcode',function(\Illuminate\Http\Request $request) {
+//                $postData = $request->all();
+//                $postData = $postData['data'];
+//                $phone = $postData['phone'];
+//                return \App\Http\Patient\WechatCtl::sendBindCode($phone);
+//            });
         });
 
         //落地页海外医院
