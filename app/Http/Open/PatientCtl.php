@@ -19,6 +19,12 @@ class PatientCtl
         jsonOut('success',$patientInfo);
     }
 
+    static function getPatientInfoByPhone($phone){
+        $patientInfo = PatientORM::getOneByPhone($phone);
+
+        jsonOut('success',$patientInfo);
+    }
+
     static function getPatientList($patientIds) {
         $patientIds = explode(',',$patientIds);
         $patientList = PatientORM::getAllByOpen($patientIds);

@@ -759,7 +759,6 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Open\PatientCtl::getPatientInfo($patientId);
             });
-
             //患者详情
             $router->put('', function(\Illuminate\Http\Request $request){
                 $putData = $request->all();
@@ -775,6 +774,13 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Open\PatientCtl::decrease($putData);
             });
+        });
+
+        //患者详情
+        $router->get('patientsinfo', function(\Illuminate\Http\Request $request){
+            $getData = $request->all();
+            $phone = isset($getData['phone'])?$getData['phone']:'';
+            return App\Http\Open\PatientCtl::getPatientInfoByPhone($phone);
         });
     });
 });
