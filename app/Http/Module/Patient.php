@@ -27,6 +27,7 @@ class Patient extends Model
         'token_time',
         'login_time',
         'cash',
+        'address',
         'invite_code',
         'r_status'
     ];
