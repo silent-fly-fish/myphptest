@@ -22,6 +22,7 @@ class PatientCtl
      */
     static function getPatientInfo($patientId) {
         $patientInfo = PatientORM::getOneById($patientId);
+        $patientInfo['birth'] = empty($patientInfo['birth'])? 0 : date('Y-m-d',$patientInfo['birth']);
         $intergralInfo = GET('intergral.open/intergral',$patientId)['data'];
         $patientInfo['intergral'] = isset($intergralInfo['intergral_number'])? $intergralInfo['intergral_number'] : 0;
 
@@ -40,6 +41,17 @@ class PatientCtl
         }
         if(isset($data['head_img'])) {
             $params['head_img'] = $data['head_img'];
+        }
+        if(isset($data['sex'])) {
+            $params['sex'] = $data['sex']; //0未知 1男 2女
+        }
+
+        if(isset($data['birth'])) {
+            $params['birth'] = strtotime($data['birth']);
+        }
+
+        if(isset($data['address'])) {
+            $params['address'] = $data['address'];
         }
 
         $result = PatientORM::update($params);
