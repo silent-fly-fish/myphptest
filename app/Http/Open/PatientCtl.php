@@ -18,7 +18,6 @@ class PatientCtl
 
         jsonOut('success',$patientInfo);
     }
-
     static function getPatientList($patientIds) {
         $patientIds = explode(',',$patientIds);
         $patientList = PatientORM::getAllByOpen($patientIds);

@@ -760,7 +760,6 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Open\PatientCtl::getPatientInfo($patientId);
             });
-
             //患者详情
             $router->put('', function(\Illuminate\Http\Request $request){
                 $putData = $request->all();
@@ -770,12 +769,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
             //减积分操作
-            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
-                $putData = $request->all();
-                $putData = $putData['data'];
-
-                return App\Http\Open\PatientCtl::decrease($putData);
-            });
+//            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
+//                $putData = $request->all();
+//                $putData = $putData['data'];
+//
+//                return App\Http\Open\PatientCtl::decrease($putData);
+//            });
         });
     });
 });
