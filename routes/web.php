@@ -768,19 +768,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             });
 
             //减积分操作
-            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
-                $putData = $request->all();
-                $putData = $putData['data'];
-
-                return App\Http\Open\PatientCtl::decrease($putData);
-            });
-        });
-
-        //患者详情
-        $router->get('patientsinfo', function(\Illuminate\Http\Request $request){
-            $getData = $request->all();
-            $phone = isset($getData['phone'])?$getData['phone']:'';
-            return App\Http\Open\PatientCtl::getPatientInfoByPhone($phone);
+//            $router->put('/decrease/intergral', function(\Illuminate\Http\Request $request){
+//                $putData = $request->all();
+//                $putData = $putData['data'];
+//
+//                return App\Http\Open\PatientCtl::decrease($putData);
+//            });
         });
     });
 });

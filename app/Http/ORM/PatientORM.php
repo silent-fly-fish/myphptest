@@ -11,10 +11,6 @@ class PatientORM extends BaseORM
         return Patient::find($patientId, Patient::$fields);
     }
 
-    static function getOneByPhone($phone){
-        return Patient::select('phone','password','salt')->where(['phone'=>$phone,'r_status'=>1])->first();
-    }
-
     static function getInByIds($patientIds) {
 
         return Patient::select(Patient::$fields)->where(['r_status'=>1])->whereIn('id',$patientIds)->get();
