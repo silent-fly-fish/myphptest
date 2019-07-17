@@ -35,4 +35,22 @@ class DoctorVisitsCtl
         jsonOut('success',$result);
     }
 
+    /**
+     * 删除出诊信息
+     * @param $postData
+     */
+
+    static function delByID($postData){
+        $id = isset($postData['id'])?$postData['id']:'';
+        $doctorId = isset($postData['doctor_id'])?$postData['doctor_id']:'';
+        $recID = DoctorVisitORM::delByID($id);
+
+        if($recID){
+            return jsonOut('success',true);
+        }else{
+            return jsonOut('error',false);
+        }
+
+    }
+
 }

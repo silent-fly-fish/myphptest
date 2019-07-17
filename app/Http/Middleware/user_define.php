@@ -1233,6 +1233,56 @@ return [
             ],
 
         ],
+
+
+        'patient/records'=>[
+            'POST' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => '','integer'=>''],
+                        101
+                    ],
+                    'category_code' => [
+                        ['required' => ''],
+                        102
+                    ],
+                    'cycle_id' => [
+                        ['required' => '','integer'=>''],
+                        103
+                    ],
+                    'img_urls' => [
+                        ['required' => ''],
+                        104
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required and integer',
+                    102 => 'category_code is required ',
+                    103 => 'cycle_id is required and intege',
+                    104 => 'img_urls is required ',
+                ],
+            ],
+        ],
+
+        'patient/records/completion'=>[
+            'GET' => [
+                'params' => [
+                    'patient_id' => [
+                        ['required' => ''],
+                        101
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'patient_id is required ',
+
+                ],
+            ],
+        ],
+
+
+
 	]
 ];
 

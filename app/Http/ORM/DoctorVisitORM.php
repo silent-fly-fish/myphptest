@@ -73,4 +73,27 @@ class DoctorVisitORM extends BaseORM
         return true;
     }
 
+    static function delByID($id=''){
+
+        $DoctorVisitM = DoctorVisit::where([
+            'id'=>$id,
+            'r_status'=>1
+        ])->first();
+
+        $data = [
+            'id'=>$id,
+            'r_status'=>0
+        ];
+        if ($DoctorVisitM){
+
+            $data=self::isIncolumns($DoctorVisitM,$data);
+            $DoctorVisitM->fill($data);
+            $ret= $DoctorVisitM->save();
+            return  $ret;
+
+        }
+        return 0;
+
+    }
+
 }
