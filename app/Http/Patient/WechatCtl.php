@@ -25,25 +25,26 @@ class WechatCtl
         $token = $app->oauth->getAccessToken($code);
 
 
-//        $accessToken = $token->getToken();
-//        $expiresIn =$token['expires_in'];
-//        $unionid = $token['unionid'];
 
         $user = $app->oauth->user($token);
 
         $userInfo = $user->getOriginal();
-        var_dump($userInfo);die;
+        $unionid = $userInfo['unionid'];
         $isWechatRegister = PatientWechatORM::getOneByUnionid($unionid);
 
         //是否授权当前系统
         if(!$isWechatRegister) {
             $data = [
-                'open_id' => $user->getId(),
-                'nickname' => $user->getNickname(),
-                'head_img' => $user->getAvatar(),
-                'unionid' => $unionid
+                'open_id' => $userInfo['openid'],
+                'nickname' => $userInfo['nickname'],
+                'head_img' => $userInfo['headimgurl'],
+                'unionid' => $unionid,
+                'sex' => $userInfo['sex'],
+                'province' => $userInfo['province'],
+                'city' => $userInfo['city'],
+                'area' => $userInfo['country']
             ];
-            $result = PatientWechatORM::addOne($data);
+            $result = PatientWechatORM::addOne($data); //todo 队列操作
 
             if($result) {
                 jsonOut('success',$unionid);
@@ -53,15 +54,16 @@ class WechatCtl
         //是否绑定系统用户
         if(!empty($isWechatRegister['patient_id'])) {
             $patientId = $isWechatRegister['patient_id'];
-            $info['patient_id'] = $info['id'] = $patientId;
-            $info ['token'] = getUserToken($patientId);
 
-            $result = PatientORM::update($info);
-            if($result) {
-                jsonOut('success',$info);
-            }
+            $patientInfo = PatientORM::getOneById($patientId);
+            $info = [
+                'id' => $patientInfo['id'],
+                'phone' => $patientInfo['phone'],
+                'name' => $patientInfo['name'],
+                'head_img' => $patientInfo['head_img']
+            ];
+            jsonOut('success',$info);
 
-            jsonOut('error',false);
         }
 
         jsonOut('success',$unionid);

@@ -109,7 +109,6 @@ class PatientCtl
 
             $info = [
                 'id' => $patientId,
-                'token' => getUserToken($patientId),
                 'phone' => $phone,
                 'name' => $data2['name'],
                 'head_img' => $data2['head_img']
@@ -167,7 +166,6 @@ class PatientCtl
 
             $info = [
                 'id' => $patientId,
-                'token' => getUserToken($patientId),
                 'phone' => $isRegister['phone'],
                 'name' => $isRegister['name'],
                 'head_img' => $isRegister['head_img']
