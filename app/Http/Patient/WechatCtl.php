@@ -23,16 +23,16 @@ class WechatCtl
 
         //获取accessToken
         $token = $app->oauth->getAccessToken($code);
-var_dump($token);die;
 
-        $accessToken = $token['token'];
+
+        $accessToken = $token['access_token'];
         $expiresIn =$token['expires_in'];
         $unionid = $token['unionid'];
 
         $user = $app->oauth->user($accessToken);
 
         $userInfo = $user->getOriginal();
-
+        var_dump($userInfo);die;
         $isWechatRegister = PatientWechatORM::getOneByUnionid($unionid);
 
         //是否授权当前系统
