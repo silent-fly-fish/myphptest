@@ -29,10 +29,10 @@ class PatientWechatORM extends BaseORM
 
     static function update($data) {
         $model = new PatientWechat();
-        $unionid = $data['unionid'];
+        $id = $data['id'];
         $data = self::isIncolumns($model, $data);
 
-        return $model::whereRaw('unionid='.$unionid)->update($data);
+        return $model::whereRaw('id='.$id)->update($data);
     }
 
 }

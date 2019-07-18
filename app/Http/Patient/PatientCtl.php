@@ -94,7 +94,7 @@ class PatientCtl
                     jsonOut('error',false);
                 }
                 $wxData = [
-                    'unionid' => $unionid,
+                    'unionid' => $wxInfo['id'],
                     'patient_id' => $patientId
                 ];
                 @PatientWechatORM::update($wxData);
@@ -154,13 +154,15 @@ class PatientCtl
             $result = PatientORM::update($data);
             if(!empty($unionid)) {
                 $wxInfo = PatientWechatORM::getOneByUnionid($unionid);
+
                 if(empty($wxInfo)) {
                     jsonOut('error',false);
                 }
                 $wxData = [
-                    'unionid' => $unionid,
+                    'id' => $wxInfo['id'],
                     'patient_id' => $patientId
                 ];
+                
                 @PatientWechatORM::update($wxData);
             }
 
@@ -170,16 +172,17 @@ class PatientCtl
                 'name' => $isRegister['name'],
                 'head_img' => $isRegister['head_img']
             ];
+
             $taskInfo = [
                 'patient_id' => $patientId,
                 'task_id' =>getConfig('LOGIN_ID') ,
             ];
             event(new ExamineUserEvent($taskInfo)); //todo 暂时去除
+            DB::commit();
             jsonOut('success',$info);
 
-            DB::commit();
         }catch (\Exception $e) {
-            DB::rallback();
+            DB::rollback();
             jsonOut('error',false);
         }
 
