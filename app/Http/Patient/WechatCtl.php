@@ -25,11 +25,11 @@ class WechatCtl
         $token = $app->oauth->getAccessToken($code);
 
 
-        $accessToken = $token['access_token'];
-        $expiresIn =$token['expires_in'];
-        $unionid = $token['unionid'];
+//        $accessToken = $token->getToken();
+//        $expiresIn =$token['expires_in'];
+//        $unionid = $token['unionid'];
 
-        $user = $app->oauth->user($accessToken);
+        $user = $app->oauth->user($token);
 
         $userInfo = $user->getOriginal();
         var_dump($userInfo);die;
