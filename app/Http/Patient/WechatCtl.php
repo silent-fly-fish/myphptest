@@ -23,7 +23,7 @@ class WechatCtl
 
         //获取accessToken
         $token = $app->oauth->getAccessToken($code);
-
+var_dump($token);die;
 
         $accessToken = $token['token'];
         $expiresIn =$token['expires_in'];
