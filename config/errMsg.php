@@ -26,4 +26,6 @@ return [
     'inviteCodeIsExist' => ['code'=>3011,'msg'=>'已填写邀请码'],
     'isRefereeNameOrPhone' => ['code'=>3012,'msg'=>'销售人员手机号或姓名已存在'],
     'hospitalPhoneIsExist' => ['code'=>3014,'msg'=>'医院名称已存在'],
+    'accountIsExist' => ['code'=>3014,'msg'=>'后台账号已存在'],
+    'passwordError' => ['code'=>3015,'msg'=>'密码错误'],
 ];

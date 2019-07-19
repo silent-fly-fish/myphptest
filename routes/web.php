@@ -684,6 +684,30 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
 
         });
+
+        $router->group(['prefix'=>'accounts'],function () use ($router) {
+            //添加账号
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\AccountCtl::addOne($postData);
+            });
+
+            $router->put('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\AccountCtl::updateOne($postData);
+            });
+        });
+
+        $router->post('login',function(\Illuminate\Http\Request $request) {
+            $postData = $request->all();
+            $postData = $postData['data'];
+
+            return \App\Http\Admin\AccountCtl::login($postData);
+        });
     });
 
     //子系统调用api
