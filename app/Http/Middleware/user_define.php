@@ -1281,6 +1281,45 @@ return [
             ],
         ],
 
+        'admin/admin/login'=>[
+            'POST' => [
+                'params' => [
+                    'username' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'password' => [
+                        ['required' => ''],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'username is required ',
+                    102 => 'password is required ',
+                ],
+            ],
+        ],
+        'admin/admin'=>[
+            'POST' => [
+                'params' => [
+                    'username' => [
+                        ['required' => ''],
+                        101
+                    ],
+                    'password' => [
+                        ['required' => ''],
+                        102
+                    ],
+
+                ],
+                'err_code' => [
+                    101 => 'username is required ',
+                    102 => 'password is required ',
+                ],
+            ],
+        ],
+
 
 
 	]

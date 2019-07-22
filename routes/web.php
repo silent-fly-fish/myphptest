@@ -708,6 +708,26 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
             return \App\Http\Admin\AccountCtl::login($postData);
         });
+
+        $router->group(['prefix'=>'admin'],function () use ($router) {
+            //添加账号
+            $router->post('',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+
+                return \App\Http\Admin\AdminCtl::addAdmin($postData);
+            });
+
+            //登录操作
+            $router->post('/login',function(\Illuminate\Http\Request $request) {
+                $postData = $request->all();
+                $postData = $postData['data'];
+                $username = $postData['username'];
+                $password = $postData['password'];
+                $ip = $request->getClientIp();
+                return \App\Http\Admin\AdminCtl::adminLogin($username,$password,$ip);
+            });
+        });
     });
 
     //子系统调用api
