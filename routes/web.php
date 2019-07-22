@@ -724,8 +724,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $postData = $postData['data'];
                 $username = $postData['username'];
                 $password = $postData['password'];
-//                $ip = $request->getClientIp();
-                $ip = getRealIp();
+                $ip = $request->getClientIp();
                 return \App\Http\Admin\AdminCtl::adminLogin($username,$password,$ip);
             });
         });
