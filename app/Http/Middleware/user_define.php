@@ -424,11 +424,11 @@ return [
                         ['required' => '','Regx'=>'/^1[3456789]\d{9}$/'],
                         101
                     ],
-                    'real_name' => [
+                    'name' => [
                         ['required' => ''],
                         102
                     ],
-                    'hospital_name' => [
+                    'hospital' => [
                         ['required' => ''],
                         103
                     ],
@@ -440,8 +440,8 @@ return [
                 ],
                 'err_code' => [
                     101 => 'phone required and phoneNumber!',
-                    102 => 'real_name is required!',
-                    103 => 'hospital_name is required!',
+                    102 => 'name is required!',
+                    103 => 'hospital is required!',
                     104 => 'code is required!',
                 ],
             ]
