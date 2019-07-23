@@ -20,7 +20,7 @@ class WechatCtl
      * @param $udid
      * @param $platform
      */
-    static function getTokenByCode($product,$code,$udid = '',$platform = '') {
+    static function getTokenByCode($product,$code) {
         $app = EasyWechat::officialAccount($product);
 
         //获取accessToken
@@ -47,7 +47,7 @@ class WechatCtl
                 'area' => $userInfo['country']
             ];
             $result = PatientWechatORM::addOne($data); //todo 队列操作
-//            jsonOut('success',$result);
+            var_dump($result);die;
             if($result) {
                 jsonOut('success',$unionid);
             }
