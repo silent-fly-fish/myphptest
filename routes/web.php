@@ -179,7 +179,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             // 微信授权接口
             $router->get('/login',function(\Illuminate\Http\Request $request) {
                 $getData = $request->all();
-                echo 1;die;
+                jsonOut('success',1);
                 $code = $getData['code'];
 //                $udid = isset($getData['udid'])? $getData['udid'] : '';
 //                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
