@@ -181,9 +181,9 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $getData = $request->all();
                 $header = $request->header();
                 $code = $getData['code'];
-                $udid = isset($getData['udid'])? $getData['udid'] : '';
-                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
-                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code,$udid,$platform);
+//                $udid = isset($getData['udid'])? $getData['udid'] : '';
+//                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code);
             });
 
             //账号绑定

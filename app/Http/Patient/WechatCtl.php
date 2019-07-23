@@ -47,7 +47,7 @@ class WechatCtl
                 'area' => $userInfo['country']
             ];
             $result = PatientWechatORM::addOne($data); //todo 队列操作
-            jsonOut('success',$result);
+//            jsonOut('success',$result);
             if($result) {
                 jsonOut('success',$unionid);
             }
@@ -64,22 +64,22 @@ class WechatCtl
                 'name' => $patientInfo['name'],
                 'head_img' => $patientInfo['head_img']
             ];
-            $taskInfo = [
-                'patient_id' => $patientId,
-                'task_id' =>getConfig('LOGIN_ID') ,
-            ];
-            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
-            if(!empty($udid)) {
-                $udInfo = [
-                    'registerId' => $udid,
-                    'platform' => $platform,
-                    'userId' => $patientId,
-                    'roleType' => 'patient'
-                ];
-
-                event(new AddUserUdidEvent($udInfo)); //推送设备号
-
-            }
+//            $taskInfo = [
+//                'patient_id' => $patientId,
+//                'task_id' =>getConfig('LOGIN_ID') ,
+//            ];
+//            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
+//            if(!empty($udid)) {
+//                $udInfo = [
+//                    'registerId' => $udid,
+//                    'platform' => $platform,
+//                    'userId' => $patientId,
+//                    'roleType' => 'patient'
+//                ];
+//
+//                event(new AddUserUdidEvent($udInfo)); //推送设备号
+//
+//            }
             jsonOut('success',$info);
 
         }
