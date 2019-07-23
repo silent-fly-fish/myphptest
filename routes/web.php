@@ -74,9 +74,12 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
         //用户手机号登录/注册/微信账号绑定
         $router->post('/login', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
+            $header = $request->header();
             $postData = $postData['data'];
             $unionid = isset($postData['unionid'])? $postData['unionid'] : '';
-            return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code'],$unionid);
+            $udid = isset($postData['udid'])? $postData['udid'] : '';
+            $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+            return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code'],$unionid,$udid,$platform);
         });
 
         //退出登录
@@ -176,8 +179,11 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             // 微信授权接口
             $router->get('/login',function(\Illuminate\Http\Request $request) {
                 $getData = $request->all();
+                $header = $request->header();
                 $code = $getData['code'];
-                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code);
+                $udid = isset($getData['udid'])? $getData['udid'] : '';
+                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code,$udid,$platform);
             });
 
             //账号绑定

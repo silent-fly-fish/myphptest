@@ -4,6 +4,7 @@
 namespace App\Http\Patient;
 
 
+use App\Events\AddUserUdidEvent;
 use App\Events\ExamineUserEvent;
 use App\Http\Module\PatientHistory;
 use App\Http\ORM\DoctorViewORM;
@@ -79,8 +80,10 @@ class PatientCtl
      * 手机号注册
      * @param $phone
      * @param $unionid
+     * @param $udid
+     * @param $platform
      */
-    static function phoneRegister($phone,$unionid = '') {
+    static function phoneRegister($phone,$unionid = '',$udid = '',$platform = '') {
 
         $data['phone'] = $phone;
 
@@ -114,6 +117,21 @@ class PatientCtl
                 'name' => $data2['name'],
                 'head_img' => $data2['head_img']
             ];
+            $taskInfo = [
+                'patient_id' => $patientId,
+                'task_id' =>getConfig('LOGIN_ID') ,
+            ];
+
+            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
+            if(!empty($udid)) {
+                $udInfo = [
+                    'registerId' => $udid,
+                    'platform' => $platform,
+                    'userId' => $patientId,
+                    'roleType' => 'patient'
+                ];
+                event(new AddUserUdidEvent($udInfo)); //推送设备号
+            }
 
             DB::commit();
             jsonOut('success',$info);
@@ -131,8 +149,10 @@ class PatientCtl
      * @param $phone
      * @param $code
      * @param $unionid
+     * @param $udid
+     * @param $platform
      */
-    static function phoneCodeLogin($phone,$code,$unionid = '') {
+    static function phoneCodeLogin($phone,$code,$unionid = '',$udid = '',$platform = '') {
         //验证手机号是否注册
         $isRegister = PatientORM::isExistPhone($phone);
         //验证手机验证码是否正确
@@ -142,7 +162,7 @@ class PatientCtl
         }
         if(!$isRegister) {
             //注册逻辑
-            self::phoneRegister($phone,$unionid);
+            self::phoneRegister($phone,$unionid,$udid,$platform);
         }
         $patientId = $isRegister['id'];
         //登录逻辑
@@ -178,7 +198,19 @@ class PatientCtl
                 'patient_id' => $patientId,
                 'task_id' =>getConfig('LOGIN_ID') ,
             ];
-            event(new ExamineUserEvent($taskInfo)); //todo 暂时去除
+
+            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
+            if(!empty($udid)) {
+                $udInfo = [
+                    'registerId' => $udid,
+                    'platform' => $platform,
+                    'userId' => $patientId,
+                    'roleType' => 'patient'
+                ];
+
+               event(new AddUserUdidEvent($udInfo)); //推送设备号
+
+            }
             DB::commit();
             jsonOut('success',$info);
 

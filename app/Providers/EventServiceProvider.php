@@ -15,5 +15,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ExamineUserEvent' => [
             'App\Listeners\AddIntergralListener',
         ],
+        'App\Events\AddUserUdidEvent' => [
+            'App\Listeners\AddUdidListener',
+        ],
     ];
 }

@@ -2,6 +2,7 @@
 
 
 namespace App\Http\Patient;
+use App\Events\AddUserUdidEvent;
 use App\Events\ExamineUserEvent;
 use App\Http\ORM\PatientORM;
 use App\Http\ORM\PatientWechatORM;
@@ -16,9 +17,10 @@ class WechatCtl
      * 获取accessToken
      * @param $product
      * @param $code
-     * @return array
+     * @param $udid
+     * @param $platform
      */
-    static function getTokenByCode($product,$code) {
+    static function getTokenByCode($product,$code,$udid = '',$platform = '') {
         $app = EasyWechat::officialAccount($product);
 
         //获取accessToken
@@ -62,6 +64,22 @@ class WechatCtl
                 'name' => $patientInfo['name'],
                 'head_img' => $patientInfo['head_img']
             ];
+            $taskInfo = [
+                'patient_id' => $patientId,
+                'task_id' =>getConfig('LOGIN_ID') ,
+            ];
+            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
+            if(!empty($udid)) {
+                $udInfo = [
+                    'registerId' => $udid,
+                    'platform' => $platform,
+                    'userId' => $patientId,
+                    'roleType' => 'patient'
+                ];
+
+                event(new AddUserUdidEvent($udInfo)); //推送设备号
+
+            }
             jsonOut('success',$info);
 
         }
