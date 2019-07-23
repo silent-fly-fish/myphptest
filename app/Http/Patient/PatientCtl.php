@@ -28,6 +28,7 @@ class PatientCtl
         $patientInfo['birth'] = empty($patientInfo['birth'])? 0 : date('Y-m-d',$patientInfo['birth']);
         $intergralInfo = GET('intergral.open/intergral',$patientId)['data'];
         $patientInfo['intergral'] = isset($intergralInfo['intergral_number'])? $intergralInfo['intergral_number'] : 0;
+        $patientInfo['sign_date'] = isset($intergralInfo['sign_date'])? $intergralInfo['sign_date'] : 0;
 
         jsonOut('success',$patientInfo);
     }
