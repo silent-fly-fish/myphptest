@@ -33,7 +33,9 @@ class WechatCtl
         $userInfo = $user->getOriginal();
         $unionid = $userInfo['unionid'];
         $isWechatRegister = PatientWechatORM::getOneByUnionid($unionid);
-
+        $unionidData = [
+            'unionid' => $unionid
+        ];
         //是否授权当前系统
         if(!$isWechatRegister) {
             $data = [
@@ -47,9 +49,8 @@ class WechatCtl
                 'area' => $userInfo['country']
             ];
             $result = PatientWechatORM::addOne($data); //todo 队列操作
-
             if($result) {
-                jsonOut('success',$unionid);
+                jsonOut('success',$unionidData);
             }
             jsonOut('error',false);
         }
@@ -84,7 +85,7 @@ class WechatCtl
 
         }
 
-        jsonOut('success',$unionid);
+        jsonOut('success',$unionidData);
 
     }
 
