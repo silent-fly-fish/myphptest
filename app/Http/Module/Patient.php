@@ -29,7 +29,8 @@ class Patient extends Model
         'cash',
         'address',
         'invite_code',
-        'r_status'
+        'r_status',
+        'code'
     ];
 
 }
