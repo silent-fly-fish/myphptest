@@ -734,6 +734,20 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 return \App\Http\Admin\AdminCtl::adminLogin($username,$password,$ip);
             });
         });
+
+        $router->group(['prefix'=>'suggests'],function () use ($router) {
+            $router->get('',function(\Illuminate\Http\Request $request) {
+                $getData = $request->all();
+
+                return \App\Http\Admin\PatientSuggestCtl::getPatientSuggestList($getData);
+            });
+
+            $router->get('/{suggest_id}', function ($suggest_id){
+
+
+                return \App\Http\Admin\PatientSuggestCtl::getPatientSuggestInfo($suggest_id);
+            });
+        });
     });
 
     //子系统调用api

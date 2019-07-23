@@ -1320,7 +1320,24 @@ return [
             ],
         ],
 
+        'admin/suggests' => [
+            'GET' => [
+                'params' => [
+                    'page' => [
+                        ['default' => 1],
+                        101
+                    ],
+                    'size' => [
+                        ['default' => 20],
+                        102
+                    ]
 
+                ],
+                'err_code' => [
+
+                ],
+            ],
+        ],
 
 	]
 ];
