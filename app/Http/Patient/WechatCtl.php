@@ -20,7 +20,7 @@ class WechatCtl
      * @param $udid
      * @param $platform
      */
-    static function getTokenByCode($product,$code) {
+    static function getTokenByCode($product,$code,$udid = '',$platform = '') {
         $app = EasyWechat::officialAccount($product);
 
         //获取accessToken
@@ -33,7 +33,9 @@ class WechatCtl
         $userInfo = $user->getOriginal();
         $unionid = $userInfo['unionid'];
         $isWechatRegister = PatientWechatORM::getOneByUnionid($unionid);
-
+        $unionidData = [
+            'unionid' => $unionid
+        ];
         //是否授权当前系统
         if(!$isWechatRegister) {
             $data = [
@@ -47,9 +49,8 @@ class WechatCtl
                 'area' => $userInfo['country']
             ];
             $result = PatientWechatORM::addOne($data); //todo 队列操作
-            var_dump($result);die;
             if($result) {
-                jsonOut('success',$unionid);
+                jsonOut('success',$unionidData);
             }
             jsonOut('error',false);
         }
@@ -64,27 +65,27 @@ class WechatCtl
                 'name' => $patientInfo['name'],
                 'head_img' => $patientInfo['head_img']
             ];
-//            $taskInfo = [
-//                'patient_id' => $patientId,
-//                'task_id' =>getConfig('LOGIN_ID') ,
-//            ];
-//            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
-//            if(!empty($udid)) {
-//                $udInfo = [
-//                    'registerId' => $udid,
-//                    'platform' => $platform,
-//                    'userId' => $patientId,
-//                    'roleType' => 'patient'
-//                ];
-//
-//                event(new AddUserUdidEvent($udInfo)); //推送设备号
-//
-//            }
+            $taskInfo = [
+                'patient_id' => $patientId,
+                'task_id' =>getConfig('LOGIN_ID') ,
+            ];
+            event(new ExamineUserEvent($taskInfo)); //完成登录积分任务
+            if(!empty($udid)) {
+                $udInfo = [
+                    'registerId' => $udid,
+                    'platform' => $platform,
+                    'userId' => $patientId,
+                    'roleType' => 'patient'
+                ];
+
+                event(new AddUserUdidEvent($udInfo)); //推送设备号
+
+            }
             jsonOut('success',$info);
 
         }
 
-        jsonOut('success',$unionid);
+        jsonOut('success',$unionidData);
 
     }
 

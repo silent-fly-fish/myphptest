@@ -179,11 +179,11 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             // 微信授权接口
             $router->get('/login',function(\Illuminate\Http\Request $request) {
                 $getData = $request->all();
-                jsonOut('success',1);
+                $header = $request->header();
                 $code = $getData['code'];
-//                $udid = isset($getData['udid'])? $getData['udid'] : '';
-//                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
-                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code);
+                $udid = isset($getData['udid'])? $getData['udid'] : '';
+                $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+                return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code,$udid,$platform);
             });
 
             //账号绑定
