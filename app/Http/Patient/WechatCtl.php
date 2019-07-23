@@ -47,7 +47,7 @@ class WechatCtl
                 'area' => $userInfo['country']
             ];
             $result = PatientWechatORM::addOne($data); //todo 队列操作
-
+            jsonOut('success',$result);
             if($result) {
                 jsonOut('success',$unionid);
             }
