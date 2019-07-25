@@ -30,7 +30,10 @@ class PatientAttentionORM extends BaseORM
             'user_patient_attention.patient_id'
         ])
             ->whereRaw('user_patient_attention.doctor_id='.$doctorId)
-            ->leftJoin('user_patient_tags as pt','pt.patient_id','=','user_patient_attention.patient_id')
+            ->leftJoin('user_patient_tags as pt', function ($join){
+                $join->on('pt.patient_id','=','user_patient_attention.patient_id')
+                    ->on('pt.doctor_id','=','user_patient_attention.doctor_id');
+            })
             ->leftJoin('user_patient as p','p.id','=','user_patient_attention.patient_id');
 
         $queryTotal->select([
@@ -40,7 +43,10 @@ class PatientAttentionORM extends BaseORM
             'user_patient_attention.patient_id'
         ])
             ->whereRaw('user_patient_attention.doctor_id='.$doctorId)
-            ->leftJoin('user_patient_tags as pt','pt.patient_id','=','user_patient_attention.patient_id')
+            ->leftJoin('user_patient_tags as pt', function ($join){
+                $join->on('pt.patient_id','=','user_patient_attention.patient_id')
+                    ->on('pt.doctor_id','=','user_patient_attention.doctor_id');
+            })
             ->leftJoin('user_patient as p','p.id','=','user_patient_attention.patient_id');
 
         if(!empty($tagId)) {
