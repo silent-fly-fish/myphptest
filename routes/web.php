@@ -77,8 +77,8 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             $header = $request->header();
             $postData = $postData['data'];
             $unionid = isset($postData['unionid'])? $postData['unionid'] : '';
-            $udid = isset($postData['udid'])? $postData['udid'] : '';
-            $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+            $udid = isset($postData['registerid'])? $postData['registerid'] : '';
+            $platform = 'android'; //TODO isset($header['platform'][0])? $header['platform'][0] : ''
             return App\Http\Patient\PatientCtl::phoneCodeLogin($postData['phone'],$postData['code'],$unionid,$udid,$platform);
         });
 
@@ -181,7 +181,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $getData = $request->all();
                 $header = $request->header();
                 $code = $getData['code'];
-                $udid = isset($getData['udid'])? $getData['udid'] : '';
+                $udid = isset($getData['registerid'])? $getData['registerid'] : '';
                 $platform = isset($header['platform'][0])? $header['platform'][0] : '';
                 return \App\Http\Patient\WechatCtl::getTokenByCode('patient',$code,$udid,$platform);
             });
