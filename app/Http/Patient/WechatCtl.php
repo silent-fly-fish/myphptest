@@ -75,7 +75,8 @@ class WechatCtl
                     'registerId' => $udid,
                     'platform' => $platform,
                     'userId' => $patientId,
-                    'roleType' => 'patient'
+                    'roleType' => 'patient',
+                    'alias'=>$patientInfo['phone']
                 ];
 
                 event(new AddUserUdidEvent($udInfo)); //推送设备号
