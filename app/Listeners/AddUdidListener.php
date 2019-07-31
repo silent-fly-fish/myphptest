@@ -37,7 +37,9 @@ class AddUdidListener
         if(isset($info['roleType'])) { //角色id
             $data['roleType'] = $info['roleType'];
         }
-
+        if(isset($info['alias'])) { //别名alias
+            $data['alias'] = $info['alias'];
+        }
         \Amqp::publish('routing-key',json_encode($data), ['queue'=>'MSG_JPUSH_DEVICE_SAVE']);
     }
 
