@@ -128,7 +128,8 @@ class PatientCtl
                     'registerId' => $udid,
                     'platform' => $platform,
                     'userId' => $patientId,
-                    'roleType' => 'patient'
+                    'roleType' => 'patient',
+                    'alias'=>$phone
                 ];
                 event(new AddUserUdidEvent($udInfo)); //推送设备号
             }
@@ -205,7 +206,8 @@ class PatientCtl
                     'registerId' => $udid,
                     'platform' => $platform,
                     'userId' => $patientId,
-                    'roleType' => 'patient'
+                    'roleType' => 'patient',
+                    'alias'=>$phone
                 ];
 
                event(new AddUserUdidEvent($udInfo)); //推送设备号
