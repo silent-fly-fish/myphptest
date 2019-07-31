@@ -8,6 +8,7 @@ use App\Http\Module\PatientTags;
 use App\Http\ORM\DoctorTagsORM;
 use App\Http\ORM\PatientAttentionORM;
 use App\Http\ORM\PatientTagsORM;
+use Illuminate\Support\Facades\DB;
 
 class TagsCtl
 {
@@ -97,39 +98,60 @@ class TagsCtl
     /**
      * 为患者打上标签
      * @param $doctorId
-     * @param $patientId
+     * @param $patientIds
      * @param $tagIds
      */
-    static function assignTag($doctorId,$patientId,$tagIds) {
+    static function assignTag($doctorId,$patientIds,$tagIds) {
         $tagIds = implode(',',$tagIds);
         if(strpos($tagIds,',') !== false){
             $tagIds = ','.$tagIds.',';
         }
-
-        //患者是否存在标签信息
-        $patientTagInfo = PatientTagsORM::getOneByDoctorIdAndPatientId($doctorId,$patientId);
-
-        if($patientTagInfo){
-            //存在标签需要更新标签信息
-            $tagData = [
-                'patient_id' => $patientId,
-                'doctor_id' => $doctorId,
-                'tag_id_str' => $tagIds
-            ];
-            $result = PatientTagsORM::update($tagData);
-        }else{
-            $tagData = [
-                'doctor_id' => $doctorId,
-                'patient_id' => $patientId,
-                'tag_id_str' => $tagIds
-            ];
-            $result = PatientTagsORM::addOne($tagData);
+        if(empty($patientIds) || !is_array($patientIds)) {
+            jsonOut('error',false);
         }
+        $patientAddIds = [];
+        $patientUpdateIds = [];
+        foreach ($patientIds as $k => $v) {
+            //患者是否存在标签信息
+            $patientTagInfo = PatientTagsORM::getOneByDoctorIdAndPatientId($doctorId,$v);
+            if($patientTagInfo){
+                $patientUpdateIds[] = $v;
+            }else {
+                $patientAddIds[] = $v;
+            }
+         }
 
-        if($result) {
+        DB::beginTransaction();
+        try{
+            if(!empty($patientUpdateIds)) {
+                //存在标签需要更新标签信息
+                $tagData = [
+                    'patient_ids' => $patientUpdateIds,
+                    'doctor_id' => $doctorId,
+                    'tag_id_str' => $tagIds
+                ];
+                @PatientTagsORM::update($tagData);
+            }
+            if(!empty($patientAddIds)) {
+                $tagAddData = [];
+                foreach ($patientAddIds as $k => $v) {
+                    $tagAddData[] =  [
+                        'doctor_id' => $doctorId,
+                        'patient_id' => $v,
+                        'tag_id_str' => $tagIds,
+                        'created_at' => time()
+                    ];
+                }
+
+                @PatientTagsORM::addAll($tagAddData);
+            }
+            DB::commit();
             jsonOut('success',true);
+        }catch (\Exception $exception) {
+            DB::rollback();
+            jsonOut('success',false);
         }
-        jsonOut('success',false);
+
     }
 
     /**

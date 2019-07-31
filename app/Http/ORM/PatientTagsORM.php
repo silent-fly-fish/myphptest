@@ -18,6 +18,12 @@ class PatientTagsORM extends BaseORM
         return $model->getKey();
     }
 
+    static function addAll($data) {
+        $model = new PatientTags();
+
+        return $model::query()->insert($data);
+    }
+
     static function getAllByDoctorId($doctorId) {
         $list = PatientTags::query()
             ->select(PatientTags::$fields)
@@ -48,10 +54,11 @@ class PatientTagsORM extends BaseORM
     static function update($data) {
         $model = new PatientTags();
         $doctorId = $data['doctor_id'];
-        $patientId = $data['patient_id'];
+        $patientId = $data['patient_ids'];
+
         $data = self::isIncolumns($model, $data);
 
-        return $model::where(['doctor_id'=>$doctorId,'patient_id'=>$patientId])->update($data);
+        return $model::where(['doctor_id'=>$doctorId])->whereIn('patient_id',$patientId)->update($data);
     }
 
     static function updateBatchById($data) {

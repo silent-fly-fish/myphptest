@@ -369,10 +369,10 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
                 $postData = $request->all();
                 $postData = $postData['data'];
                 $doctorId = $postData['doctor_id'];
-                $patientId = $postData['patient_id'];
+                $patientIds = $postData['patient_ids'];
                 $tagIds = $postData['tag_ids'];
 
-                return App\Http\Doctor\TagsCtl::assignTag($doctorId,$patientId,$tagIds);
+                return App\Http\Doctor\TagsCtl::assignTag($doctorId,$patientIds,$tagIds);
             });
 
             //删除患者标签
