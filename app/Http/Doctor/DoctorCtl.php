@@ -4,6 +4,7 @@
 namespace App\Http\Doctor;
 
 
+use App\Events\AddUserUdidEvent;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorORM;
 use App\Http\ORM\DoctorVisitORM;
@@ -33,8 +34,10 @@ class DoctorCtl
      * 用户手机号登录
      * @param $phone
      * @param $code
+     * @param $udid
+     * @param $platform
      */
-    static function phoneLogin($phone,$code) {
+    static function phoneLogin($phone,$code,$udid = '',$platform = '') {
         $doctorInfo = DoctorORM::getOneByName($phone);
         if(empty($doctorInfo)) {
             jsonOut('doctorPhoneNotExist',false);
@@ -61,6 +64,18 @@ class DoctorCtl
             'real_name' => $doctorInfo['real_name'],
             'img' => $doctorInfo['img']
         ];
+        if(!empty($udid)) {
+            $udInfo = [
+                'registerId' => $udid,
+                'platform' => $platform,
+                'userId' => $doctorInfo['id'],
+                'roleType' => 'doctor',
+                'alias'=>$phone
+            ];
+
+            event(new AddUserUdidEvent($udInfo)); //推送设备号
+
+        }
         jsonOut('success',$returnData);
 
 

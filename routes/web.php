@@ -260,7 +260,10 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
         $router->post('/login', function(\Illuminate\Http\Request $request){
             $postData = $request->all();
             $postData = $postData['data'];
-            return App\Http\Doctor\DoctorCtl::phoneLogin($postData['phone'],$postData['code']);
+            $header = $request->header();
+            $udid = isset($postData['registerid'])? $postData['registerid'] : '';
+            $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+            return App\Http\Doctor\DoctorCtl::phoneLogin($postData['phone'],$postData['code'],$udid,$platform);
         });
 
         $router->group(['prefix'=> 'send'], function() use ($router){
