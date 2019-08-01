@@ -262,7 +262,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             $postData = $postData['data'];
             $header = $request->header();
             $udid = isset($postData['registerid'])? $postData['registerid'] : '';
-            $platform = isset($header['platform'][0])? $header['platform'][0] : '';
+            $platform = 'android';//isset($header['platform'][0])? $header['platform'][0] : '';
             return App\Http\Doctor\DoctorCtl::phoneLogin($postData['phone'],$postData['code'],$udid,$platform);
         });
 
