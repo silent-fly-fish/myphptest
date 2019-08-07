@@ -5,12 +5,16 @@ namespace App\Http\Admin;
 
 
 use App\Http\Module\Doctor;
+use App\Http\Module\DoctorHots;
 use App\Http\ORM\DoctorApplyORM;
+use App\Http\ORM\DoctorHotsORM;
 use App\Http\ORM\DoctorORM;
 use App\Http\ORM\DoctorTeamORM;
 use App\Http\ORM\SysOptionsORM;
 
 use App\Http\ORM\HospitalORM;
+use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class DoctorCtl
 {
@@ -114,17 +118,23 @@ class DoctorCtl
         $data['password'] = md5(md5($data['password']).$salt);
         $data['category_id_str'] = empty($data['category_ids'])? '':implode(',',$data['category_ids']);
         $data['salt'] = $salt;
-        $result = DoctorORM::addOne($data);
-        if($result) {
-            $tagData = ['doctor_id'=>$result,'tag_ids'=>$data['tag_ids']];
-            POST('tag.open/doctortag',$tagData)['data'];
+        DB::beginTransaction();
+        try {
+            $result = DoctorORM::addOne($data);
+            if($result) {
+                $tagData = ['doctor_id'=>$result,'tag_ids'=>$data['tag_ids']];
+                POST('tag.open/doctortag',$tagData)['data'];
 
-            $data['invite_code'] = createCode($result,1);
-            $data['doctor_id'] = $result;
-            @DoctorORM::update($data);
+                $data['invite_code'] = createCode($result,1);
+                $data['doctor_id'] = $result;
+                @DoctorORM::update($data);
+            }
+            DB::commit();
             jsonOut('success',true);
+        }catch (\Exception $exception) {
+            DB::rollback();
+            jsonOut('success',false);
         }
-        jsonOut('success',false);
     }
 
     /**
@@ -182,6 +192,40 @@ class DoctorCtl
             jsonOut('success',true);
         }
         jsonOut('success',false);
+    }
+
+    /**
+     * 修改医生热度人工得分
+     * @param $doctorId
+     * @param $artificialScore
+     */
+    static function updateDoctorHotScore($doctorId,$artificialScore) {
+
+        $doctorHotInfo = DoctorHotsORM::getOneByDoctorId($doctorId);
+
+        if(empty($doctorHotInfo)) {
+            //添加一条热度积分
+            $data = [
+                'doctor_id' => $doctorId,
+                'artificial_score' => $artificialScore,
+                'total_score' => $artificialScore
+            ];
+            $result = DoctorHotsORM::addOne($data);
+        }else {
+            $totalScore = $doctorHotInfo['total_score'] + ($artificialScore - $doctorHotInfo['artificial_score']);
+            //更新热度积分
+            $data = [
+                'id' => $doctorHotInfo['id'],
+                'artificial_score' => $artificialScore,
+                'total_score' => $totalScore
+            ];
+            $result = DoctorHotsORM::updateById($data);
+        }
+        if(!$result) {
+            jsonOut('error',false);
+        }
+
+        jsonOut('success',true);
     }
 
 }

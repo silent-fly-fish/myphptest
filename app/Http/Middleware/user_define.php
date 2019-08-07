@@ -1338,6 +1338,26 @@ return [
             ],
         ],
 
+        'admin/doctorhots' => [
+            'POST' => [
+                'params' => [
+                    'doctor_id' => [
+                        ['required' => '','integer' => ''],
+                        101
+                    ],
+                    'artificial_score' => [
+                        ['required' => '','integer' => ''],
+                        102
+                    ]
+
+                ],
+                'err_code' => [
+                    101 => 'doctor_id is required and integer! ',
+                    102 => 'artificial_score is required and integer!',
+                ],
+            ],
+        ],
+
 	]
 ];
 

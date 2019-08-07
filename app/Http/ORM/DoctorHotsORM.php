@@ -75,4 +75,9 @@ class DoctorHotsORM extends BaseORM
         return true;
     }
 
+    static function getOneByDoctorId($doctorId) {
+
+        return DoctorHots::query()->where(['doctor_id'=>$doctorId])->first();
+    }
+
 }

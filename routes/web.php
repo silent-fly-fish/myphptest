@@ -487,6 +487,18 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
 
                 return App\Http\Admin\DoctorCtl::updateDoctor($putData);
             });
+
+        });
+
+        $router->group(['prefix'=>'doctorhots'],function () use ($router){
+            $router->post('', function(\Illuminate\Http\Request $request){
+                $postData = $request->all();
+                $postData = $postData['data'];
+                $doctorId = $postData['doctor_id'];
+                $artificialScore = $postData['artificial_score'];
+
+                return \App\Http\Admin\DoctorCtl::updateDoctorHotScore($doctorId,$artificialScore);
+            });
         });
 
         $router->group(['prefix'=>'patients'],function () use ($router){
