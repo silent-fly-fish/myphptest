@@ -40,26 +40,23 @@ class DoctorCtl
     static function phoneLogin($phone,$code,$udid = '',$platform = '') {
         $doctorInfo = DoctorORM::getOneByName($phone);
         if(empty($doctorInfo)) {
-            jsonOut('doctorPhoneNotExist',false);
+            jsonOut('doctorPhoneNotExist',[]);
         }
 
         $redisCode = getRedisDataByKey(env('REDIS_CODE_DOCTOR').$phone);
         if(($redisCode != $code && $code != '708090') || empty($code)) {
-            jsonOut('phoneCodeError',false);
+            jsonOut('phoneCodeError',[]);
         }
 
 
         //更新登录时间和token
         $doctorData = [
             'doctor_id' => $doctorInfo['id'],
-            'login_time' => time(),
-            'token' => '', //TODO
-            'token_time' => '' //TODO
+            'login_time' => time()
         ];
         DoctorORM::update($doctorData);
         $returnData = [
             'id' => $doctorInfo['id'],
-            'token' => '',
             'name' => $doctorInfo['name'],
             'real_name' => $doctorInfo['real_name'],
             'img' => $doctorInfo['img']
