@@ -105,9 +105,9 @@ class TagsCtl
      * @param $tagIds
      */
     static function assignTag($doctorId,$patientIds,$tagIds) {
-        $tagIds = implode(',',$tagIds);
-        if(strpos($tagIds,',') !== false){
-            $tagIds = ','.$tagIds.',';
+        $tagIdsStr = implode(',',$tagIds);
+        if(strpos($tagIdsStr,',') !== false){
+            $tagIdsStr = ','.$tagIdsStr.',';
         }
         if(empty($patientIds) || !is_array($patientIds)) {
             jsonOut('error',false);
@@ -118,7 +118,16 @@ class TagsCtl
             //患者是否存在标签信息
             $patientTagInfo = PatientTagsORM::getOneByDoctorIdAndPatientId($doctorId,$v);
             if($patientTagInfo){
-                $patientUpdateIds[] = $v;
+                //当前患者拥有的标签
+                $hasTag = empty($patientTagInfo['tag_id_str'])? []: explode(',',$patientTagInfo['tag_id_str']);
+                $hasTag = array_unique(array_merge($hasTag,$tagIds));
+
+                $tagIdsStr2 = implode(',',$hasTag);
+                $patientUpdateIds[$k] = [
+                    'id' => $patientTagInfo['id'],
+                    'tag_id_str' => $tagIdsStr2
+                ];
+
             }else {
                 $patientAddIds[] = $v;
             }
@@ -128,12 +137,8 @@ class TagsCtl
         try{
             if(!empty($patientUpdateIds)) {
                 //存在标签需要更新标签信息
-                $tagData = [
-                    'patient_ids' => $patientUpdateIds,
-                    'doctor_id' => $doctorId,
-                    'tag_id_str' => $tagIds
-                ];
-                @PatientTagsORM::update($tagData);
+
+                @PatientTagsORM::updateBatchById($patientUpdateIds);
             }
             if(!empty($patientAddIds)) {
                 $tagAddData = [];
@@ -141,7 +146,7 @@ class TagsCtl
                     $tagAddData[] =  [
                         'doctor_id' => $doctorId,
                         'patient_id' => $v,
-                        'tag_id_str' => $tagIds,
+                        'tag_id_str' => $tagIdsStr,
                         'created_at' => time()
                     ];
                 }
