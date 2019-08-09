@@ -28,4 +28,5 @@ return [
     'hospitalPhoneIsExist' => ['code'=>3014,'msg'=>'医院名称已存在'],
     'accountIsExist' => ['code'=>3014,'msg'=>'后台账号已存在'],
     'accountPasswordError' => ['code'=>3015,'msg'=>'账号或密码错误'],
+    'tagNameError' => ['code'=>3016,'msg'=>'标签名重复'],
 ];

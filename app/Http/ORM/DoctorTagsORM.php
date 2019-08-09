@@ -34,4 +34,8 @@ class DoctorTagsORM extends BaseORM
         return DoctorTags::where(['doctor_id' => $doctorId,'id'=>$tagId])->update(['r_status'=>0]);
     }
 
+    static function isTagName($doctorId,$tagName) {
+        return DoctorTags::where(['doctor_id' => $doctorId,'tag_name' => $tagName,'r_status' => 1])->count();
+    }
+
 }

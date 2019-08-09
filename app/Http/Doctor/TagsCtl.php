@@ -66,7 +66,10 @@ class TagsCtl
      * @param $tagName
      */
     static function addTag($doctorId,$tagName) {
-
+        $isTagName = DoctorTagsORM::isTagName($doctorId,$tagName);
+        if($isTagName) {
+            jsonOut('tagNameError',false);
+        }
         $data = [
             'doctor_id' => $doctorId,
             'tag_name' => $tagName,
