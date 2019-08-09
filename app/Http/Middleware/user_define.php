@@ -687,7 +687,11 @@ return [
                     'description' => [
                         ['required' => ''],
                         111
-                    ]
+                    ],
+                    'tag_ids' => [
+                        ['default' => []],
+                        112
+                    ],
 
                 ],
                 'err_code' => [
@@ -730,7 +734,11 @@ return [
                     'position_id' => [
                         ['integer' => ''],
                         106
-                    ]
+                    ],
+                    'tag_ids' => [
+                        ['default' => []],
+                        107
+                    ],
 
                 ],
                 'err_code' => [

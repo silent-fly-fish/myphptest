@@ -160,7 +160,7 @@ class DoctorORM extends BaseORM
         $doctorId = $data['doctor_id'];
         $data = self::isIncolumns($model, $data);
 
-        return $model::whereRaw('id='.$doctorId.' and r_status=1')->update($data);
+        return $model::whereRaw('id='.$doctorId)->update($data);
     }
 
     static function updateBatchById($data) {
