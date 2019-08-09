@@ -33,7 +33,9 @@ class Kernel extends ConsoleKernel
         });
 
         //每天晚上2:00医生热度积分脚本任务执行
-        $schedule->job(new DoctorHotsJob,'doctorhots')->dailyAt('2:00');
+        $schedule
+            ->job(new DoctorHotsJob)
+            ->dailyAt('2:00');
 
 
     }
