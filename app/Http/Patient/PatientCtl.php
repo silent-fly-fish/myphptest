@@ -301,10 +301,15 @@ class PatientCtl
         $first = substr($decode,0,1);
         $inviteId = substr($decode,1); //邀请人id
         $selfInfo = PatientORM::getOneById($patientId);
+        if(empty($selfInfo)) {
+            jsonOut('error',false);
+        }
         //已填写邀请码
         if(!empty($selfInfo['invite_code'])) {
             jsonOut('inviteCodeIsExist',false);
         }
+
+        DB::beginTransaction(); //开启事务回滚
 
         if($first === 'd') {
             //建立邀请关系和关注关系
@@ -315,6 +320,7 @@ class PatientCtl
             ];
             $res = POST('intergral.open/invitation',$invitationData)['data'];
             if(!$res) {
+                DB::rollback();
                 jsonOut('error',false);
             }
             $isAttention = PatientAttentionORM::getOneByPatientIdAndDoctorId($patientId,$inviteId);
@@ -329,6 +335,7 @@ class PatientCtl
         }elseif($first === 'p') {
             //邀请码不能是自己的
             if($inviteId == $patientId) {
+                DB::rollback();
                 jsonOut('inviteCodeNotSelf',false);
             }
             $invitationData = [
@@ -340,12 +347,14 @@ class PatientCtl
             //建立邀请关系
             $res = POST('intergral.open/invitation',$invitationData)['data'];
             if(!$res) {
+                DB::rollback();
                 jsonOut('error',false);
             }
             $info['patient_id'] = $patientId;
             $info['task_id'] = getConfig('INPUT_INVITE_ID');
             event(new ExamineUserEvent($info)); //加积分
         }else {
+            DB::rollback();
             jsonOut('inviteCodeNotExist',false);
         }
 
@@ -353,8 +362,10 @@ class PatientCtl
         $data['invite_code'] = $inviteCode;
         $result = PatientORM::update($data);
         if($result) {
+            DB::commit();
             jsonOut('success',true);
         }
+        DB::rollback();
         jsonOut('success',false);
     }
 
