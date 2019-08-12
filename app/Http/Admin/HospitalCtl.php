@@ -63,7 +63,6 @@ class HospitalCtl
             jsonOut('NoFoundData',false);
         }
         $hospitalInfo = $hospitalInfo->toArray();
-        $hospitalInfo['level'] = (int)$hospitalInfo['level'];
 
         jsonOut('success',$hospitalInfo);
     }
