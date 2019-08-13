@@ -132,7 +132,7 @@ $router->group(['middleware' => ['auth','before','after']], function () use ($ro
             $putData = $request->all();
             $putData = $putData['data'];
             $patientId = $putData['patient_id'];
-            $inviteCode = trim($putData['invite_code']);
+            $inviteCode = strtoupper(trim($putData['invite_code']));
 
             return \App\Http\Patient\PatientCtl::addInvitation($patientId,$inviteCode);
         });
