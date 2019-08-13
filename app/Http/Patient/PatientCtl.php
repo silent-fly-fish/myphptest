@@ -106,7 +106,7 @@ class PatientCtl
             //生成用户7位唯一邀请码
             $data2['code'] = createCode($patientId,2);
             $data2['patient_id'] = $patientId;
-            $data2['name'] = createUsername($patientId);
+            $data2['name'] = createUsername();
             $data2['head_img'] = ''; //todo 默认头像
             $data2['login_time'] = time();
             @PatientORM::update($data2);

@@ -414,12 +414,12 @@ function getUserToken($patientId) {
 
 
 /**
- * 生成用户唯一用户名
- * @param $id
+ * 生成用户用户名(可重复)
+ *
  */
-function createUsername($id) {
-    $rand = rand(1000,9999);
-    $username = 'SGY_'.md5($id.$rand);
+function createUsername() {
+    $rand = rand(100000,999999);
+    $username = 'S'.$rand;
 
     return $username;
 }
