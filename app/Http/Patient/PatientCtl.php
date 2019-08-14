@@ -6,6 +6,7 @@ namespace App\Http\Patient;
 
 use App\Events\AddUserUdidEvent;
 use App\Events\ExamineUserEvent;
+use App\Events\RegisterIMEvent;
 use App\Http\Module\PatientHistory;
 use App\Http\ORM\DoctorViewORM;
 use App\Http\ORM\DoctorVisitORM;
@@ -63,6 +64,15 @@ class PatientCtl
         if($result){
             $result = true;
         }else {
+            if(isset($data['sex'])) {
+                //推送IM事件
+                $IMData = [
+                    'user_id' => $params['patient_id'],
+                    'sex' => $data['sex']
+                ];
+                event(new RegisterIMEvent($IMData));
+            }
+
             $result = false;
         }
         jsonOut('success',$result);
@@ -133,7 +143,14 @@ class PatientCtl
                 ];
                 event(new AddUserUdidEvent($udInfo)); //推送设备号
             }
-
+            //TODO 推送注册IM事件
+            $IMData = [
+                'user_id' => $patientId,
+                'phone' => $phone,
+                'name' => $data2['name'],
+                'head_img' => $data2['head_img']
+            ];
+            event(new RegisterIMEvent($IMData));
             DB::commit();
             jsonOut('success',$info);
         }catch (\Exception $e) {

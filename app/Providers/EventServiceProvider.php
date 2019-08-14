@@ -18,5 +18,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\AddUserUdidEvent' => [
             'App\Listeners\AddUdidListener',
         ],
+        'App\Events\RegisterIMEvent' => [
+            'App\Listeners\RegisterIMListener',
+        ],
     ];
 }
