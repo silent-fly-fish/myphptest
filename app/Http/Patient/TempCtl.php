@@ -44,10 +44,9 @@ class TempCtl
     static function getIllnessInfo() {
         $info = [
             'illness_tag' => '多囊卵巢',
-            'description' => '多囊卵巢综合征（PCOS）是生育年龄妇女常见的一种复杂的内分泌及代谢异常所致的疾病，以慢性无排卵（排卵功能紊乱或丧失）和高雄激素血症（妇女体内男性激素产生过剩）为特征，主要临床表现为月经周期不规律、不孕、多毛，是常见的女性内分泌疾病',
+            'description' => '囊卵巢综合征（PCOS）是生育年龄妇女常见的一种复杂的内分泌及代谢异常所致的疾病，以慢性无排卵（排卵功能紊乱或丧失）和高雄激素血症（妇女体内男性激素产生过剩）为特征，主要临床表现为月经周期不规律、不孕、多毛和/或痤疮，是最常见的女性内分泌疾病。',
             'list_img' => [
-                'www.baidu.com',
-                'www.zuosi.com'
+                'http://futurefertile.oss-cn-hangzhou.aliyuncs.com/app/15657498036604.jpg'
             ]
         ];
 
