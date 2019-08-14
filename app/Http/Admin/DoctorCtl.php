@@ -9,6 +9,7 @@ use App\Http\Module\DoctorHots;
 use App\Http\ORM\DoctorApplyORM;
 use App\Http\ORM\DoctorHotsORM;
 use App\Http\ORM\DoctorORM;
+use App\Http\ORM\DoctorTagsORM;
 use App\Http\ORM\DoctorTeamORM;
 use App\Http\ORM\SysOptionsORM;
 
@@ -128,6 +129,13 @@ class DoctorCtl
                 $data['invite_code'] = createCode($result,1);
                 $data['doctor_id'] = $result;
                 @DoctorORM::update($data);
+                //添加自定义VIP标签
+                $tagData= [
+                    'doctor_id' => $result,
+                    'tag_name' => 'VIP',
+                    'is_system' => 1 //系统标签
+                ];
+                @DoctorTagsORM::addOne($tagData);
             }
             DB::commit();
             jsonOut('success',true);
