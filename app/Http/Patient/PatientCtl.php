@@ -108,7 +108,7 @@ class PatientCtl
                     jsonOut('error',false);
                 }
                 $wxData = [
-                    'unionid' => $wxInfo['id'],
+                    'id' => $wxInfo['id'],
                     'patient_id' => $patientId
                 ];
                 @PatientWechatORM::update($wxData);
