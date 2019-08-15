@@ -19,10 +19,11 @@ class PatientCtl
             jsonOut('patientNotExist',false);
         }
         $patientInfo = $patientInfo->toArray();
+        $patientInfo['login_time'] = $patientInfo['login_time']?date('Y-m-d H:i',$patientInfo['login_time']):'';
+        $patientInfo['birth'] = $patientInfo['birth']?date('Y-m-d H:i',$patientInfo['birth']):'';
 
         $tagArr = GET('tag.open/patienttag',$patientId)['data'];
         $patientInfo['tag_ids'] = $tagArr;
-//        print_r($patientInfo);exit;
 
         jsonOut('success',$patientInfo);
     }
@@ -35,8 +36,8 @@ class PatientCtl
         $search = isset($getData['search'])?$getData['search']:'';
         $startTime = isset($getData['start_time'])?$getData['start_time']:0;
         $endTime = isset($getData['end_time'])?$getData['end_time']:0;
-        $page = empty($getData['page'])?$getData['page']:1;
-        $size = empty($getData['size'])?$getData['size']:10;
+        $page = !empty($getData['page'])?$getData['page']:1;
+        $size = !empty($getData['size'])?$getData['size']:10;
 
         $ret = PatientORM::getAll($search,$startTime,$endTime,$page,$size);
 
