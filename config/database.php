@@ -143,6 +143,34 @@ return [
             'database' => 0,
             'read_write_timeout' => 60,
         ],
+        'options' => [
+            'cluster' => 'redis',
+        ],
+        'clusters' => [
+            'mycluster1' => [
+                [
+                    'host' => env('REDIS_HOST'.env('DB_BETA')),
+                    'password' => env('REDIS_PASSWORD'.env('DB_BETA')),
+                    'port' => env('REDIS_PORT_FIRST'.env('DB_BETA')),
+                    'database' => 0,
+                    'read_write_timeout' => env('REDIS_TIMEOUT',60),
+                ],
+                [
+                    'host' => env('REDIS_HOST'.env('DB_BETA')),
+                    'password' => env('REDIS_PASSWORD'.env('DB_BETA')),
+                    'port' => env('REDIS_PORT_SECOND'.env('DB_BETA')),
+                    'database' => 0,
+                    'read_write_timeout' => env('REDIS_TIMEOUT',60),
+                ],
+                [
+                    'host' => env('REDIS_HOST'.env('DB_BETA')),
+                    'password' => env('REDIS_PASSWORD'.env('DB_BETA')),
+                    'port' => env('REDIS_PORT_THIRD'.env('DB_BETA')),
+                    'database' => 0,
+                    'read_write_timeout' => env('REDIS_TIMEOUT',60),
+                ],
+            ]
+        ],
     ],
 
 ];

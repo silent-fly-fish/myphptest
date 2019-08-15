@@ -430,33 +430,47 @@ function getRedisFix(){
     return env('SYS_CODE').'_';
 }
 
-
+/**
+ * @param $key
+ * @return int|mixed
+ * 获取redis对应的key值
+ */
 function getRedisDataByKey($key){
-
-    if(Redis::exists(getRedisFix().$key)){
-        $ret =  json_decode(Redis::get(getRedisFix().$key),true);
+    $redis = app('redis')->connection('mycluster1');
+    if($redis->exists(getRedisFix().$key)) {
+        $ret = json_decode($redis->get(getRedisFix().$key),true);
         return $ret;
     }
     return 0;
 }
 
+/**
+ * @param $key
+ * @return int
+ * 删除redis对应的key
+ */
 function delRedisByKey($key){
-
-    if(Redis::exists(getRedisFix().$key)){
-
-        return Redis::del(getRedisFix().$key);
+    $redis = app('redis')->connection('mycluster1');
+    if($redis->exists(getRedisFix().$key)) {
+        return $redis->del(getRedisFix().$key);
     }
     return 0;
 }
 
-
+/**
+ * @param $key
+ * @param $data
+ * @param null $time
+ * @return mixed
+ * 设置redis值
+ */
 function setRedisDataWithKey($key,$data,$time=null){
+    $redis = app('redis')->connection('mycluster1');
     //此处直接写入时间为60秒
     if(!$time){
-        return Redis::setex(getRedisFix().$key,60,json_encode($data));
+       return $redis->setex(getRedisFix().$key,60,json_encode($data));
     }
-
-    return Redis::setex(getRedisFix().$key,$time,json_encode($data));
+    return $redis->setex(getRedisFix().$key,$time,json_encode($data));
 }
 
 
