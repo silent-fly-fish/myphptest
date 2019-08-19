@@ -153,9 +153,15 @@ class DoctorCtl
 
         $params['doctor_id'] = $data['doctor_id'];
         if(isset($data['one_price'])) {
+            if($data['one_price'] > 0 && $data['one_price'] < 1) {
+                jsonOut('error',false);
+            }
             $params['one_price'] = $data['one_price'];
         }
         if(isset($data['more_price'])) {
+            if($data['more_price'] > 0 && $data['more_price'] < 1) {
+                jsonOut('error',false);
+            }
             $params['more_price'] = $data['more_price'];
         }
 
