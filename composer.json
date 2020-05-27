@@ -13,7 +13,7 @@
         "symfony/console": "~3.2",
         "guzzlehttp/guzzle": "^6.2",
         "monolog/monolog": "^1.22",
-        "phpmailer/phpmailer": "^5.2",
+        "phpmailer/phpmailer": "^6.1",
         "aws/aws-sdk-php": "^3.0",
         "pda/pheanstalk": "^3.0",
         "bschmitt/laravel-amqp": "^2.0",
